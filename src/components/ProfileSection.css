@@ -1,0 +1,230 @@
+.profile-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+    z-index: 1;
+}
+
+.profile-text {
+    flex: 1;
+    position: relative;
+    animation: fadeInLeft 1s ease-out;
+}
+
+.speech-bubble {
+    position: absolute;
+    top: -70px;
+    left: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 12px 25px;
+    border-radius: 20px 20px 20px 0;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    animation: float 3s ease-in-out infinite;
+}
+
+.profile-text h1 {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    line-height: 1.2;
+    font-weight: 800;
+}
+
+.profile-text h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.profile-text p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    color: #555;
+    max-width: 600px;
+    line-height: 1.8;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 15px 35px;
+    background: linear-gradient(45deg, var(--primary-color), #007bff);
+    color: var(--white);
+    border-radius: 50px;
+    font-weight: 600;
+    margin-top: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(0, 86, 179, 0.3);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 86, 179, 0.4);
+}
+
+.profile-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    animation: fadeInRight 1s ease-out;
+}
+
+.profile-image {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 30px;
+    box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1), -20px -20px 60px rgba(255, 255, 255, 0.8);
+    border: 8px solid rgba(255, 255, 255, 0.5);
+}
+
+.robot-decoration {
+    position: absolute;
+    bottom: -30px;
+    right: 30px;
+    width: 120px;
+    height: 120px;
+    animation: bounce 3s infinite ease-in-out;
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+}
+
+.robot-decoration img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.scroll-down {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #888;
+    font-size: 0.9rem;
+    animation: fadeInUp 1s ease-out 1s backwards;
+}
+
+.scroll-down .arrow {
+    font-size: 1.5rem;
+    margin-top: 5px;
+    animation: bounce 2s infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate(-50%, 20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@media (max-width: 900px) {
+    .profile-content {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .profile-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .speech-bubble {
+        left: 50%;
+        transform: translateX(-50%);
+        top: -60px;
+        border-radius: 20px;
+    }
+
+    .profile-image {
+        width: 280px;
+        height: 280px;
+    }
+
+    .profile-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .robot-decoration {
+        width: 80px;
+        height: 80px;
+        right: 0;
+    }
+}
