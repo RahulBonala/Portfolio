@@ -8,7 +8,7 @@ const ProfileSection: React.FC = () => {
         <section id="home" className="section profile-section">
             <div className="container profile-content">
                 <div className="profile-text">
-                    <div className="speech-bubble">Hello!</div>
+
                     <h1>I'm Sri Sai Rahul Bonala</h1>
                     <h2>Experience Designer</h2>
                     <p>

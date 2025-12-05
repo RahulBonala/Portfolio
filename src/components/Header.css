@@ -61,13 +61,21 @@
 }
 
 @media (max-width: 768px) {
+    .header {
+        padding: 10px 0;
+    }
+
     .header-content {
-        flex-direction: column;
+        flex-direction: row;
         gap: 15px;
     }
 
     .nav ul {
         gap: 15px;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+    }
+
+    .logo h1 {
+        font-size: 1.2rem;
     }
 }
