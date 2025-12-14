@@ -119,6 +119,9 @@
 
 .project-link-container {
     margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .project-link-btn {

@@ -9,6 +9,7 @@ interface ProjectCardProps {
     tags: string[];
     fullDetails: React.ReactNode;
     link?: string;
+    webLink?: string;
     reverse?: boolean;
 }
 
@@ -20,6 +21,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     tags,
     fullDetails,
     link,
+    webLink,
     reverse
 }) => {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -44,11 +46,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 <div className={`project-details ${isExpanded ? 'expanded' : ''}`}>
                     {fullDetails}
 
-                    {link && (
+                    {(link || webLink) && (
                         <div className="project-link-container">
-                            <a href={link} target="_blank" rel="noopener noreferrer" className="project-link-btn">
-                                View Figma Prototype
-                            </a>
+                            {link && (
+                                <a href={link} target="_blank" rel="noopener noreferrer" className="project-link-btn">
+                                    View Figma Prototype
+                                </a>
+                            )}
+                            {webLink && (
+                                <a href={webLink} target="_blank" rel="noopener noreferrer" className="project-link-btn">
+                                    View Live Website
+                                </a>
+                            )}
                         </div>
                     )}
                 </div>

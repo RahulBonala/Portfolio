@@ -17,6 +17,7 @@ const Projects: React.FC = () => {
                     image={dosthImg}
                     tags={['User Flow', 'Journey Mapping', 'Wireframing', 'High-Fidelity Prototyping', 'UI Design', 'UX Writing']}
                     link="http://figma.com/make/kVFaUs3rBUt6CtzwlCzHCb/Dosth-App-Prototype?node-id=0-1&p=f&fullscreen=1"
+                    webLink="https://dosth-app.vercel.app/"
                     fullDetails={
                         <div>
                             <h3>Project Overview</h3>
@@ -57,6 +58,7 @@ const Projects: React.FC = () => {
                     image={barImg}
                     tags={['Wireframing', 'High-Fidelity Prototyping', 'UI Design', 'UX Design']}
                     link="https://www.figma.com/make/X9Zdh1fZaQWWpaV9n8AyX6/Bar-App?node-id=0-1&p=f&fullscreen=1"
+                    webLink="https://bar-app-iota.vercel.app/"
                     reverse={true}
                     fullDetails={
                         <div>
@@ -90,6 +92,7 @@ const Projects: React.FC = () => {
                     image={waggleImg}
                     tags={['User Flow', 'Journey Mapping', 'Information Architecture', 'Wireframing', 'UX Writing', 'UI Design']}
                     link="https://www.figma.com/make/4FaGz8I3cnyPdCtSFmGpOm/Waggle-Mobile-App-Design?node-id=0-1&p=f&fullscreen=1"
+                    webLink="https://waggle-app-pied.vercel.app/"
                     fullDetails={
                         <div>
                             <h3>Project Overview</h3>
