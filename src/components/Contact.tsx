@@ -43,10 +43,7 @@ const Contact: React.FC = () => {
                             <span className="icon">📧</span>
                             <a href="mailto:rahulbonala06@gmail.com">rahulbonala06@gmail.com</a>
                         </div>
-                        <div className="info-item">
-                            <span className="icon">📱</span>
-                            <a href="tel:+917989367960">+91-7989367960</a>
-                        </div>
+
                         <div className="info-item">
                             <span className="icon">🔗</span>
                             <a href="https://linkedin.com/in/srisairahul" target="_blank" rel="noopener noreferrer">linkedin.com/in/srisairahul</a>
