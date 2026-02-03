@@ -16,7 +16,7 @@ const ProfileSection: React.FC = () => {
                         design strategy and technical execution to build scalable, AI-native
                         digital products. Expert in rapid prototyping and developing enterprise
                         tools using an integrated workflow of Figma, Java, and Python.
-                        Adept at applying data insights to drive a 95% increase in customer satisfaction
+                        Applying data insights to drive a 95% increase in customer satisfaction
                         and reduce workflow times by 90%, delivering intuitive, WCAG-compliant solutions
                         from concept to deployment
                     </p>
