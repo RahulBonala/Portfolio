@@ -12,12 +12,13 @@ const ProfileSection: React.FC = () => {
                     <h1>I'm Sri Sai Rahul Bonala</h1>
                     <h2>Experience Designer</h2>
                     <p>
-                        This is Sri Sai Rahul Bonala, Currently working as UI/UX Designer and Software Engineer with 3 years of experience
-                        designing intuitive, accessible, and high-impact digital interfaces. Proficient in Figma, Sketch, Adobe XD, HTML,
-                        CSS, and Java, with expertise in user research, usability testing, and prototyping. Proven success in translating
-                        complex requirements into user-centered designs, driving an 85% increase in customer satisfaction and a 40% boost
-                        in positive feedback. Skilled in collaborating with cross-functional and global teams to deliver visually engaging,
-                        seamless, and user-driven design solutions aligned with business goals.
+                        Product Designer (UI/UX & Developer) with 3+ years of experience unifying
+                        design strategy and technical execution to build scalable, AI-native
+                        digital products. Expert in rapid prototyping and developing enterprise
+                        tools using an integrated workflow of Figma, Java, and Python.
+                        Adept at applying data insights to drive a 95% increase in customer satisfaction
+                        and reduce workflow times by 90%, delivering intuitive, WCAG-compliant solutions
+                        from concept to deployment
                     </p>
                     <p>
                         Skilled in collaborating with cross-functional teams to deliver elegant, user-centric
