@@ -15,10 +15,10 @@ const Projects: React.FC = () => {
 
                 <ProjectCard
                     title="BestAnswer.ai"
-                    subtitle="(The Multi-Agent Consensus Engine)"
+                    subtitle="(GenAI Multi-Agent System using Llama 3)"
                     description="BestAnswer.ai is a next-generation intelligence engine that eliminates AI hallucination by convening a 'Roundtable' of four distinct AI personas to debate every user query. It transforms the solitary act of searching into a transparent, multi-perspective consensus event."
                     image={bestAnswerImg}
-                    tags={['Multi-Agent Systems', 'Generative AI Orchestration', 'Real-Time Consensus Algorithms', 'Zero-Latency Synthesis']}
+                    tags={['UI Design', 'AI', 'Multi-Agent Systems', 'Generative AI Orchestration', 'Real-Time Consensus Algorithms']}
                     webLink="https://best-answer--rahulbonala06.replit.app/"
                     fullDetails={
                         <div>
