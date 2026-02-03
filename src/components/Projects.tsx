@@ -5,12 +5,52 @@ import barImg from '../assets/bar-app.png';
 import waggleImg from '../assets/waggle-app.png';
 import byocImg from '../assets/byoc-logo.png';
 import iupgradeImg from '../assets/iupgrade-logo.png';
+import bestAnswerImg from '../assets/bestanswer-logo.png';
 
 const Projects: React.FC = () => {
     return (
         <section id="projects" className="section projects-section">
             <div className="container">
                 <h2 className="section-title">Featured Projects</h2>
+
+                <ProjectCard
+                    title="BestAnswer.ai"
+                    subtitle="(The Multi-Agent Consensus Engine)"
+                    description="BestAnswer.ai is a next-generation intelligence engine that eliminates AI hallucination by convening a 'Roundtable' of four distinct AI personas to debate every user query. It transforms the solitary act of searching into a transparent, multi-perspective consensus event."
+                    image={bestAnswerImg}
+                    tags={['Multi-Agent Systems', 'Generative AI Orchestration', 'Real-Time Consensus Algorithms', 'Zero-Latency Synthesis']}
+                    webLink="https://best-answer--rahulbonala06.replit.app/"
+                    fullDetails={
+                        <div>
+                            <h3>Project Overview</h3>
+                            <p>BestAnswer.ai addresses the 'Trust Crisis' in Generative AI: the tendency of single models to hallucinate or provide biased answers. The platform utilizes a 'Clean Future' aesthetic inspired by Google Gemini, presenting the search process not as a retrieval, but as a high-speed deliberation between the world's leading language models.</p>
+
+                            <h3>My Role & Responsibilities</h3>
+                            <p>As the Creator & Chief Architect, the role encompassed the end-to-end definition of the multi-agent logic and the user interface.</p>
+                            <ul>
+                                <li><strong>Product Strategy:</strong> Defining the 'Council of 4' system (The Researcher, The Engineer, The Friend, The Academic) to ensure diverse cognitive perspectives.</li>
+                                <li><strong>UX/UI Architecture:</strong> Designing the 'Live Debate' visualization where users watch agents 'think', 'vote', and 'synthesize' in real-time.</li>
+                                <li><strong>Technical Specification:</strong> Architecting the asynchronous backend (Python FastAPI, asyncio) to query Google Gemini and Groq Llama 3 simultaneously without latency.</li>
+                                <li><strong>Economic Modeling:</strong> Engineering the 'Zero-Cost Stack' by utilizing high-throughput Free Tier APIs to democratize access to advanced AI consensus.</li>
+                            </ul>
+
+                            <h3>The Problem</h3>
+                            <ul>
+                                <li><strong>The Hallucination Hazard:</strong> Single AI models often invent facts with high confidence, misleading users.</li>
+                                <li><strong>The 'Tab Fatigue':</strong> Users currently waste time manually cross-checking answers between ChatGPT, Claude, and Gemini.</li>
+                                <li><strong>The Bias Trap:</strong> Individual models have specific leanings—some are too creative (unsafe), while others are too rigid (unhelpful).</li>
+                            </ul>
+
+                            <h3>The Solution</h3>
+                            <p>BestAnswer.ai acts as a 'Supreme Editor,' guiding the user to the objective truth through a rigorous, automated debate process.</p>
+                            <ul>
+                                <li><strong>The Council of 4:</strong> A parallel-processing engine that simultaneously consults Gemini (Google), Llama (Meta), and Mistral (Open Source).</li>
+                                <li><strong>The Supreme Judge:</strong> A meta-layer AI that critiques the four drafts, identifies the strongest logic, and merges them into one Master Answer.</li>
+                                <li><strong>The Verdict Badge:</strong> A transparent UI element that declares the 'Winner' of the debate, explaining why that specific agent's logic was superior.</li>
+                            </ul>
+                        </div>
+                    }
+                />
 
                 <ProjectCard
                     title="Build Your Own Company"
