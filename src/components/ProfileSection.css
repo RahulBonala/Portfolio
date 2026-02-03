@@ -9,6 +9,175 @@
     overflow: hidden;
 }
 
+/* --- Hero Background Layer (Absolute) --- */
+.hero-background-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Layer 1: Orbit Lines */
+.orbit-lines {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    transform-origin: center;
+}
+
+.orbit-1 { width: 600px; height: 600px; animation: rotateOrbit 60s linear infinite; }
+.orbit-2 { width: 900px; height: 900px; animation: rotateOrbit 90s linear infinite reverse; }
+.orbit-3 { width: 1200px; height: 1200px; animation: rotateOrbit 120s linear infinite; }
+
+.orbit-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    background: rgba(0, 123, 255, 0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.orbit-dot span {
+    position: absolute;
+    top: -20px;
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.3);
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Positioning dots on orbits */
+.dot-discover { transform: rotate(0deg) translate(300px) rotate(0deg); }
+.dot-define { transform: rotate(120deg) translate(450px) rotate(-120deg); }
+.dot-ideate { transform: rotate(240deg) translate(300px) rotate(-240deg); }
+.dot-test { transform: rotate(180deg) translate(600px) rotate(-180deg); }
+
+
+/* Layer 2: Glass Cards */
+.glass-card {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    border-radius: 16px;
+    padding: 15px;
+    overflow: hidden;
+    transform-style: preserve-3d;
+}
+
+.code-card {
+    top: 25%;
+    left: 5%;
+    width: 220px;
+    transform: perspective(1000px) rotateY(15deg) rotateX(5deg);
+    animation: float 6s ease-in-out infinite;
+}
+
+.ui-card {
+    top: 30%;
+    right: 5%;
+    width: 180px;
+    height: 280px;
+    transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
+    animation: float 7s ease-in-out infinite reverse;
+}
+
+/* Card Internals */
+.card-header {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+.dot { width: 8px; height: 8px; border-radius: 50%; }
+.dot.red { background: #FF5F56; }
+.dot.yellow { background: #FFBD2E; }
+.dot.green { background: #27C93F; }
+
+.code-content { font-family: 'Fira Code', monospace; font-size: 0.7rem; color: #444; }
+.code-line { line-height: 1.6; }
+.indent { padding-left: 10px; }
+.indent-2 { padding-left: 20px; }
+.keyword { color: #d73a49; }
+.function { color: #6f42c1; }
+.tag { color: #22863a; }
+
+.ui-mockup { display: flex; flex-direction: column; height: 100%; gap: 10px; }
+.ui-header { height: 20px; background: rgba(0, 0, 0, 0.05); border-radius: 4px; }
+.ui-body { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.ui-block { height: 40px; background: rgba(0, 0, 0, 0.05); border-radius: 4px; }
+.ui-block.short { width: 60%; }
+.ui-button { height: 30px; background: rgba(0, 123, 255, 0.3); border-radius: 15px; margin-top: auto; }
+
+
+/* Layer 3: Glass Bubbles */
+.glass-bubble {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    animation: bounce 5s ease-in-out infinite;
+}
+
+.bubble-1 {
+    width: 100px;
+    height: 100px;
+    top: 15%;
+    right: 18%;
+    animation-delay: 1s;
+}
+
+.bubble-2 {
+    width: 80px;
+    height: 80px;
+    bottom: 20%;
+    left: 15%;
+    animation-delay: 2s;
+}
+
+.bubble-3 {
+    width: 90px;
+    height: 90px;
+    bottom: 30%;
+    right: 10%;
+    animation-delay: 0.5s;
+}
+
+.glass-bubble .count { font-weight: 800; color: var(--primary-color); font-size: 1.2rem; }
+.glass-bubble .label { font-size: 0.7rem; color: #666; font-weight: 500; }
+.glass-bubble .icon { font-size: 1.5rem; }
+
+
+/* --- End Hero Background Layer --- */
+
+
 .profile-content {
     display: flex;
     align-items: center;
@@ -22,8 +191,6 @@
     position: relative;
     animation: fadeInLeft 1s ease-out;
 }
-
-
 
 .profile-text h1 {
     font-size: 3.5rem;
@@ -79,28 +246,11 @@
     width: 400px;
     height: 400px;
     object-fit: cover;
-    /* Scale and position to slightly crop the head */
     object-position: center 20%;
     transform: scale(1.15);
     border-radius: 30px;
     box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1), -20px -20px 60px rgba(255, 255, 255, 0.8);
     border: 8px solid rgba(255, 255, 255, 0.5);
-}
-
-.robot-decoration {
-    position: absolute;
-    bottom: -30px;
-    right: 30px;
-    width: 120px;
-    height: 120px;
-    animation: bounce 3s infinite ease-in-out;
-    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
-}
-
-.robot-decoration img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
 }
 
 .scroll-down {
@@ -123,63 +273,39 @@
 }
 
 @keyframes float {
+    0%, 100% { transform: translateY(0) perspective(1000px) rotateY(var(--y-rot, 15deg)) rotateX(5deg); }
+    50% { transform: translateY(-15px) perspective(1000px) rotateY(var(--y-rot, 15deg)) rotateX(5deg); }
+}
 
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
+@keyframes rotateOrbit {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @keyframes bounce {
-
-    0%,
-    100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 @keyframes fadeInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(-50px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeInRight {
-    from {
-        opacity: 0;
-        transform: translateX(50px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    from { opacity: 0; transform: translateX(50px); }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-    }
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
+@media (max-width: 1100px) {
+    .glass-card { display: none; }
+    .glass-bubble { display: none; }
+    .orbit-lines { opacity: 0.3; }
 }
 
 @media (max-width: 900px) {
@@ -188,27 +314,15 @@
         text-align: center;
         gap: 30px;
     }
-
     .profile-text {
-        display: flex;
-        flex-direction: column;
         align-items: center;
     }
-
-
-
     .profile-image {
         width: 280px;
         height: 280px;
+        transform: scale(1);
     }
-
     .profile-text h1 {
         font-size: 2.5rem;
-    }
-
-    .robot-decoration {
-        width: 80px;
-        height: 80px;
-        right: 0;
     }
 }
