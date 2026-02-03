@@ -20,6 +20,7 @@ const Projects: React.FC = () => {
                     image={bestAnswerImg}
                     tags={['UI Design', 'AI', 'Multi-Agent Systems', 'Generative AI Orchestration', 'Real-Time Consensus Algorithms']}
                     webLink="https://best-answer--rahulbonala06.replit.app/"
+                    reverse={true}
                     fullDetails={
                         <div>
                             <h3>Project Overview</h3>

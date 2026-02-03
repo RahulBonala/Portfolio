@@ -54,46 +54,77 @@ const AboutMe: React.FC = () => {
                         <h3>Skills & Expertise</h3>
 
                         <div className="skills-category">
+                            <h4>Design & Prototyping</h4>
+                            <div className="skill-tags">
+                                <span>Figma (Advanced)</span>
+                                <span>Adobe XD</span>
+                                <span>Sketch</span>
+                                <span>Photoshop</span>
+                                <span>Framer</span>
+                                <span>Webflow</span>
+                                <span>Lottie</span>
+                                <span>Miro</span>
+                                <span>Loveable</span>
+                            </div>
+                        </div>
+
+                        <div className="skills-category">
+                            <h4>UI Strategy & Research</h4>
+                            <div className="skill-tags">
+                                <span>Design Systems</span>
+                                <span>Information Architecture (IA)</span>
+                                <span>Interaction Design</span>
+                                <span>Micro-interactions</span>
+                                <span>End-to-End Prototyping</span>
+                                <span>WCAG Accessibility</span>
+                                <span>User Research</span>
+                                <span>Usability Testing</span>
+                                <span>Complex Data Visualization</span>
+                                <span>Journey Mapping</span>
+                            </div>
+                        </div>
+
+                        <div className="skills-category">
+                            <h4>Technical & Development</h4>
+                            <div className="skill-tags">
+                                <span>HTML/CSS</span>
+                                <span>Java</span>
+                                <span>Python</span>
+                                <span>JSF</span>
+                                <span>PrimeFaces</span>
+                                <span>Git</span>
+                                <span>Storybook (Concepts)</span>
+                            </div>
+                        </div>
+
+                        <div className="skills-category">
                             <h4>AI & Emerging Tech</h4>
                             <div className="skill-tags">
                                 <span>AI-Native Workflows</span>
-                                <span>Prompt Engineering</span>
-                                <span>Python</span>
-                                <span>Framer</span>
-                                <span>Webflow</span>
+                                <span>Prompt Engineering (Copilot, Gemini, ChatGPT, Claude, Midjourney)</span>
+                                <span>Figma AI</span>
+                                <span>Antigravity</span>
                             </div>
                         </div>
 
                         <div className="skills-category">
-                            <h4>Design Tools</h4>
+                            <h4>Methodologies & Domain</h4>
                             <div className="skill-tags">
-                                <span>Figma</span>
-                                <span>Sketch</span>
-                                <span>Adobe XD</span>
-                                <span>Photoshop</span>
+                                <span>Agile/Scrum</span>
+                                <span>SDLC</span>
+                                <span>Design Thinking</span>
+                                <span>SaaS Product Design</span>
+                                <span>Control Tower Interfaces</span>
+                                <span>Cross-Functional Leadership</span>
                             </div>
                         </div>
 
                         <div className="skills-category">
-                            <h4>Web Technologies</h4>
+                            <h4>Project Tools</h4>
                             <div className="skill-tags">
-                                <span>HTML</span>
-                                <span>CSS</span>
-                                <span>Java</span>
-                                <span>React</span>
-                                <span>JavaScript</span>
-                            </div>
-                        </div>
-
-                        <div className="skills-category">
-                            <h4>Core Areas</h4>
-                            <div className="skill-tags">
-                                <span>User Experience Design</span>
-                                <span>Information Architecture</span>
-                                <span>Accessibility (WCAG)</span>
-                                <span>User Research</span>
-                                <span>Prototyping</span>
-                                <span>Wireframing</span>
+                                <span>Jira</span>
+                                <span>Confluence</span>
+                                <span>MS Office</span>
                             </div>
                         </div>
                     </div>
