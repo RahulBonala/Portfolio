@@ -1,9 +1,10 @@
-/* Add to existing styles or create new App.css */
+/* Scroll-reveal animation */
 .fade-in-section {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  will-change: opacity, visibility;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 .fade-in-section.visible {
@@ -11,15 +12,31 @@
   transform: none;
 }
 
+/* Footer */
 .footer {
-  background-color: #333;
+  background-color: #1a1a2e;
   color: var(--white);
-  padding: 30px 0;
+  padding: 40px 0;
   text-align: center;
 }
 
 .footer p {
   margin-bottom: 10px;
   font-size: 0.9rem;
-  color: #ccc;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.footer p:last-child {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 30px 0;
+  }
+
+  .footer p {
+    font-size: 0.8rem;
+  }
 }

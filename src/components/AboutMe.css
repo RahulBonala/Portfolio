@@ -12,7 +12,7 @@
 }
 
 .about-column h3 {
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
     margin-bottom: 30px;
     color: var(--primary-color);
     border-bottom: 2px solid #eee;
@@ -23,6 +23,11 @@
     margin-bottom: 30px;
     padding-left: 20px;
     border-left: 3px solid var(--secondary-color);
+    transition: border-color 0.3s ease;
+}
+
+.experience-item:hover {
+    border-left-color: var(--primary-color);
 }
 
 .experience-item h4 {
@@ -46,6 +51,7 @@
 
 .experience-item li {
     margin-bottom: 5px;
+    line-height: 1.6;
 }
 
 .skills-category {
@@ -67,22 +73,51 @@
 .skill-tags span {
     background: #f5f5f5;
     padding: 8px 16px;
-    border-radius: 5px;
+    border-radius: 8px;
     font-size: 0.95rem;
     color: var(--text-color);
     border: 1px solid #eee;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: default;
 }
 
 .skill-tags span:hover {
     background: var(--primary-color);
     color: var(--white);
     border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 86, 179, 0.2);
 }
 
+/* Tablet */
 @media (max-width: 768px) {
     .about-content {
         flex-direction: column;
         gap: 40px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .about-column h3 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+    }
+
+    .experience-item h4 {
+        font-size: 1.05rem;
+    }
+
+    .experience-item {
+        padding-left: 15px;
+    }
+
+    .skill-tags span {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .skills-category h4 {
+        font-size: 1rem;
     }
 }

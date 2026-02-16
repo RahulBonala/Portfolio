@@ -81,7 +81,7 @@ const ProfileSection: React.FC = () => {
                     <a href="#projects" className="cta-button">View My Work</a>
                 </div>
                 <div className="profile-image-container">
-                    <img src={profileImg} alt="Sri Sai Rahul Bonala" className="profile-image" />
+                    <img src={profileImg} alt="Sri Sai Rahul Bonala" className="profile-image" loading="eager" fetchPriority="high" />
                     {/* <div className="robot-decoration">
                         <img src={robotImg} alt="Robot Mascot" />
                     </div> */}

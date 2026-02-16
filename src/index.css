@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #0056b3; /* Blue from Dosth/Waggle */
-  --secondary-color: #f0ad4e; /* Orange/Gold from Bar/Waggle */
+  --primary-color: #0056b3;
+  --secondary-color: #f0ad4e;
   --text-color: #333;
   --bg-color: #f9f9f9;
   --white: #ffffff;
@@ -24,6 +24,7 @@ body {
   background-color: var(--bg-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 a {
@@ -42,6 +43,11 @@ button {
   font-family: inherit;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 /* Utility Classes */
 .container {
   max-width: 1200px;
@@ -51,11 +57,11 @@ button {
 
 .section {
   padding: 80px 0;
-  scroll-margin-top: 80px; /* For sticky header */
+  scroll-margin-top: 80px;
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
   margin-bottom: 40px;
   text-align: center;
   color: var(--primary-color);
@@ -77,4 +83,35 @@ button {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* --- Reduced Motion Support --- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- Small Mobile --- */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+
+  .section {
+    padding: 50px 0;
+  }
+
+  .section-title {
+    margin-bottom: 25px;
+  }
 }

@@ -14,7 +14,7 @@
 }
 
 .contact-info h3 {
-    font-size: 1.8rem;
+    font-size: clamp(1.4rem, 3vw, 1.8rem);
     margin-bottom: 20px;
     color: var(--text-color);
 }
@@ -22,6 +22,7 @@
 .contact-info p {
     margin-bottom: 30px;
     color: #666;
+    line-height: 1.7;
 }
 
 .info-item {
@@ -30,15 +31,25 @@
     gap: 15px;
     margin-bottom: 20px;
     font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.info-item:hover {
+    background-color: rgba(0, 86, 179, 0.04);
 }
 
 .info-item .icon {
     font-size: 1.5rem;
 }
 
+.info-item a {
+    transition: color 0.3s ease;
+}
+
 .info-item a:hover {
     color: var(--primary-color);
-    text-decoration: underline;
 }
 
 .contact-form {
@@ -47,6 +58,11 @@
     padding: 40px;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.contact-form:hover {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
 
 .form-group {
@@ -63,18 +79,21 @@
 .form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 14px 16px;
+    border: 2px solid #eee;
+    border-radius: 10px;
     font-family: inherit;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: #fafafa;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+    background: var(--white);
 }
 
 .submit-btn {
@@ -82,19 +101,31 @@
     padding: 15px;
     background-color: var(--primary-color);
     color: var(--white);
-    border-radius: 8px;
+    border-radius: 10px;
     font-weight: 600;
     font-size: 1rem;
-    transition: background-color 0.3s ease;
+    min-height: 44px;
+    transition: background-color 0.3s ease,
+        transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 0.3s ease;
 }
 
 .submit-btn:hover {
     background-color: #004494;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 86, 179, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
 }
 
 .submit-btn:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -104,5 +135,27 @@
 
     .contact-form {
         padding: 30px;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .contact-form {
+        padding: 20px;
+        border-radius: 16px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 12px 14px;
+        font-size: 0.95rem;
+    }
+
+    .contact-info h3 {
+        font-size: 1.3rem;
+    }
+
+    .info-item {
+        font-size: 0.95rem;
     }
 }

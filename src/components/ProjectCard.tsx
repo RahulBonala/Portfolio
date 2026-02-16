@@ -29,7 +29,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
     return (
         <div className={`project-card ${reverse ? 'reverse' : ''}`}>
             <div className="project-image-wrapper">
-                <img src={image} alt={title} className="project-image" />
+                <img src={image} alt={title} className="project-image" loading="lazy" decoding="async" />
             </div>
             <div className="project-content">
                 <h3 className="project-title">{title}</h3>
