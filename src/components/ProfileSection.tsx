@@ -64,7 +64,7 @@ const ProfileSection: React.FC = () => {
                 <div className="profile-text">
 
                     <h1>I'm Sri Sai Rahul Bonala</h1>
-                    <h2>Experience Designer</h2>
+                    <h2>Product Designer</h2>
                     <p>
                         Product Designer (UI/UX & Developer) with 3+ years of experience unifying
                         design strategy and technical execution to build scalable, AI-native

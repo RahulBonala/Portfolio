@@ -28,8 +28,25 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
     return (
         <div className={`project-card ${reverse ? 'reverse' : ''}`}>
-            <div className="project-image-wrapper">
-                <img src={image} alt={title} className="project-image" loading="lazy" decoding="async" />
+            <div className="project-image-column">
+                <div className="project-image-wrapper">
+                    <img src={image} alt={title} className="project-image" loading="lazy" decoding="async" />
+                </div>
+
+                {(link || webLink) && (
+                    <div className="project-link-container center-links">
+                        {link && (
+                            <a href={link} target="_blank" rel="noopener noreferrer" className="project-link-btn">
+                                View Live Prototype
+                            </a>
+                        )}
+                        {webLink && (
+                            <a href={webLink} target="_blank" rel="noopener noreferrer" className="project-link-btn">
+                                View Live Website
+                            </a>
+                        )}
+                    </div>
+                )}
             </div>
             <div className="project-content">
                 <h3 className="project-title">{title}</h3>
@@ -45,21 +62,6 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
                 <div className={`project-details ${isExpanded ? 'expanded' : ''}`}>
                     {fullDetails}
-
-                    {(link || webLink) && (
-                        <div className="project-link-container">
-                            {link && (
-                                <a href={link} target="_blank" rel="noopener noreferrer" className="project-link-btn">
-                                    View Figma Prototype
-                                </a>
-                            )}
-                            {webLink && (
-                                <a href={webLink} target="_blank" rel="noopener noreferrer" className="project-link-btn">
-                                    View Live Website
-                                </a>
-                            )}
-                        </div>
-                    )}
                 </div>
 
                 <button

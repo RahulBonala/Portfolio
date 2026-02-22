@@ -14,12 +14,12 @@ const Projects: React.FC = () => {
                 <h2 className="section-title">Featured Projects</h2>
 
                 <ProjectCard
-                    title="BestAnswer.ai"
+                    title="Bestanswers.ai"
                     subtitle="(GenAI Multi-Agent System using Llama 3)"
                     description="BestAnswer.ai is a next-generation intelligence engine that eliminates AI hallucination by convening a 'Roundtable' of four distinct AI personas to debate every user query. It transforms the solitary act of searching into a transparent, multi-perspective consensus event."
                     image={bestAnswerImg}
                     tags={['UI Design', 'AI', 'Multi-Agent Systems', 'Generative AI Orchestration', 'Real-Time Consensus Algorithms']}
-                    webLink="https://best-answer--rahulbonala06.replit.app/"
+                    webLink="https://bestanswersai.com/"
                     reverse={true}
                     fullDetails={
                         <div>
