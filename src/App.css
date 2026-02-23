@@ -1,7 +1,11 @@
-/* Scroll-reveal animation */
+/* ============================================================
+   APP LAYOUT & SCROLL-REVEAL
+   ============================================================ */
+
+/* ── Section Scroll-Reveal ──────────────────────────────────── */
 .fade-in-section {
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(28px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
     transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
@@ -12,28 +16,35 @@
   transform: none;
 }
 
-/* Footer */
+/* ── Footer ─────────────────────────────────────────────────── */
 .footer {
-  background-color: #1a1a2e;
+  background: #0a0f1e;
   color: var(--white);
-  padding: 40px 0;
+  padding: 48px 0;
   text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .footer p {
-  margin-bottom: 10px;
-  font-size: 0.9rem;
+  margin-bottom: 8px;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.01em;
+}
+
+.footer p:first-child {
   color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
 }
 
 .footer p:last-child {
   margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.35);
 }
 
 @media (max-width: 480px) {
   .footer {
-    padding: 30px 0;
+    padding: 32px 0;
   }
 
   .footer p {
