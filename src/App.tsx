@@ -10,24 +10,44 @@ function App() {
   const mainRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // Once visible, stop observing for better performance
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+    const sections = mainRef.current?.querySelectorAll<HTMLElement>('.section');
+    if (!sections) return;
 
-    // Use ref-based querying instead of document.querySelectorAll
-    const sections = mainRef.current?.querySelectorAll('.section');
-    sections?.forEach((section, index) => {
+    // Add base class to all sections
+    sections.forEach((section) => {
       section.classList.add('fade-in-section');
-      // Add stagger delay based on section index
-      (section as HTMLElement).style.transitionDelay = `${index * 0.1}s`;
-      observer.observe(section);
     });
+
+    // Bidirectional IntersectionObserver:
+    // - When entering from bottom  → add "visible", remove "exit-top"
+    // - When exiting through top   → add "exit-top", remove "visible"
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const el = entry.target as HTMLElement;
+          if (entry.isIntersecting) {
+            el.classList.add('visible');
+            el.classList.remove('exit-top');
+          } else {
+            // Determine if it exited through the top
+            const rect = entry.boundingClientRect;
+            if (rect.top < 0) {
+              el.classList.add('exit-top');
+              el.classList.remove('visible');
+            } else {
+              // Exited through the bottom (scrolled back up past it)
+              el.classList.remove('visible', 'exit-top');
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
 
     return () => observer.disconnect();
   }, []);
@@ -44,7 +64,7 @@ function App() {
       <footer className="footer">
         <div className="container">
           <p>&copy; {new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
-          <p>Designed & Built with ❤️</p>
+          <p>Designed &amp; Built with ❤️</p>
         </div>
       </footer>
     </div>

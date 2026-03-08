@@ -2,23 +2,28 @@ import React, { useState, useEffect, useCallback } from 'react';
 import './Header.css';
 
 const Header: React.FC = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('home');
 
+    // Track active section via IntersectionObserver
     useEffect(() => {
-        let ticking = false;
-        const handleScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    setIsScrolled(window.scrollY > 50);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
+        const sectionIds = ['home', 'projects', 'about', 'contact'];
+        const observers: IntersectionObserver[] = [];
 
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        sectionIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const obs = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) setActiveSection(id);
+                },
+                { threshold: 0.4 }
+            );
+            obs.observe(el);
+            observers.push(obs);
+        });
+
+        return () => observers.forEach(o => o.disconnect());
     }, []);
 
     const scrollToSection = useCallback((id: string) => {
@@ -36,53 +41,90 @@ const Header: React.FC = () => {
     // Close menu on Escape key
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && isMenuOpen) {
-                setIsMenuOpen(false);
-            }
+            if (e.key === 'Escape' && isMenuOpen) setIsMenuOpen(false);
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [isMenuOpen]);
 
-    // Prevent body scroll when menu is open
+    // Prevent body scroll when mobile menu is open
     useEffect(() => {
-        if (isMenuOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
+        document.body.style.overflow = isMenuOpen ? 'hidden' : '';
         return () => { document.body.style.overflow = ''; };
     }, [isMenuOpen]);
 
+    const navLinks = [
+        { id: 'home', label: 'Home' },
+        { id: 'projects', label: 'Projects' },
+        { id: 'about', label: 'About' },
+    ];
+
     return (
-        <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="container header-content">
-                <div className="logo" onClick={() => scrollToSection('home')} role="button" tabIndex={0} aria-label="Go to home">
-                    <h1>Rahul Bonala</h1>
+        <header className="header">
+            <div className="header-pill">
+                {/* Nav links */}
+                <nav className={`nav ${isMenuOpen ? 'open' : ''}`} role="navigation" aria-label="Main navigation">
+                    <ul>
+                        {navLinks.map(({ id, label }) => (
+                            <li
+                                key={id}
+                                className={activeSection === id ? 'active' : ''}
+                                onClick={() => scrollToSection(id)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={e => e.key === 'Enter' && scrollToSection(id)}
+                            >
+                                {label}
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
+
+                {/* Separator */}
+                <span className="nav-separator" aria-hidden="true" />
+
+                {/* Social Icons */}
+                <div className="nav-icons">
+                    <a
+                        href="https://www.linkedin.com/in/rahul-bonala/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="icon-btn"
+                        aria-label="LinkedIn profile"
+                    >
+                        {/* LinkedIn icon */}
+                        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                        </svg>
+                    </a>
+                    <a
+                        href="mailto:rahulbonala2002@gmail.com"
+                        className="icon-btn"
+                        aria-label="Send email"
+                    >
+                        {/* Mail icon */}
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                            <rect x="2" y="4" width="20" height="16" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                    </a>
                 </div>
 
+                {/* Hamburger — mobile only */}
                 <button
                     className={`hamburger ${isMenuOpen ? 'active' : ''}`}
                     onClick={toggleMenu}
                     aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
                     aria-expanded={isMenuOpen}
                 >
-                    <span className="hamburger-line"></span>
-                    <span className="hamburger-line"></span>
-                    <span className="hamburger-line"></span>
+                    <span className="hamburger-line" />
+                    <span className="hamburger-line" />
+                    <span className="hamburger-line" />
                 </button>
-
-                {isMenuOpen && <div className="nav-overlay" onClick={() => setIsMenuOpen(false)} />}
-
-                <nav className={`nav ${isMenuOpen ? 'open' : ''}`} role="navigation" aria-label="Main navigation">
-                    <ul>
-                        <li onClick={() => scrollToSection('home')} role="button" tabIndex={0}>Home</li>
-                        <li onClick={() => scrollToSection('projects')} role="button" tabIndex={0}>Projects</li>
-                        <li onClick={() => scrollToSection('about')} role="button" tabIndex={0}>About Me</li>
-                        <li onClick={() => scrollToSection('contact')} role="button" tabIndex={0}>Contact</li>
-                    </ul>
-                </nav>
             </div>
+
+            {/* Mobile overlay */}
+            {isMenuOpen && <div className="nav-overlay" onClick={() => setIsMenuOpen(false)} />}
         </header>
     );
 };

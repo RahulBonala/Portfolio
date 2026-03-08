@@ -1,0 +1,118 @@
+/* ============================================================
+   SKILLS TICKER — Seamless infinite horizontal scroll
+   ============================================================ */
+
+.skills-ticker {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    padding: 18px 0 32px;
+    margin-top: 8px;
+}
+
+/* Gradient fade masks on both edges */
+.ticker-fade-left,
+.ticker-fade-right {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 140px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.ticker-fade-left {
+    left: 0;
+    background: linear-gradient(to right, var(--bg-color) 0%, transparent 100%);
+}
+
+.ticker-fade-right {
+    right: 0;
+    background: linear-gradient(to left, var(--bg-color) 0%, transparent 100%);
+}
+
+/*
+  Track is tripled: [copy1 | copy2 | copy3]
+  Animate from 0 → -33.333% (exactly one copy width),
+  then CSS resets to 0. Perfectly seamless.
+*/
+.ticker-track {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    /* Duration tuned so speed feels comfortable */
+    animation: tickerScroll 35s linear infinite;
+    will-change: transform;
+}
+
+.ticker-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes tickerScroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-33.3333%);
+    }
+}
+
+/* Each skill item: dot · SKILL */
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    color: var(--text-muted);
+    white-space: nowrap;
+    cursor: default;
+    transition: color 0.2s ease;
+    padding: 0 4px;
+}
+
+.ticker-item:hover {
+    color: var(--primary-color);
+}
+
+/* Dot separator that precedes each item */
+.ticker-dot {
+    display: inline-block;
+    margin-right: 18px;
+    margin-left: 18px;
+    color: rgba(99, 102, 241, 0.4);
+    font-size: 1.1rem;
+    font-weight: 400;
+    vertical-align: middle;
+    line-height: 1;
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+    .ticker-track {
+        animation: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .skills-ticker {
+        padding: 14px 0 24px;
+    }
+
+    .ticker-item {
+        font-size: 0.8rem;
+    }
+
+    .ticker-dot {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+
+    .ticker-fade-left,
+    .ticker-fade-right {
+        width: 70px;
+    }
+}

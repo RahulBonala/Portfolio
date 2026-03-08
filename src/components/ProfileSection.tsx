@@ -1,6 +1,7 @@
 import React from 'react';
 import './ProfileSection.css';
 import profileImg from '../assets/profile-headshot.jpg';
+import SkillsTicker from './SkillsTicker';
 
 const ProfileSection: React.FC = () => {
     return (
@@ -104,6 +105,11 @@ const ProfileSection: React.FC = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            {/* Skills Ticker */}
+            <div className="profile-ticker-wrapper">
+                <SkillsTicker />
             </div>
 
             {/* Scroll indicator */}
