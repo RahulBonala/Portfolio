@@ -175,3 +175,25 @@ img {
     margin-bottom: 10px;
   }
 }
+
+/* ── Section Eyebrow Pill (global utility) ──────────────────── */
+.section-eyebrow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 100px;
+  padding: 5px 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}

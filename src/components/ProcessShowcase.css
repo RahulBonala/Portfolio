@@ -1,0 +1,336 @@
+/* ============================================================
+   PROCESS SHOWCASE — Double Diamond Design Process
+   ============================================================ */
+
+.process-section {
+  background: var(--bg-color);
+  overflow: hidden;
+}
+
+.section-eyebrow {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(99, 102, 241, 0.08);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 100px;
+  padding: 5px 16px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary-color);
+}
+
+/* ── Step Progress Tracker ─────────────────────────────────── */
+.step-track {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 48px auto 44px;
+  max-width: 780px;
+  position: relative;
+}
+
+/* Connector line between nodes */
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: #e2e8f0;
+  margin-top: 28px;
+  border-radius: 2px;
+  transition: background 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.step-connector::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--primary-light), #8b5cf6);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.step-connector.passed::after {
+  transform: scaleX(1);
+}
+
+/* Each step node */
+.step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  flex-shrink: 0;
+  width: 88px;
+  transition: transform 0.2s ease;
+}
+
+.step-node:hover {
+  transform: translateY(-2px);
+}
+
+/* Number badge — the main circle */
+.step-number-badge {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  color: #94a3b8;
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  z-index: 1;
+}
+
+.step-node.completed .step-number-badge {
+  background: var(--step-color);
+  border-color: var(--step-color);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.step-node.active .step-number-badge {
+  background: var(--step-color);
+  border-color: var(--step-color);
+  color: #fff;
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--step-color) 18%, transparent),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+  transform: scale(1.1);
+}
+
+/* Icon below the badge */
+.step-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.step-node.active .step-icon,
+.step-node.completed .step-icon {
+  color: var(--step-color);
+}
+
+/* Text label */
+.step-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  transition: color 0.3s ease;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.step-node.active .step-label {
+  color: var(--step-color);
+}
+
+.step-node.completed .step-label {
+  color: #64748b;
+}
+
+/* ── Process Card ──────────────────────────────────────────── */
+.process-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.06);
+  max-width: 860px;
+  margin: 0 auto;
+  animation: cardReveal 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  border-top: 3px solid var(--step-color, var(--primary-color));
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.process-card-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.process-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--step-color, var(--primary-color)) 12%, white);
+  color: var(--step-color, var(--primary-color));
+  flex-shrink: 0;
+}
+
+.process-phase-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--step-color, var(--primary-color));
+  margin-bottom: 4px;
+}
+
+.process-card-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--text-color);
+  letter-spacing: -0.01em;
+}
+
+.process-card-detail {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #475569;
+  margin-bottom: 28px;
+}
+
+.process-card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.process-row-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.process-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.process-chip {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.process-outcome {
+  background: #f8fafc;
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #e2e8f0;
+}
+
+.process-outcome-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #334155;
+  font-weight: 500;
+}
+
+/* ── Nav Dots ───────────────────────────────────────────────── */
+.process-nav {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.process-nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.process-nav-dot.active {
+  background: var(--primary-color);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ── Responsive fixes for step tracker ─────────────────────── */
+@media (max-width: 768px) {
+  .step-track {
+    max-width: 100%;
+    margin: 36px auto 32px;
+    padding: 0 8px;
+  }
+
+  .step-node {
+    width: 68px;
+    gap: 6px;
+  }
+
+  .step-number-badge {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    font-size: 0.72rem;
+  }
+
+  .step-icon {
+    display: none;
+  }
+
+  .step-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.04em;
+  }
+}
+
+@media (max-width: 420px) {
+  .step-node {
+    width: 56px;
+  }
+
+  .step-number-badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    font-size: 0.68rem;
+  }
+
+  .step-label {
+    font-size: 0.58rem;
+  }
+}

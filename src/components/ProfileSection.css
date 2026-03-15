@@ -707,3 +707,20 @@
         display: none;
     }
 }
+
+/* ── Resume CTA Button ────────────────────────────────────── */
+.cta-resume {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px dashed #cbd5e1;
+  font-size: 0.88rem;
+  padding: 13px 22px;
+  gap: 7px;
+}
+
+.cta-resume:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  background: rgba(79, 70, 229, 0.04);
+  transform: translateY(-1px);
+}

@@ -2,8 +2,6 @@
    APP LAYOUT & SCROLL-REVEAL
    ============================================================ */
 
-/* ── Section Scroll-Reveal ──────────────────────────────────── */
-/* Sections start invisible & translated down */
 .fade-in-section {
   opacity: 0;
   transform: translateY(40px);
@@ -12,13 +10,11 @@
   will-change: opacity, transform;
 }
 
-/* Entering viewport → slide up & fade in */
 .fade-in-section.visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Exiting top of viewport → slide up & fade out */
 .fade-in-section.exit-top {
   opacity: 0;
   transform: translateY(-30px);
@@ -30,34 +26,64 @@
 .footer {
   background: #0a0f1e;
   color: var(--white);
-  padding: 48px 0;
+  padding: 56px 0 40px;
   text-align: center;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.footer p {
-  margin-bottom: 8px;
+.footer-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.01em;
+}
+
+.footer-role {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.footer-links a {
   font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.01em;
-}
-
-.footer p:first-child {
-  color: rgba(255, 255, 255, 0.7);
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.2s ease;
 }
 
-.footer p:last-child {
-  margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.35);
+.footer-links a:hover {
+  color: var(--primary-light);
+}
+
+.footer-dot {
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.7rem;
+}
+
+.footer-copy {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.01em;
 }
 
 @media (max-width: 480px) {
   .footer {
-    padding: 32px 0;
-  }
-
-  .footer p {
-    font-size: 0.8rem;
+    padding: 40px 0 28px;
   }
 }
