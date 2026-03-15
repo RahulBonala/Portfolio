@@ -18,7 +18,7 @@ const ProfileSection: React.FC = () => {
                 {/* ── LEFT: Text Column ── */}
                 <div className="profile-text">
                     <div className="hero-eyebrow">
-                        <span className="eyebrow-dot" />
+                        <span className="eyebrow-dot" aria-hidden="true" />
                         <span>Available for opportunities</span>
                     </div>
 
@@ -28,7 +28,7 @@ const ProfileSection: React.FC = () => {
                     </h1>
 
                     <div className="role-badge">
-                        <span className="role-icon">✦</span>
+                        <span className="role-icon" aria-hidden="true">✦</span>
                         <h2>Product Designer</h2>
                     </div>
 
@@ -39,10 +39,10 @@ const ProfileSection: React.FC = () => {
                     </p>
 
                     <div className="hero-badges">
-                        <span className="badge"><span>🎯</span> 95% CSAT</span>
-                        <span className="badge"><span>⚡</span> 90% Faster Workflows</span>
-                        <span className="badge"><span>🤖</span> AI-Native</span>
-                        <span className="badge"><span>♿</span> WCAG</span>
+                        <span className="badge"><span aria-hidden="true">🎯</span> 95% CSAT</span>
+                        <span className="badge"><span aria-hidden="true">⚙️</span> 80% Faster Maintenance</span>
+                        <span className="badge"><span aria-hidden="true">🤖</span> 90% Less Manual Work</span>
+                        <span className="badge"><span aria-hidden="true">♿</span> WCAG 2.1 AA</span>
                     </div>
 
                     <div className="hero-tools">
@@ -76,7 +76,7 @@ const ProfileSection: React.FC = () => {
                 <div className="profile-image-wrapper">
                     {/* Floating stat chips — clipped to this column only */}
                     <div className="stat-chip chip-top-left">
-                        <span className="chip-icon">🎨</span>
+                        <span className="chip-icon" aria-hidden="true">🎨</span>
                         <div>
                             <strong>3+ Years</strong>
                             <span>Experience</span>
@@ -84,7 +84,7 @@ const ProfileSection: React.FC = () => {
                     </div>
 
                     <div className="stat-chip chip-top-right">
-                        <span className="chip-icon">🌍</span>
+                        <span className="chip-icon" aria-hidden="true">🌍</span>
                         <div>
                             <strong>Global</strong>
                             <span>Reach</span>

@@ -24,14 +24,34 @@ interface ProjectCardProps {
   figmaLink?: string;
   category?: string;
   index?: number;
+  isScreenshot?: boolean;
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({
   title, subtitle, description, image, tags, fullDetails,
-  link, webLink, reverse, metrics, phases, role, problem, solution, figmaLink, category, index = 0
+  link, webLink, reverse, metrics, phases, role, problem, solution, figmaLink, category, index = 0, isScreenshot
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showFigma, setShowFigma] = useState(false);
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.currentTarget;
+    img.style.display = 'none';
+    const wrapper = img.parentElement;
+    if (wrapper && !wrapper.querySelector('.img-fallback')) {
+      const fallback = document.createElement('div');
+      fallback.className = 'img-fallback';
+      fallback.innerHTML = `
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+        <span>${title}</span>
+      `;
+      wrapper.appendChild(fallback);
+    }
+  };
 
   return (
     <article className={`project-card ${reverse ? 'reverse' : ''}`} style={{ '--card-index': index } as React.CSSProperties}>
@@ -48,9 +68,12 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             <img 
               src={image} 
               alt={`${title} — product screenshot and interface preview`} 
-              className="project-image" 
+              className={`project-image ${isScreenshot ? 'screenshot' : ''}`} 
               loading="lazy" 
               decoding="async" 
+              width="600"
+              height="400"
+              onError={handleImageError}
             />
             <div className="project-image-overlay">
               {figmaLink && (
@@ -93,7 +116,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {(link || webLink) && (
             <div className="project-link-container">
               {link && (
-                <a href={link} target="_blank" rel="noopener noreferrer" className="project-link-btn btn-outline">
+                <a href={link} target="_blank" rel="noopener noreferrer" className="project-link-btn btn-outline" title={`View ${title} interactive prototype in Figma`} aria-label={`View ${title} live prototype in Figma (opens in new tab)`}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
                     <polyline points="15 3 21 3 21 9"/>
@@ -103,7 +126,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 </a>
               )}
               {webLink && (
-                <a href={webLink} target="_blank" rel="noopener noreferrer" className="project-link-btn btn-primary">
+                <a href={webLink} target="_blank" rel="noopener noreferrer" className="project-link-btn btn-primary" title={`Open ${title} live website`} aria-label={`Visit ${title} live website (opens in new tab)`}>
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="10"/>
                     <line x1="2" y1="12" x2="22" y2="12"/>

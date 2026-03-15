@@ -45,7 +45,7 @@ const timelineItems = [
       'Redesigned Service Console Interface → 80% maintenance time reduction',
       'Global CSAT uplift to 95% across Europe, APAC, North America, Middle East',
       'Automated Python pipeline → reduced 6-hour reports to 15 minutes',
-      'Complete UI redesign in Java/HTML/CSS → 40% increase in positive feedback',
+      'Complete UI redesign in Java/HTML/CSS → 40% increase in positive feedback during FY25',
       '3 usability tests → 70% fewer customer support requests',
       'Led client sessions in Wiesbaden, Germany for product adoption',
     ],
@@ -74,7 +74,9 @@ const AboutMe: React.FC = () => {
           <span className="eyebrow-pill">About</span>
         </div>
         <h2 className="section-title">The Person Behind the Work</h2>
-        <p className="section-subtitle">AI-Native Product Designer bridging design strategy and technical execution.</p>
+        <p className="section-subtitle">
+          AI-native designer and developer — 3+ years bridging strategy, design, and technical execution.
+        </p>
 
         <div className="about-grid">
           {/* ── LEFT: Timeline ── */}

@@ -18,7 +18,7 @@ const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';    // e.g. 'abcDEFghiJKL'
 
 const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
-  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '', _gotcha: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [focusedField, setFocusedField] = useState<string | null>(null);
 
@@ -28,6 +28,13 @@ const Contact: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Bot detection — if honeypot is filled, silently reject
+    if (formData._gotcha) {
+      setStatus('success'); // Fake success to fool bots
+      return;
+    }
+
     setStatus('sending');
 
     try {
@@ -38,7 +45,7 @@ const Contact: React.FC = () => {
         EMAILJS_PUBLIC_KEY
       );
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', subject: '', message: '', _gotcha: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (err) {
       console.error('EmailJS error:', err);
@@ -55,7 +62,7 @@ const Contact: React.FC = () => {
         </div>
         <h2 className="section-title">Let's Build Something Together</h2>
         <p className="section-subtitle">
-          Open to full-time roles, freelance projects, and design collaborations.
+          Open to full-time roles, freelance collaborations, and meaningful conversations.
         </p>
 
         <div className="contact-grid">
@@ -87,7 +94,7 @@ const Contact: React.FC = () => {
                 <span className="clc-arrow">→</span>
               </a>
 
-              <a href="https://linkedin.com/in/rahul-bonala" target="_blank" rel="noopener noreferrer" className="contact-link-card">
+              <a href="https://www.linkedin.com/in/rahul-bonala/" target="_blank" rel="noopener noreferrer" className="contact-link-card">
                 <div className="clc-icon">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452z"/>
@@ -128,6 +135,7 @@ const Contact: React.FC = () => {
                       onFocus={() => setFocusedField('name')}
                       onBlur={() => setFocusedField(null)}
                       required placeholder="Your full name"
+                      autoComplete="name"
                     />
                   </div>
                   <div className={`form-field ${focusedField === 'email' ? 'focused' : ''} ${formData.email ? 'filled' : ''}`}>
@@ -138,6 +146,8 @@ const Contact: React.FC = () => {
                       onFocus={() => setFocusedField('email')}
                       onBlur={() => setFocusedField(null)}
                       required placeholder="you@company.com"
+                      autoComplete="email"
+                      inputMode="email"
                     />
                   </div>
                 </div>
@@ -174,6 +184,20 @@ const Contact: React.FC = () => {
                     ⚠ Something went wrong. Please try emailing directly at rahulbonala2002@gmail.com
                   </div>
                 )}
+
+                {/* Honeypot — hidden from humans, filled by bots */}
+                <div className="form-honeypot" aria-hidden="true">
+                  <label htmlFor="_gotcha">Leave this field empty</label>
+                  <input
+                    type="text"
+                    id="_gotcha"
+                    name="_gotcha"
+                    value={formData._gotcha}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
 
                 <button type="submit" className="submit-btn" disabled={status === 'sending'}>
                   {status === 'sending' ? (

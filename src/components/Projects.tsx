@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import ProjectCard from './ProjectCard';
 import './Projects.css';
-import dosthImg from '../assets/dosth.png';
-import barImg from '../assets/bar-app.png';
-import waggleImg from '../assets/waggle-app.png';
-import byocImg from '../assets/byoc-logo.png';
-import iupgradeImg from '../assets/iupgrade-logo.png';
-import bestAnswerImg from '../assets/bestanswer-logo.png';
+import dosthImg from '../assets/dosth.webp';
+import barImg from '../assets/bar-app.webp';
+import waggleImg from '../assets/waggle-app.webp';
+import byocImg from '../assets/byoc-logo.webp';
+import iupgradeImg from '../assets/iupgrade-logo.webp';
+import bestAnswerImg from '../assets/bestanswer-logo.webp';
 
 const allProjects = [
   {
@@ -104,6 +104,7 @@ const allProjects = [
     problem: 'Users waste time finding repair shops, face opaque surge pricing during rush hours, and have no easy way to donate surplus food.',
     solution: 'On-Demand Repair Hub + Propose Pay emergency travel (user sets the fare) + Community Food Donation connector.',
     figmaLink: 'http://figma.com/make/kVFaUs3rBUt6CtzwlCzHCb/Dosth-App-Prototype?node-id=0-1&p=f&fullscreen=1',
+    isScreenshot: true,
     fullDetails: (
       <div>
         <h3>The Problem</h3>
@@ -142,6 +143,7 @@ const allProjects = [
     problem: 'High entry cost, physical storage risks (theft, purity), and no purpose-driven savings tools for life events like weddings.',
     solution: 'Micro-investing from ₹10, goal-based wealth building with automated SIPs, and a trusted digital-to-physical ecosystem.',
     figmaLink: 'https://www.figma.com/make/X9Zdh1fZaQWWpaV9n8AyX6/Bar-App?node-id=0-1&p=f&fullscreen=1',
+    isScreenshot: true,
     fullDetails: (
       <div>
         <h3>The Problem</h3>
@@ -217,6 +219,7 @@ const allProjects = [
     problem: 'Trust barrier with strangers, scheduling inflexibility, and owner anxiety about pets left alone.',
     solution: 'Verified profiles, flexible scheduling (near you / recurring), and a seamless search + booking + messaging + payment experience.',
     figmaLink: 'https://www.figma.com/make/4FaGz8I3cnyPdCtSFmGpOm/Waggle-Mobile-App-Design?node-id=0-1&p=f&fullscreen=1',
+    isScreenshot: true,
     fullDetails: (
       <div>
         <h3>The Problem</h3>
@@ -253,7 +256,7 @@ const Projects: React.FC = () => {
         </div>
         <h2 className="section-title">Featured Projects</h2>
         <p className="section-subtitle">
-          End-to-end case studies spanning research, strategy, design, and development.
+          End-to-end case studies — from research and strategy through design and shipped code.
         </p>
 
         {/* Filter Bar */}

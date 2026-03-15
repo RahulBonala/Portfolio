@@ -25,7 +25,7 @@ const SkillsTicker: React.FC = () => {
     const items = [...SKILLS, ...SKILLS, ...SKILLS];
 
     return (
-        <div className="skills-ticker" aria-label="Skills">
+        <div className="skills-ticker" aria-hidden="true" role="presentation">
             <div className="ticker-fade-left" aria-hidden="true" />
             <div className="ticker-fade-right" aria-hidden="true" />
             <div className="ticker-track" aria-hidden="true">

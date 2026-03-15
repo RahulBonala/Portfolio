@@ -67,9 +67,15 @@
 }
 
 .nav-link.active {
-  color: var(--text-color);
+  color: #ffffff;
   font-weight: 700;
-  background: rgba(79, 70, 229, 0.06);
+  background: var(--primary-color);
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+.nav-link.active:hover {
+  background: var(--primary-dark);
+  color: #ffffff;
 }
 
 /* ── Separator ───────────────────────────────────────────── */

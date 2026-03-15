@@ -32,7 +32,8 @@ function App() {
     const sections = mainRef.current?.querySelectorAll<HTMLElement>('.section');
     if (!sections) return;
 
-    sections.forEach((section) => {
+    sections.forEach((section, index) => {
+      if (index === 0) return;
       section.classList.add('fade-in-section');
     });
 
@@ -95,11 +96,17 @@ function App() {
             <div className="footer-links">
               <a href="https://www.linkedin.com/in/rahul-bonala/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
               <span className="footer-dot">·</span>
+              <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <span className="footer-dot">·</span>
               <a href="mailto:rahulbonala2002@gmail.com">Email</a>
               <span className="footer-dot">·</span>
               <a href="#projects">Projects</a>
             </div>
-            <p className="footer-copy">&copy; {new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved. Designed &amp; Built with ❤️</p>
+            <div className="footer-availability">
+              <span className="footer-avail-dot" aria-hidden="true" />
+              <span>Open to full-time opportunities &amp; freelance projects</span>
+            </div>
+            <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved. Designed &amp; Built with ❤️</p>
           </div>
         </div>
       </footer>

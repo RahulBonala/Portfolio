@@ -163,6 +163,15 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    color: var(--primary-color);
+}
+
+@media (forced-colors: active) {
+    .name-highlight {
+        -webkit-text-fill-color: unset;
+        background: none;
+        color: LinkText;
+    }
 }
 
 /* Role badge */
@@ -483,13 +492,6 @@
     animation: chipFloat 6s ease-in-out infinite 0.8s;
 }
 
-.chip-bottom {
-    bottom: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-    animation: chipFloat 5.5s ease-in-out infinite 0.4s;
-}
-
 @keyframes chipFloat {
 
     0%,
@@ -703,18 +705,6 @@
         transform: none;
         animation: none;
         margin-top: 14px;
-    }
-
-    @keyframes chipFloatCentered {
-
-        0%,
-        100% {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-4px);
-        }
     }
 
     .hero-badges {
