@@ -4,6 +4,13 @@ import './Header.css';
 const Header: React.FC = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState('home');
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+      const handleScroll = () => setIsScrolled(window.scrollY > 20);
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     // Track active section via IntersectionObserver
     useEffect(() => {
@@ -58,24 +65,24 @@ const Header: React.FC = () => {
         { id: 'process', label: 'Process' },
         { id: 'projects', label: 'Projects' },
         { id: 'about', label: 'About' },
+        { id: 'contact', label: 'Contact' },
     ];
 
     return (
-        <header className="header">
+        <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
             <div className="header-pill">
                 {/* Nav links */}
                 <nav className={`nav ${isMenuOpen ? 'open' : ''}`} role="navigation" aria-label="Main navigation">
                     <ul>
                         {navLinks.map(({ id, label }) => (
-                            <li
-                                key={id}
-                                className={activeSection === id ? 'active' : ''}
-                                onClick={() => scrollToSection(id)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={e => e.key === 'Enter' && scrollToSection(id)}
-                            >
-                                {label}
+                            <li key={id}>
+                                <button
+                                    className={`nav-link ${activeSection === id ? 'active' : ''}`}
+                                    onClick={() => scrollToSection(id)}
+                                    aria-current={activeSection === id ? 'page' : undefined}
+                                >
+                                    {label}
+                                </button>
                             </li>
                         ))}
                     </ul>

@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: center;
     padding-top: 90px;
-    padding-bottom: 20px;
+    padding-bottom: 0;
     position: relative;
     overflow: hidden;
     background: var(--bg-color);
@@ -243,6 +243,39 @@
     margin-bottom: 32px;
 }
 
+.hero-cta-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 10px;
+}
+
+/* Staggered hero load animation */
+.hero-eyebrow { animation-delay: 0.1s; }
+.profile-text h1 { animation-delay: 0.2s; }
+.role-badge { animation-delay: 0.3s; }
+.hero-tagline { animation-delay: 0.35s; }
+.hero-badges { animation-delay: 0.4s; }
+.hero-tools { animation-delay: 0.45s; }
+.hero-cta-group { animation-delay: 0.5s; }
+
+.hero-eyebrow,
+.profile-text h1,
+.role-badge,
+.hero-tagline,
+.hero-badges,
+.hero-tools,
+.hero-cta-group {
+  opacity: 0;
+  animation: heroChildFade 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroChildFade {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .tools-label {
     font-size: 0.8rem;
     color: #94a3b8;
@@ -428,7 +461,7 @@
 }
 
 .stat-chip span {
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     color: #64748b;
     font-weight: 500;
 }
@@ -511,54 +544,49 @@
 }
 
 /* ── Scroll Indicator ────────────────────────────────────────── */
+.scroll-indicator-wrap {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 12px;
+  margin-top: 8px;
+  position: relative;
+  z-index: 1;
+}
+
 .scroll-indicator {
-    position: absolute;
-    bottom: 28px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    color: #94a3b8;
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    animation: fadeInUp 0.8s ease 0.8s both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  animation: fadeInUp 0.8s ease 0.8s both;
 }
 
 .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, currentColor, transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
+  width: 1px;
+  height: 36px;
+  background: linear-gradient(to bottom, #94a3b8, transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
 }
 
 @keyframes scrollPulse {
-
-    0%,
-    100% {
-        opacity: 0.4;
-        transform: scaleY(1);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scaleY(1.1);
-    }
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.1); }
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-    }
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
+@media (max-width: 600px) {
+  .scroll-indicator-wrap {
+    display: none;
+  }
 }
 
 /* ── Tablet : ≤ 1100px ───────────────────────────────────────── */
@@ -703,9 +731,7 @@
         font-size: 0.88rem;
     }
 
-    .scroll-indicator {
-        display: none;
-    }
+
 }
 
 /* ── Resume CTA Button ────────────────────────────────────── */

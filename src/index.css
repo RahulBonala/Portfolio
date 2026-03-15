@@ -27,6 +27,17 @@
   --text-muted: #64748b;
   --white: #ffffff;
 
+  /* Semantic */
+  --color-success: #10b981;
+  --color-success-bg: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-error: #dc2626;
+  --color-error-bg: #fff7f5;
+  --color-error-border: #fecaca;
+  --color-warning: #f59e0b;
+  --color-warning-bg: #fffbeb;
+  --color-info: #3b82f6;
+
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
   --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
@@ -47,6 +58,24 @@
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-med: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Type Scale ─────────────────────────────────────────────── */
+  --text-xs:   0.75rem;   /* 12px — minimum, use for labels only */
+  --text-sm:   0.875rem;  /* 14px — secondary UI text */
+  --text-base: 1rem;      /* 16px — body copy */
+  --text-md:   1.125rem;  /* 18px — lead paragraphs */
+  --text-lg:   1.25rem;   /* 20px — subheadings */
+  --text-xl:   1.5rem;    /* 24px — section subheadings */
+  --text-2xl:  2rem;      /* 32px — section titles */
+  --text-3xl:  2.5rem;    /* 40px — hero heading */
+  --text-4xl:  3rem;      /* 48px — display */
+
+  /* ── Line Heights ───────────────────────────────────────────── */
+  --leading-tight:  1.25;  /* headings */
+  --leading-snug:   1.4;   /* subheadings */
+  --leading-normal: 1.6;   /* UI text */
+  --leading-relaxed: 1.75; /* body paragraphs */
+  --leading-loose:  1.9;   /* long-form content */
 }
 
 /* ── Reset ──────────────────────────────────────────────────── */
@@ -58,6 +87,30 @@
   padding: 0;
 }
 
+/* ── Focus Visible — WCAG 2.4.7 / 2.4.11 ───────────────────── */
+/* Remove default for mouse users, keep for keyboard users */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Larger offset for interactive components */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 3px;
+  border-radius: 6px;
+  box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.12);
+}
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -65,12 +118,15 @@ html {
 
 body {
   font-family: var(--font-main);
-  line-height: 1.6;
+  line-height: var(--leading-relaxed);
   color: var(--text-color);
   background-color: var(--bg-color);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  font-size: var(--text-base);
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: 100%;
 }
 
 a {
@@ -103,28 +159,41 @@ img {
 }
 
 .section {
-  padding: 96px 0;
+  padding: 80px 0 72px;
   scroll-margin-top: 80px;
 }
 
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0 52px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section {
+    padding: 48px 0 40px;
+  }
+}
+
 .section-title {
-  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
   font-weight: 800;
   margin-bottom: 12px;
   text-align: center;
   color: var(--text-color);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  line-height: var(--leading-tight);
 }
 
 .section-subtitle {
   text-align: center;
   color: var(--text-muted);
-  font-size: 1.05rem;
-  margin-bottom: 56px;
-  max-width: 560px;
+  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+  margin-bottom: 48px;
+  max-width: 520px;
   margin-left: auto;
   margin-right: auto;
-  line-height: 1.7;
+  line-height: var(--leading-relaxed);
 }
 
 /* ── Scrollbar ──────────────────────────────────────────────── */
@@ -158,6 +227,25 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+    transform: none !important;
+  }
+
+  /* Preserve opacity transitions (they don't cause vestibular issues) */
+  .fade-in-section,
+  .fade-in-section.visible {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .blob-1,
+  .blob-2,
+  .eyebrow-dot,
+  .scroll-line,
+  .chip-top-left,
+  .chip-top-right,
+  .chip-bottom {
+    animation: none !important;
   }
 }
 

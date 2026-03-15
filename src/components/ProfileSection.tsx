@@ -94,10 +94,13 @@ const ProfileSection: React.FC = () => {
                     <div className="image-frame">
                         <img
                             src={profileImg}
-                            alt="Sri Sai Rahul Bonala — Product Designer"
+                            alt="Sri Sai Rahul Bonala, Product Designer — professional headshot"
                             className="profile-image"
                             loading="eager"
                             fetchPriority="high"
+                            decoding="sync"
+                            width="380"
+                            height="420"
                         />
                     </div>
 
@@ -120,10 +123,12 @@ const ProfileSection: React.FC = () => {
                 <SkillsTicker />
             </div>
 
-            {/* Scroll indicator */}
-            <div className="scroll-indicator" aria-hidden="true">
-                <div className="scroll-line" />
-                <span>Scroll</span>
+            {/* Scroll indicator — sits above the ticker */}
+            <div className="scroll-indicator-wrap" aria-hidden="true">
+                <div className="scroll-indicator">
+                    <div className="scroll-line" />
+                    <span>Scroll</span>
+                </div>
             </div>
         </section>
     );

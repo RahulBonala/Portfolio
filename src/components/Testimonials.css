@@ -3,7 +3,91 @@
    ============================================================ */
 
 .testimonials-section {
-  background: var(--surface-subtle);
+  background: linear-gradient(160deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+  color: #fff;
+}
+
+/* Invert text colors inside testimonials section */
+.testimonials-section .section-title {
+  color: #f8fafc;
+}
+
+.testimonials-section .section-subtitle {
+  color: rgba(248, 250, 252, 0.65);
+}
+
+.testimonials-section .eyebrow-pill {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #a5b4fc;
+}
+
+.testimonials-section .testimonial-card {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.testimonials-section .testimonial-text {
+  color: rgba(248, 250, 252, 0.85);
+}
+
+.testimonials-section .author-name {
+  color: #f8fafc;
+}
+
+.testimonials-section .author-role {
+  color: rgba(248, 250, 252, 0.5);
+}
+
+.testimonials-section .testimonial-dot {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.testimonials-section .testimonial-dot.active {
+  background: #818cf8;
+}
+
+.testimonials-section .tnav-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.testimonials-section .tnav-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #fff;
+}
+
+.testimonials-section .impact-stats-row {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.testimonials-section .impact-stat {
+  background: transparent;
+}
+
+.testimonials-section .impact-stat:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.testimonials-section .impact-value {
+  color: #a5b4fc;
+}
+
+.testimonials-section .impact-label {
+  color: #f8fafc;
+}
+
+.testimonials-section .impact-sub {
+  color: rgba(248, 250, 252, 0.45);
+}
+
+.testimonials-section .metric-badge {
+  background: rgba(165, 180, 252, 0.15);
+  border-color: rgba(165, 180, 252, 0.3);
+  color: #a5b4fc;
 }
 
 .testimonials-wrapper {
@@ -203,7 +287,7 @@
 }
 
 .impact-sub {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   color: #94a3b8;
   font-weight: 400;
 }

@@ -54,8 +54,9 @@ const Testimonials: React.FC = () => {
         <div className="testimonials-wrapper"
           onMouseEnter={() => setIsAutoPlaying(false)}
           onMouseLeave={() => setIsAutoPlaying(true)}
+          aria-label="Testimonials carousel"
         >
-          <div className="testimonial-card" key={activeIndex}>
+          <div className="testimonial-card" key={activeIndex} aria-live="polite" aria-atomic="true">
             <div className="testimonial-quote-icon" aria-hidden="true">"</div>
             <blockquote className="testimonial-text">
               {testimonials[activeIndex].quote}

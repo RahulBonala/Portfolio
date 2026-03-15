@@ -45,7 +45,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         {/* ── IMAGE COLUMN ── */}
         <div className="project-image-column">
           <div className="project-image-wrapper">
-            <img src={image} alt={title} className="project-image" loading="lazy" decoding="async" />
+            <img 
+              src={image} 
+              alt={`${title} — product screenshot and interface preview`} 
+              className="project-image" 
+              loading="lazy" 
+              decoding="async" 
+            />
             <div className="project-image-overlay">
               {figmaLink && (
                 <button className="overlay-btn" onClick={() => setShowFigma(true)}>

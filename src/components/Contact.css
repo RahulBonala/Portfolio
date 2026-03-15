@@ -3,7 +3,7 @@
    ============================================================ */
 
 .contact-section {
-  background: var(--bg-color);
+  background: var(--surface-subtle);
 }
 
 .contact-grid {
@@ -188,7 +188,7 @@
   font-family: inherit;
   font-size: 0.92rem;
   color: var(--text-color);
-  background: #fafafa;
+  background: var(--surface-subtle);
   transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   outline: none;
 }
@@ -196,6 +196,18 @@
 .form-field input::placeholder,
 .form-field textarea::placeholder {
   color: #cbd5e1;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus,
+.form-field input:focus-visible,
+.form-field textarea:focus-visible,
+.form-field select:focus-visible {
+  outline: none; /* Custom style below overrides */
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15), 0 0 0 1px var(--primary-color);
+  background: #fff;
 }
 
 .form-field.focused input,
