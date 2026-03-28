@@ -118,7 +118,7 @@ const Header: React.FC = () => {
                         </svg>
                     </a>
                     <a
-                        href="https://www.linkedin.com/in/rahul-bonala/"
+                        href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="icon-btn"
