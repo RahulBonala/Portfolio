@@ -6,6 +6,9 @@ import Projects from './components/Projects';
 import Testimonials from './components/Testimonials';
 import AboutMe from './components/AboutMe';
 import Contact from './components/Contact';
+import CourseSection from './components/CourseSection';
+import CourseFab from './components/CourseBanner';
+import CoursePopup from './components/CoursePopup';
 import './App.css';
 
 function App() {
@@ -86,6 +89,7 @@ function App() {
         <Projects />
         <Testimonials />
         <AboutMe />
+        <CourseSection />
         <Contact />
       </main>
       <footer className="footer">
@@ -123,6 +127,8 @@ function App() {
           </svg>
         </button>
       )}
+      <CourseFab />
+      <CoursePopup />
     </div>
   );
 }

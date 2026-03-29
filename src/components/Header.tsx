@@ -14,7 +14,7 @@ const Header: React.FC = () => {
 
     // Track active section via IntersectionObserver
     useEffect(() => {
-        const sectionIds = ['home', 'process', 'projects', 'about', 'contact'];
+        const sectionIds = ['home', 'process', 'projects', 'about', 'contact', 'course-section'];
         const observers: IntersectionObserver[] = [];
 
         sectionIds.forEach(id => {
@@ -65,7 +65,6 @@ const Header: React.FC = () => {
         { id: 'process', label: 'Process' },
         { id: 'projects', label: 'Projects' },
         { id: 'about', label: 'About' },
-        { id: 'contact', label: 'Contact' },
     ];
 
     return (
@@ -85,11 +84,42 @@ const Header: React.FC = () => {
                                 </button>
                             </li>
                         ))}
+                        {/* Course — special accent button, between About and Contact */}
+                        <li>
+                            <button
+                                className={`nav-course-btn ${activeSection === 'course-section' ? 'nav-course-btn--active' : ''}`}
+                                onClick={() => scrollToSection('course-section')}
+                                aria-current={activeSection === 'course-section' ? 'page' : undefined}
+                            >
+                                <span className="nav-course-dot" aria-hidden="true" />
+                                Course
+                            </button>
+                        </li>
+                        <li>
+                            <button
+                                className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}
+                                onClick={() => scrollToSection('contact')}
+                                aria-current={activeSection === 'contact' ? 'page' : undefined}
+                            >
+                                Contact
+                            </button>
+                        </li>
                     </ul>
                 </nav>
 
                 {/* Separator */}
                 <span className="nav-separator" aria-hidden="true" />
+
+                {/* Course — mobile-only standalone (desktop version is inside nav) */}
+                <button
+                    className={`nav-course-btn nav-course-btn--mobile ${activeSection === 'course-section' ? 'nav-course-btn--active' : ''}`}
+                    onClick={() => scrollToSection('course-section')}
+                    aria-current={activeSection === 'course-section' ? 'page' : undefined}
+                    aria-label="View course"
+                >
+                    <span className="nav-course-dot" aria-hidden="true" />
+                    Course
+                </button>
 
                 {/* Social Icons */}
                 <div className="nav-icons">

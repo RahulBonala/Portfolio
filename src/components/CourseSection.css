@@ -1,0 +1,659 @@
+/* ============================================================
+   COURSE SECTION — Premium dark editorial design
+   ============================================================ */
+
+.course-section {
+  position: relative;
+  background: #0d0d0d;
+  color: #fff;
+  overflow: hidden;
+  padding: 100px 0 80px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── Background decoration ───────────────────────────────────── */
+.course-bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(108, 99, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(108, 99, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.course-bg-glow {
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(108, 99, 255, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Eyebrow pill (dark variant) ─────────────────────────────── */
+.course-eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(108, 99, 255, 0.1);
+  border: 1px solid rgba(108, 99, 255, 0.25);
+  border-radius: 100px;
+  padding: 6px 18px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6c63ff;
+}
+
+.course-eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #6c63ff;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.25);
+  animation: coursePulse 2.5s ease-in-out infinite;
+}
+
+@keyframes coursePulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.25); }
+  50% { box-shadow: 0 0 0 6px rgba(108, 99, 255, 0.08); }
+}
+
+/* ── Headline ────────────────────────────────────────────────── */
+.course-headline {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.course-headline-accent {
+  background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 50%, #6c63ff 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: courseGradient 4s ease infinite;
+}
+
+@keyframes courseGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.course-tagline {
+  text-align: center;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 500;
+  margin-bottom: 56px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Highlights (What You'll Get) ────────────────────────────── */
+.course-highlights {
+  max-width: 600px;
+  margin: 0 auto 56px;
+}
+
+.course-subheading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+.course-highlights-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.course-highlight-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+}
+
+.course-highlight-marker {
+  color: #6c63ff;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* ── Detail cards grid ───────────────────────────────────────── */
+.course-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto 48px;
+}
+
+.course-detail-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  text-align: center;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.course-detail-card:hover {
+  border-color: rgba(108, 99, 255, 0.25);
+  background: rgba(108, 99, 255, 0.04);
+}
+
+.course-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(108, 99, 255, 0.1);
+  color: #6c63ff;
+}
+
+.course-detail-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.course-detail-value {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ── Trust Badge ─────────────────────────────────────────────── */
+.course-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 600px;
+  margin: 0 auto 56px;
+  padding: 18px 28px;
+  background: rgba(108, 99, 255, 0.06);
+  border: 1px solid rgba(108, 99, 255, 0.15);
+  border-radius: 14px;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+}
+
+.course-trust svg {
+  color: #6c63ff;
+  flex-shrink: 0;
+}
+
+.course-trust strong {
+  color: #6c63ff;
+  font-weight: 700;
+}
+
+/* ── Steps ────────────────────────────────────────────────────── */
+.course-steps {
+  max-width: 560px;
+  margin: 0 auto 64px;
+}
+
+.course-steps-track {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.course-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  position: relative;
+  padding-bottom: 32px;
+}
+
+.course-step:last-child {
+  padding-bottom: 0;
+}
+
+.course-step-num {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(108, 99, 255, 0.1);
+  border: 1px solid rgba(108, 99, 255, 0.25);
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #6c63ff;
+  font-variant-numeric: tabular-nums;
+}
+
+.course-step-connector {
+  position: absolute;
+  left: 21px;
+  top: 48px;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(108, 99, 255, 0.25) 0%, rgba(108, 99, 255, 0.05) 100%);
+}
+
+.course-step:last-child .course-step-connector {
+  display: none;
+}
+
+.course-step-content {
+  padding-top: 4px;
+}
+
+.course-step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 4px;
+}
+
+.course-step-desc {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.5;
+}
+
+/* ── Action Block (Payment + Calendar) ───────────────────────── */
+.course-action-block {
+  max-width: 640px;
+  margin: 0 auto 48px;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  text-align: center;
+}
+
+.course-price {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.course-price-original {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.3);
+  text-decoration: line-through;
+  text-decoration-color: rgba(220, 38, 38, 0.6);
+  text-decoration-thickness: 2px;
+}
+
+.course-price-original-currency {
+  font-size: 0.95rem;
+}
+
+.course-price-current {
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.course-price-currency {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.course-price-amount {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.course-price-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin-left: 2px;
+}
+
+.course-price-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #10b981;
+  white-space: nowrap;
+}
+
+.course-price-savings {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #10b981;
+  font-weight: 600;
+  margin-bottom: 32px;
+  opacity: 0.8;
+}
+
+.course-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.course-action-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.course-action-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.course-action-arrow {
+  color: rgba(255, 255, 255, 0.15);
+  margin-top: 18px;
+}
+
+/* Payment Button */
+.course-pay-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-pay-discount-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px dashed rgba(16, 185, 129, 0.3);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #10b981;
+  letter-spacing: 0.02em;
+}
+
+.course-pay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: #6c63ff;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 24px rgba(108, 99, 255, 0.35);
+  white-space: nowrap;
+}
+
+.course-pay-btn:hover {
+  background: #5a52e0;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(108, 99, 255, 0.5);
+}
+
+.course-pay-btn--done {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  box-shadow: none;
+  cursor: default;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.course-pay-btn--done:hover {
+  background: rgba(16, 185, 129, 0.15);
+  transform: none;
+  box-shadow: none;
+}
+
+/* Calendar Button */
+.course-calendar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.course-calendar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  letter-spacing: 0.02em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.course-calendar-btn--locked {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: not-allowed;
+}
+
+.course-calendar-btn--active {
+  background: linear-gradient(135deg, #6c63ff, #8b5cf6);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 24px rgba(108, 99, 255, 0.35);
+  animation: courseUnlock 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.course-calendar-btn--active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 36px rgba(108, 99, 255, 0.5);
+}
+
+@keyframes courseUnlock {
+  0% { transform: scale(0.9); opacity: 0.5; }
+  60% { transform: scale(1.04); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.course-calendar-hint {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.25);
+  font-style: italic;
+}
+
+/* ── Footer note ─────────────────────────────────────────────── */
+.course-footer-note {
+  text-align: center;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.course-contact-link {
+  color: #6c63ff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(108, 99, 255, 0.3);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.course-contact-link:hover {
+  color: #a78bfa;
+  text-decoration-color: rgba(167, 139, 250, 0.5);
+}
+
+/* ── Toast ────────────────────────────────────────────────────── */
+.course-toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: #111118;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 14px;
+  color: #10b981;
+  font-size: 0.88rem;
+  font-weight: 600;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  z-index: 10001;
+  animation: courseToastIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+@keyframes courseToastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .course-section {
+    padding: 72px 0 60px;
+  }
+
+  .course-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .course-action-block {
+    padding: 28px 20px;
+  }
+
+  .course-action-buttons {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .course-action-arrow {
+    transform: rotate(90deg);
+    margin-top: 0;
+  }
+
+  .course-price-amount {
+    font-size: 2.5rem;
+  }
+
+  .course-price-original {
+    font-size: 1.15rem;
+  }
+
+  .course-trust {
+    flex-direction: column;
+    text-align: center;
+    padding: 16px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-section {
+    padding: 56px 0 48px;
+  }
+
+  .course-headline {
+    font-size: 1.75rem;
+  }
+
+  .course-details-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .course-detail-card {
+    padding: 18px 12px;
+  }
+
+  .course-pay-btn,
+  .course-calendar-btn {
+    padding: 14px 24px;
+    font-size: 0.88rem;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .course-action-block {
+    padding: 24px 16px;
+    border-radius: 18px;
+  }
+
+  .course-step {
+    gap: 14px;
+  }
+
+  .course-step-num {
+    width: 38px;
+    height: 38px;
+    font-size: 0.75rem;
+  }
+
+  .course-step-connector {
+    left: 18px;
+    top: 42px;
+  }
+
+  .course-toast {
+    left: 16px;
+    right: 16px;
+    transform: none;
+    white-space: normal;
+    font-size: 0.82rem;
+    bottom: 72px;
+  }
+
+  @keyframes courseToastIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

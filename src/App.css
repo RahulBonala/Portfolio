@@ -153,7 +153,7 @@
 /* ── Back to Top ─────────────────────────────────────────────── */
 .back-to-top {
   position: fixed;
-  bottom: 28px;
+  bottom: 80px;
   right: 28px;
   width: 46px;
   height: 46px;
@@ -186,7 +186,7 @@
 
 @media (max-width: 480px) {
   .back-to-top {
-    bottom: 16px;
+    bottom: 72px;
     right: 16px;
     width: 40px;
     height: 40px;
