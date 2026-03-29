@@ -505,6 +505,8 @@
 }
 
 .chip-bottom {
+    bottom: 5%;
+    left: 50%;
     animation: chipFloatCentered 5.5s ease-in-out infinite 0.4s;
 }
 
@@ -700,11 +702,7 @@
     }
 
     .chip-bottom {
-        position: relative;
-        left: unset;
-        transform: none;
-        animation: none;
-        margin-top: 14px;
+        display: none;
     }
 
     .hero-badges {
