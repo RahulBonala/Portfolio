@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './CoursePopup.css';
 
-const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/eCbnBfbL';
-
 const CoursePopup: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [courseInView, setCourseInView] = useState(false);
@@ -45,7 +43,10 @@ const CoursePopup: React.FC = () => {
 
   const handleCTA = useCallback(() => {
     close();
-    window.location.href = RAZORPAY_PAYMENT_LINK;
+    setTimeout(() => {
+      const section = document.getElementById('course-section');
+      if (section) section.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   }, [close]);
 
   const handleBackdrop = useCallback((e: React.MouseEvent) => {

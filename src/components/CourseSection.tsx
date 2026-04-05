@@ -1,25 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PaymentButton from './PaymentButton';
-import CalendarButton from './CalendarButton';
 import './CourseSection.css';
 
 const ORIGINAL_PRICE = 999;
 const DISCOUNTED_PRICE = 49;
 const DISCOUNT_PERCENT = Math.round(((ORIGINAL_PRICE - DISCOUNTED_PRICE) / ORIGINAL_PRICE) * 100);
-const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/eCbnBfbL';
-const CALENDLY_LINK = 'https://calendly.com/rahulbonala06/30min';
 const CONTACT_LINK = 'mailto:rahulbonala2002@gmail.com';
 
 const steps = [
   {
     num: '01',
     title: 'Click Pay & Book',
-    desc: 'One click takes you to secure Razorpay payment',
+    desc: 'Click the button below — checkout opens right here',
   },
   {
     num: '02',
     title: 'Complete Payment',
-    desc: 'Pay ₹49 securely — you\'re automatically redirected next',
+    desc: 'Pay ₹49 securely — you\'re redirected to book your slot next',
   },
   {
     num: '03',
@@ -47,13 +44,6 @@ const highlights = [
 ];
 
 const CourseSection: React.FC = () => {
-  const [hasPaid, setHasPaid] = useState(false);
-
-  useEffect(() => {
-    if (localStorage.getItem('session_paid') === 'true') {
-      setHasPaid(true);
-    }
-  }, []);
 
   return (
     <section id="course-section" className="section course-section">
@@ -168,11 +158,7 @@ const CourseSection: React.FC = () => {
           </p>
 
           <div className="course-action-buttons">
-            {hasPaid ? (
-              <CalendarButton calendarLink={CALENDLY_LINK} />
-            ) : (
-              <PaymentButton paymentLink={RAZORPAY_PAYMENT_LINK} />
-            )}
+            <PaymentButton />
           </div>
         </div>
 

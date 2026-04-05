@@ -11,23 +11,12 @@ import CourseFab from './components/CourseBanner';
 import CoursePopup from './components/CoursePopup';
 import './App.css';
 
-const CALENDLY_LINK = 'https://calendly.com/rahulbonala06/30min';
-
 function App() {
   const mainRef = useRef<HTMLElement>(null);
 
   // Scroll visibility states
   const [scrollProgress, setScrollProgress] = useState(0);
   const [showBackToTop, setShowBackToTop] = useState(false);
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('payment') === 'success') {
-      localStorage.setItem('session_paid', 'true');
-      window.history.replaceState({}, '', window.location.pathname);
-      window.location.href = CALENDLY_LINK;
-    }
-  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
