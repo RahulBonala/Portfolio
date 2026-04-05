@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import './CoursePopup.css';
 
+const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/eCbnBfbL';
+
 const CoursePopup: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [courseInView, setCourseInView] = useState(false);
@@ -43,10 +45,7 @@ const CoursePopup: React.FC = () => {
 
   const handleCTA = useCallback(() => {
     close();
-    setTimeout(() => {
-      const section = document.getElementById('course-section');
-      if (section) section.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
+    window.location.href = RAZORPAY_PAYMENT_LINK;
   }, [close]);
 
   const handleBackdrop = useCallback((e: React.MouseEvent) => {
@@ -100,7 +99,7 @@ const CoursePopup: React.FC = () => {
         </div>
 
         <button className="course-popup-cta" onClick={handleCTA}>
-          Claim Your Slot
+          Pay ₹49 & Book Your Slot
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </button>
 

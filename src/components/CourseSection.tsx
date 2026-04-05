@@ -1,30 +1,30 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import PaymentButton from './PaymentButton';
 import CalendarButton from './CalendarButton';
 import './CourseSection.css';
 
 const ORIGINAL_PRICE = 999;
 const DISCOUNTED_PRICE = 49;
-const AMOUNT_IN_PAISE = DISCOUNTED_PRICE * 100; // Razorpay expects paise
 const DISCOUNT_PERCENT = Math.round(((ORIGINAL_PRICE - DISCOUNTED_PRICE) / ORIGINAL_PRICE) * 100);
-const CALENDAR_LINK = 'YOUR_CALENDAR_BOOKING_LINK'; // TODO: Replace with Cal.com / Calendly / Google link
-const CONTACT_LINK = 'mailto:rahulbonala2002@gmail.com'; // TODO: Replace with preferred contact link
+const RAZORPAY_PAYMENT_LINK = 'https://rzp.io/rzp/eCbnBfbL';
+const CALENDLY_LINK = 'https://calendly.com/rahulbonala06/30min';
+const CONTACT_LINK = 'mailto:rahulbonala2002@gmail.com';
 
 const steps = [
   {
     num: '01',
-    title: 'Pay to Reserve Slot',
-    desc: 'Complete payment securely via Razorpay',
+    title: 'Click Pay & Book',
+    desc: 'One click takes you to secure Razorpay payment',
   },
   {
     num: '02',
-    title: 'Payment Confirmed',
-    desc: 'The "Book Your Slot" calendar button unlocks instantly',
+    title: 'Complete Payment',
+    desc: 'Pay ₹49 securely — you\'re automatically redirected next',
   },
   {
     num: '03',
     title: 'Pick Your Slot',
-    desc: 'Choose a time that works for you from the calendar',
+    desc: 'Calendly opens automatically — choose a time that works',
   },
   {
     num: '04',
@@ -47,19 +47,12 @@ const highlights = [
 ];
 
 const CourseSection: React.FC = () => {
-  const [isPaid, setIsPaid] = useState(false);
-  const [showToast, setShowToast] = useState<string | null>(null);
+  const [hasPaid, setHasPaid] = useState(false);
 
   useEffect(() => {
-    if (localStorage.getItem('coursePaid') === 'true') {
-      setIsPaid(true);
+    if (localStorage.getItem('session_paid') === 'true') {
+      setHasPaid(true);
     }
-  }, []);
-
-  const handlePaymentSuccess = useCallback((paymentId: string) => {
-    setIsPaid(true);
-    setShowToast(`Payment successful! (${paymentId.slice(0, 12)}…) Your slot button is now unlocked.`);
-    setTimeout(() => setShowToast(null), 5000);
   }, []);
 
   return (
@@ -175,31 +168,11 @@ const CourseSection: React.FC = () => {
           </p>
 
           <div className="course-action-buttons">
-            <div className="course-action-step">
-              <span className="course-action-tag">Step 1</span>
-              {isPaid ? (
-                <button className="course-pay-btn course-pay-btn--done" disabled>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                  Payment Complete
-                </button>
-              ) : (
-                <div className="course-pay-wrapper">
-                  <PaymentButton amount={AMOUNT_IN_PAISE} onSuccess={handlePaymentSuccess} />
-                  <span className="course-pay-discount-tag">
-                    Save ₹{(ORIGINAL_PRICE - DISCOUNTED_PRICE).toLocaleString('en-IN')}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            <div className="course-action-arrow" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </div>
-
-            <div className="course-action-step">
-              <span className="course-action-tag">Step 2</span>
-              <CalendarButton isPaid={isPaid} calendarLink={CALENDAR_LINK} />
-            </div>
+            {hasPaid ? (
+              <CalendarButton calendarLink={CALENDLY_LINK} />
+            ) : (
+              <PaymentButton paymentLink={RAZORPAY_PAYMENT_LINK} />
+            )}
           </div>
         </div>
 
@@ -210,13 +183,6 @@ const CourseSection: React.FC = () => {
         </p>
       </div>
 
-      {/* Toast notification */}
-      {showToast && (
-        <div className="course-toast" role="status" aria-live="polite">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-          {showToast}
-        </div>
-      )}
     </section>
   );
 };
