@@ -13,8 +13,8 @@ const allProjects = [
     id: 1,
     category: 'AI / GenAI',
     title: 'Bestanswers.ai',
-    subtitle: 'GenAI Multi-Agent System using Llama 3',
-    description: 'BestAnswer.ai eliminates AI hallucination by convening a "Roundtable" of four distinct AI personas to debate every user query — transforming the solitary act of searching into a transparent, multi-perspective consensus event.',
+    subtitle: 'A multi-agent debate engine for AI answers',
+    description: 'Most AI tools answer with a confident voice and no second opinion. Bestanswers.ai convenes four AI personas (Researcher, Engineer, Friend, Academic) and lets them argue. A meta-judge merges the strongest reasoning into one answer with the disagreements visible. The premise: trust comes from transparent disagreement, not single-source confidence.',
     image: bestAnswerImg,
     tags: ['UI Design', 'AI', 'Multi-Agent Systems', 'Generative AI', 'Real-Time Consensus'],
     webLink: 'https://bestanswersai.com/',
@@ -50,8 +50,8 @@ const allProjects = [
     id: 2,
     category: 'Full-Stack',
     title: 'Build Your Own Company',
-    subtitle: 'Construct Your Vision, Brick by Brick',
-    description: 'A futuristic B2B platform that gamifies the software development lifecycle — transforming the opaque agency experience into an intuitive "construction" experience with full cost transparency.',
+    subtitle: 'Visualizing the cost of building software',
+    description: 'Software agencies quote in black boxes. This platform turns the SDLC into a 3D configurator: drag bricks (auth, payments, dashboards) into a glass case, watch the price update, and follow the build through a Metro Map of phases. The signature is honesty about cost.',
     image: byocImg,
     tags: ['Gamified UX', '3D Configurator', 'Full-Stack', 'B2B SaaS'],
     webLink: 'https://build-your-own-company.vercel.app/',
@@ -87,8 +87,8 @@ const allProjects = [
     id: 3,
     category: 'UI/UX Design',
     title: 'Dosth App',
-    subtitle: 'Your Friend, Your Guide',
-    description: 'An all-in-one urban app simplifying daily life with on-demand product repairs and an innovative "Propose Pay" feature for emergency rides — one solution for everyday urban challenges.',
+    subtitle: 'On-demand repairs, fares you set, food you forward',
+    description: 'Three urban frictions: finding a repair shop, hailing a ride during surge hours, and what to do with the food a household didn\'t finish. Dosth is an end-to-end Figma case study covering all three, with a Propose-Pay model where the rider sets the fare and a community donation flow that connects surplus food to vetted partners.',
     image: dosthImg,
     tags: ['User Flow', 'Journey Mapping', 'Wireframing', 'High-Fidelity UI', 'UX Writing'],
     link: 'http://figma.com/make/kVFaUs3rBUt6CtzwlCzHCb/Dosth-App-Prototype?node-id=0-1&p=f&fullscreen=1',
@@ -126,8 +126,8 @@ const allProjects = [
     id: 4,
     category: 'Fintech',
     title: 'Bar App',
-    subtitle: 'Buy and Sell Gold & Silver',
-    description: 'A mobile-first fintech app making 99.99% pure digital gold and silver investment accessible from ₹10 — empowering middle-class Indian families through goal-based savings plans.',
+    subtitle: 'Digital gold and silver from ₹10',
+    description: 'Most middle-class families I know want to invest in gold but can\'t put down a lakh at once. Bar App breaks it down to ₹10 minimums, ties purchases to specific goals like a wedding or school fees, and runs auto-SIPs against 99.99% pure metal. End-to-end concept and UI, with the digital-to-physical handoff designed in.',
     image: barImg,
     tags: ['Wireframing', 'High-Fidelity UI', 'UX Design', 'Fintech'],
     link: 'https://www.figma.com/make/X9Zdh1fZaQWWpaV9n8AyX6/Bar-App?node-id=0-1&p=f&fullscreen=1',
@@ -165,8 +165,8 @@ const allProjects = [
     id: 5,
     category: 'Full-Stack',
     title: 'iUpgrade',
-    subtitle: 'The Future of Ownership',
-    description: 'A premium Device-as-a-Service (DaaS) platform replacing high upfront Apple hardware costs with a flexible subscription model — combining fintech and e-commerce for a seamless yearly upgrade cycle.',
+    subtitle: 'Apple devices on a subscription',
+    description: 'Owning a flagship phone in India means a one-shot purchase that loses 30% in twelve months. iUpgrade rents you the device on a yearly cycle, bundles AppleCare+ and theft cover, and resells the returned hardware as refurbished. I designed the brand (Cosmic Orange / Titanium), worked through the unit economics, and built the video KYC and MDM flows.',
     image: iupgradeImg,
     tags: ['DaaS Model', 'Brand Identity', 'Full-Stack', 'Fintech Strategy'],
     webLink: 'https://i-upgrade.vercel.app/',
@@ -202,8 +202,8 @@ const allProjects = [
     id: 6,
     category: 'UI/UX Design',
     title: 'Waggle App',
-    subtitle: 'Pet Care, Simplified',
-    description: 'A conceptual mobile app connecting busy dog owners with vetted local walkers — a trusted, all-in-one platform for finding, scheduling, and managing pet care with full transparency.',
+    subtitle: 'Trusted dog walkers, on demand',
+    description: 'Letting a stranger walk your dog is mostly a trust problem. Waggle is the booking app I\'d want as an owner: verified walker profiles, public ratings, live GPS during walks, and recurring schedules for the families with regular routines. Concept design, IA, full UI, and prototype.',
     image: waggleImg,
     tags: ['User Flow', 'Journey Mapping', 'Information Architecture', 'UI Design'],
     link: 'https://www.figma.com/make/4FaGz8I3cnyPdCtSFmGpOm/Waggle-Mobile-App-Design?node-id=0-1&p=f&fullscreen=1',
@@ -254,9 +254,9 @@ const Projects: React.FC = () => {
         <div className="section-eyebrow">
           <span className="eyebrow-pill">Work</span>
         </div>
-        <h2 className="section-title">Featured Projects</h2>
+        <h2 className="section-title">Selected work</h2>
         <p className="section-subtitle">
-          End-to-end case studies — from research and strategy through design and shipped code.
+          Six projects, from research through shipped code.
         </p>
 
         {/* Filter Bar */}

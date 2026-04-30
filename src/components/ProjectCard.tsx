@@ -160,18 +160,18 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
             </div>
           )}
 
-          {/* Problem / Solution Summary */}
+          {/* Problem / Approach Summary */}
           {(problem || solution) && !isExpanded && (
             <div className="project-ps-row">
               {problem && (
-                <div className="ps-block problem-block">
-                  <span className="ps-label">⚠ Problem</span>
+                <div className="ps-block">
+                  <span className="ps-label">Problem</span>
                   <p>{problem}</p>
                 </div>
               )}
               {solution && (
-                <div className="ps-block solution-block">
-                  <span className="ps-label">✦ Solution</span>
+                <div className="ps-block">
+                  <span className="ps-label">Approach</span>
                   <p>{solution}</p>
                 </div>
               )}

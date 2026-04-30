@@ -60,23 +60,18 @@ const Contact: React.FC = () => {
         <div className="section-eyebrow">
           <span className="eyebrow-pill">Contact</span>
         </div>
-        <h2 className="section-title">Let's Build Something Together</h2>
+        <h2 className="section-title">Let's talk.</h2>
         <p className="section-subtitle">
-          Open to full-time roles, freelance collaborations, and meaningful conversations.
+          Full-time, freelance, or just a chat about a project &mdash; happy to hear from you.
         </p>
 
         <div className="contact-grid">
           {/* ── LEFT: Info Panel ── */}
           <div className="contact-info-panel">
-            <div className="contact-availability">
-              <span className="avail-dot" />
-              <span>Available for opportunities</span>
-            </div>
-
-            <h3 className="contact-info-heading">Get In Touch</h3>
+            <h3 className="contact-info-heading">Get in touch</h3>
             <p className="contact-info-body">
-              Whether it's a product design role, a UX collaboration, or an AI-native product idea —
-              I'm always open to meaningful conversations. Let's talk.
+              Product design roles, freelance work, the occasional collaboration. I read
+              every email and aim to reply within a day.
             </p>
 
             <div className="contact-links">

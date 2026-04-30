@@ -42,24 +42,24 @@ const timelineItems = [
     type: 'work',
     color: '#6366f1',
     highlights: [
-      'Redesigned Service Console Interface → 80% maintenance time reduction',
-      'Global CSAT uplift to 95% across Europe, APAC, North America, Middle East',
-      'Automated Python pipeline → reduced 6-hour reports to 15 minutes',
-      'Complete UI redesign in Java/HTML/CSS → 40% increase in positive feedback during FY25',
-      '3 usability tests → 70% fewer customer support requests',
-      'Led client sessions in Wiesbaden, Germany for product adoption',
+      'Redesigned the Service Console — engineers now finish maintenance in a fifth of the time',
+      'Held global CSAT at 95% across Europe, APAC, North America, and the Middle East',
+      'Automated the team\'s Python reporting pipeline — six hours of work, down to fifteen minutes',
+      'Rebuilt the FY25 UI in Java/HTML/CSS — 40% lift in positive user feedback',
+      'Ran three rounds of usability testing — 70% drop in support requests',
+      'Led product adoption sessions for clients in Wiesbaden, Germany',
     ],
   },
   {
     period: 'Sep 2019 – May 2023',
-    role: 'B.Tech — Electronics & Instrumentation Engineering',
+    role: 'B.Tech, Electronics & Instrumentation Engineering',
     org: 'SASTRA University',
     type: 'edu',
     color: '#8b5cf6',
     highlights: [
       'CGPA: 8/10',
-      'Robotics & IoT projects — Raspberry Pi, OpenCV, C',
-      'Strong foundation in systems thinking and engineering logic',
+      'Robotics and IoT projects on Raspberry Pi, OpenCV, and embedded C',
+      'A foundation in systems thinking that still shapes how I design',
     ],
   },
 ];
@@ -73,9 +73,10 @@ const AboutMe: React.FC = () => {
         <div className="section-eyebrow">
           <span className="eyebrow-pill">About</span>
         </div>
-        <h2 className="section-title">The Person Behind the Work</h2>
+        <h2 className="section-title">What I make, why I make it</h2>
         <p className="section-subtitle">
-          AI-native designer and developer — 3+ years bridging strategy, design, and technical execution.
+          Three years at Smiths Detection in Bangalore. I design the screens engineers
+          use every day, and I write the code behind them.
         </p>
 
         <div className="about-grid">
@@ -142,32 +143,20 @@ const AboutMe: React.FC = () => {
             {/* Key Facts */}
             <div className="about-key-facts">
               <div className="key-fact">
-                <span className="kf-icon">📍</span>
-                <div>
-                  <strong>Based in</strong>
-                  <span>India · Open to Global Remote</span>
-                </div>
+                <span className="kf-label">Based in</span>
+                <span className="kf-value">Bangalore, India · Open to global remote</span>
               </div>
               <div className="key-fact">
-                <span className="kf-icon">🌐</span>
-                <div>
-                  <strong>Experience</strong>
-                  <span>Europe, APAC, North America, Middle East</span>
-                </div>
+                <span className="kf-label">Experience</span>
+                <span className="kf-value">Europe, APAC, North America, Middle East</span>
               </div>
               <div className="key-fact">
-                <span className="kf-icon">🚀</span>
-                <div>
-                  <strong>Superpower</strong>
-                  <span>Design + Code + AI in one person</span>
-                </div>
+                <span className="kf-label">Strength</span>
+                <span className="kf-value">Design, and the production code that runs it</span>
               </div>
               <div className="key-fact">
-                <span className="kf-icon">♿</span>
-                <div>
-                  <strong>Standards</strong>
-                  <span>WCAG 2.1 AA compliant designs</span>
-                </div>
+                <span className="kf-label">Standards</span>
+                <span className="kf-value">WCAG 2.1 AA across every shipped surface</span>
               </div>
             </div>
           </div>

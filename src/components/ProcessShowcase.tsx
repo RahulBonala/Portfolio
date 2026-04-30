@@ -142,7 +142,7 @@ const ProcessShowcase: React.FC = () => {
             </div>
             <div className="process-outcome">
               <p className="process-row-label">Outcome</p>
-              <p className="process-outcome-text">✦ {steps[activeStep].outcome}</p>
+              <p className="process-outcome-text">{steps[activeStep].outcome}</p>
             </div>
           </div>
 

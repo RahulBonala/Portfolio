@@ -17,32 +17,27 @@ const ProfileSection: React.FC = () => {
             <div className="container profile-content">
                 {/* ── LEFT: Text Column ── */}
                 <div className="profile-text">
-                    <div className="hero-eyebrow">
-                        <span className="eyebrow-dot" aria-hidden="true" />
-                        <span>Available for opportunities</span>
-                    </div>
-
                     <h1>
                         I'm Sri Sai<br />
                         <span className="name-highlight">Rahul Bonala</span>
                     </h1>
 
                     <div className="role-badge">
-                        <span className="role-icon" aria-hidden="true">✦</span>
                         <h2>Product Designer</h2>
                     </div>
 
                     <p className="hero-tagline">
-                        UI/UX & Developer with <strong>3+ years</strong> bridging design strategy and
-                        technical execution — building AI-native digital products that are fast,
-                        scalable, and WCAG-compliant.
+                        I design and ship operational software at <strong>Smiths Detection</strong> &mdash;
+                        service consoles and dashboards used daily across Europe, APAC, and North America.
+                        I also write the React, Java, and Python that runs behind those screens, because
+                        handoff is where most good ideas quietly die.
                     </p>
 
                     <div className="hero-badges">
-                        <span className="badge"><span aria-hidden="true">🎯</span> 95% CSAT</span>
-                        <span className="badge"><span aria-hidden="true">⚙️</span> 80% Faster Maintenance</span>
-                        <span className="badge"><span aria-hidden="true">🤖</span> 90% Less Manual Work</span>
-                        <span className="badge"><span aria-hidden="true">♿</span> WCAG 2.1 AA</span>
+                        <span className="badge">95% CSAT</span>
+                        <span className="badge">80% Faster Maintenance</span>
+                        <span className="badge">90% Less Manual Work</span>
+                        <span className="badge">WCAG 2.1 AA</span>
                     </div>
 
                     <div className="hero-tools">
@@ -74,20 +69,10 @@ const ProfileSection: React.FC = () => {
 
                 {/* ── RIGHT: Image Column ── */}
                 <div className="profile-image-wrapper">
-                    {/* Floating stat chips — clipped to this column only */}
-                    <div className="stat-chip chip-top-left">
-                        <span className="chip-icon" aria-hidden="true">🎨</span>
-                        <div>
-                            <strong>3+ Years</strong>
-                            <span>Experience</span>
-                        </div>
-                    </div>
-
                     <div className="stat-chip chip-top-right">
-                        <span className="chip-icon" aria-hidden="true">🌍</span>
                         <div>
-                            <strong>Global</strong>
-                            <span>Reach</span>
+                            <strong>Bangalore</strong>
+                            <span>Wiesbaden · Frankfurt</span>
                         </div>
                     </div>
 

@@ -26,9 +26,9 @@
 
 .fade-in-section {
   opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -40,9 +40,9 @@
 
 .fade-in-section.exit-top {
   opacity: 0;
-  transform: translateY(-30px);
-  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(-16px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 
@@ -158,7 +158,7 @@
   width: 46px;
   height: 46px;
   border-radius: 14px;
-  background: #fff;
+  background: var(--surface-color);
   border: 1.5px solid var(--border-color);
   color: var(--text-secondary);
   display: flex;
@@ -173,10 +173,10 @@
 
 .back-to-top:hover {
   background: var(--primary-color);
-  color: #fff;
+  color: var(--primary-contrast);
   border-color: var(--primary-color);
   transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(79, 70, 229, 0.3);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--primary-color) 30%, transparent);
 }
 
 @keyframes slideInRight {

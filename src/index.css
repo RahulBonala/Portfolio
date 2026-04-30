@@ -1,32 +1,35 @@
 /* ============================================================
    GLOBAL STYLES — Rahul Bonala Portfolio
+   Fonts are loaded via <link> in index.html (preconnected + variable).
    ============================================================ */
 
-/* Google Fonts — Plus Jakarta Sans (premium, modern designer feel) */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Fira+Code:wght@400;500&display=swap');
-
-/* ── Design Tokens ──────────────────────────────────────────── */
-:root {
+/* ── Design Tokens — Light theme (default) ──────────────────── */
+:root,
+:root[data-theme='light'] {
   color-scheme: light;
   --header-height: 80px;
+
   /* Brand */
   --primary-color: #4f46e5;
-  /* Indigo — professional, design-forward */
   --primary-light: #6366f1;
   --primary-dark: #3730a3;
+  --primary-contrast: #ffffff;
   --accent-color: #ec4899;
-  /* Pink accent for subtle highlights */
 
   /* Surfaces */
   --bg-color: #f8f9ff;
   --surface-color: #ffffff;
   --surface-subtle: #f1f5f9;
+  --surface-elevated: #ffffff;
   --border-color: #e2e8f0;
+  --border-subtle: rgba(15, 23, 42, 0.06);
+  --overlay-color: rgba(15, 23, 42, 0.55);
 
   /* Text */
   --text-color: #0f172a;
   --text-secondary: #334155;
   --text-muted: #64748b;
+  --text-faint: #94a3b8;
   --white: #ffffff;
 
   /* Semantic */
@@ -46,7 +49,7 @@
   --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12), 0 8px 16px rgba(15, 23, 42, 0.06);
   --shadow-glow: 0 8px 24px rgba(99, 102, 241, 0.3);
 
-  /* Spacing */
+  /* Radius */
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -60,24 +63,60 @@
   --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-med: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-theme: 0.35s ease;
 
-  /* ── Type Scale ─────────────────────────────────────────────── */
-  --text-xs:   0.75rem;   /* 12px — minimum, use for labels only */
-  --text-sm:   0.875rem;  /* 14px — secondary UI text */
-  --text-base: 1rem;      /* 16px — body copy */
-  --text-md:   1.125rem;  /* 18px — lead paragraphs */
-  --text-lg:   1.25rem;   /* 20px — subheadings */
-  --text-xl:   1.5rem;    /* 24px — section subheadings */
-  --text-2xl:  2rem;      /* 32px — section titles */
-  --text-3xl:  2.5rem;    /* 40px — hero heading */
-  --text-4xl:  3rem;      /* 48px — display */
+  /* Type scale */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3rem;
 
-  /* ── Line Heights ───────────────────────────────────────────── */
-  --leading-tight:  1.25;  /* headings */
-  --leading-snug:   1.4;   /* subheadings */
-  --leading-normal: 1.6;   /* UI text */
-  --leading-relaxed: 1.75; /* body paragraphs */
-  --leading-loose:  1.9;   /* long-form content */
+  /* Line heights */
+  --leading-tight: 1.25;
+  --leading-snug: 1.4;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+  --leading-loose: 1.9;
+}
+
+/* ── Dark theme tokens ──────────────────────────────────────── */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --primary-color: #818cf8;
+  --primary-light: #a5b4fc;
+  --primary-dark: #6366f1;
+  --primary-contrast: #0a0b10;
+  --accent-color: #f472b6;
+
+  --bg-color: #0a0b10;
+  --surface-color: #12141c;
+  --surface-subtle: #161922;
+  --surface-elevated: #1a1d27;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+  --overlay-color: rgba(0, 0, 0, 0.7);
+
+  --text-color: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-faint: #64748b;
+
+  --color-success-bg: rgba(16, 185, 129, 0.08);
+  --color-success-border: rgba(16, 185, 129, 0.3);
+  --color-error-bg: rgba(220, 38, 38, 0.08);
+  --color-error-border: rgba(220, 38, 38, 0.3);
+  --color-warning-bg: rgba(245, 158, 11, 0.08);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55), 0 8px 16px rgba(0, 0, 0, 0.35);
+  --shadow-glow: 0 8px 24px rgba(129, 140, 248, 0.25);
 }
 
 /* ── Reset ──────────────────────────────────────────────────── */
@@ -90,7 +129,6 @@
 }
 
 /* ── Focus Visible — WCAG 2.4.7 / 2.4.11 ───────────────────── */
-/* Remove default for mouse users, keep for keyboard users */
 *:focus {
   outline: none;
 }
@@ -101,7 +139,6 @@
   border-radius: 4px;
 }
 
-/* Larger offset for interactive components */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
@@ -110,7 +147,7 @@ select:focus-visible {
   outline: 3px solid var(--primary-color);
   outline-offset: 3px;
   border-radius: 6px;
-  box-shadow: 0 0 0 6px rgba(79, 70, 229, 0.12);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary-color) 18%, transparent);
 }
 
 html {
@@ -130,11 +167,18 @@ body {
   font-size: var(--text-base);
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
+  font-feature-settings: 'ss01', 'cv11';
+  transition: background-color var(--transition-theme), color var(--transition-theme);
 }
 
-/* Force light colour scheme on all form elements */
+/* Headings inherit body font but get a slightly tighter optical setting */
+h1, h2, h3, h4 {
+  font-feature-settings: 'ss01';
+  transition: font-variation-settings 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 input, textarea, select, button {
-  color-scheme: light;
+  color-scheme: inherit;
 }
 
 a {
@@ -211,11 +255,11 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: var(--surface-subtle);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--text-faint);
   border-radius: 6px;
 }
 
@@ -239,7 +283,6 @@ img {
     transform: none !important;
   }
 
-  /* Preserve opacity transitions (they don't cause vestibular issues) */
   .fade-in-section,
   .fade-in-section.visible {
     opacity: 1 !important;
@@ -249,9 +292,7 @@ img {
 
   .blob-1,
   .blob-2,
-  .eyebrow-dot,
   .scroll-line,
-  .chip-top-left,
   .chip-top-right,
   .chip-bottom {
     animation: none !important;
@@ -284,8 +325,8 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(99, 102, 241, 0.08);
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: color-mix(in srgb, var(--primary-color) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
   border-radius: 100px;
   padding: 5px 16px;
   font-size: 0.78rem;

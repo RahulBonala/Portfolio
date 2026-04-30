@@ -40,9 +40,8 @@
 .course-eyebrow-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  background: rgba(108, 99, 255, 0.1);
-  border: 1px solid rgba(108, 99, 255, 0.25);
+  background: rgba(108, 99, 255, 0.08);
+  border: 1px solid rgba(108, 99, 255, 0.2);
   border-radius: 100px;
   padding: 6px 18px;
   font-size: 0.75rem;
@@ -50,20 +49,6 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: #6c63ff;
-}
-
-.course-eyebrow-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #6c63ff;
-  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.25);
-  animation: coursePulse 2.5s ease-in-out infinite;
-}
-
-@keyframes coursePulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.25); }
-  50% { box-shadow: 0 0 0 6px rgba(108, 99, 255, 0.08); }
 }
 
 /* ── Headline ────────────────────────────────────────────────── */
@@ -75,20 +60,6 @@
   line-height: 1.15;
   margin-bottom: 12px;
   color: #fff;
-}
-
-.course-headline-accent {
-  background: linear-gradient(135deg, #6c63ff 0%, #a78bfa 50%, #6c63ff 100%);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: courseGradient 4s ease infinite;
-}
-
-@keyframes courseGradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 .course-tagline {
@@ -132,89 +103,52 @@
 }
 
 .course-highlight-marker {
-  color: #6c63ff;
-  font-size: 0.75rem;
+  color: rgba(108, 99, 255, 0.5);
+  font-size: 0.95rem;
+  font-weight: 400;
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: 0;
+  line-height: 1.6;
 }
 
 /* ── Detail cards grid ───────────────────────────────────────── */
 .course-details-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
-  max-width: 720px;
-  margin: 0 auto 48px;
+  max-width: 600px;
+  margin: 0 auto 56px;
 }
 
 .course-detail-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  padding: 24px 16px;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 20px 22px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  text-align: center;
+  border-radius: 14px;
   transition: border-color 0.3s ease, background 0.3s ease;
 }
 
 .course-detail-card:hover {
-  border-color: rgba(108, 99, 255, 0.25);
-  background: rgba(108, 99, 255, 0.04);
-}
-
-.course-detail-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: rgba(108, 99, 255, 0.1);
-  color: #6c63ff;
+  border-color: rgba(108, 99, 255, 0.2);
+  background: rgba(108, 99, 255, 0.03);
 }
 
 .course-detail-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.35);
 }
 
 .course-detail-value {
-  font-size: 0.92rem;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
-}
-
-/* ── Trust Badge ─────────────────────────────────────────────── */
-.course-trust {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  max-width: 600px;
-  margin: 0 auto 56px;
-  padding: 18px 28px;
-  background: rgba(108, 99, 255, 0.06);
-  border: 1px solid rgba(108, 99, 255, 0.15);
-  border-radius: 14px;
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1.6;
-}
-
-.course-trust svg {
-  color: #6c63ff;
-  flex-shrink: 0;
-}
-
-.course-trust strong {
-  color: #6c63ff;
-  font-weight: 700;
 }
 
 /* ── Steps ────────────────────────────────────────────────────── */
@@ -303,21 +237,8 @@
   align-items: baseline;
   justify-content: center;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
-}
-
-.course-price-original {
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
-  text-decoration: line-through;
-  text-decoration-color: rgba(220, 38, 38, 0.6);
-  text-decoration-thickness: 2px;
-}
-
-.course-price-original-currency {
-  font-size: 0.95rem;
 }
 
 .course-price-current {
@@ -344,29 +265,6 @@
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.35);
   margin-left: 2px;
-}
-
-.course-price-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 100px;
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  color: #10b981;
-  white-space: nowrap;
-}
-
-.course-price-savings {
-  text-align: center;
-  font-size: 0.85rem;
-  color: #10b981;
-  font-weight: 600;
-  margin-bottom: 32px;
-  opacity: 0.8;
 }
 
 .course-action-buttons {
@@ -404,111 +302,6 @@
   gap: 8px;
 }
 
-.course-pay-discount-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 12px;
-  background: rgba(16, 185, 129, 0.08);
-  border: 1px dashed rgba(16, 185, 129, 0.3);
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #10b981;
-  letter-spacing: 0.02em;
-}
-
-.course-pay-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 32px;
-  background: #6c63ff;
-  color: #fff;
-  font-size: 0.95rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 14px;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 24px rgba(108, 99, 255, 0.35);
-  white-space: nowrap;
-}
-
-.course-pay-btn:hover {
-  background: #5a52e0;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 36px rgba(108, 99, 255, 0.5);
-}
-
-.course-pay-btn--done {
-  background: rgba(16, 185, 129, 0.15);
-  color: #10b981;
-  box-shadow: none;
-  cursor: default;
-  border: 1px solid rgba(16, 185, 129, 0.25);
-}
-
-.course-pay-btn--done:hover {
-  background: rgba(16, 185, 129, 0.15);
-  transform: none;
-  box-shadow: none;
-}
-
-/* Calendar Button */
-.course-calendar-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.course-calendar-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 32px;
-  font-size: 0.95rem;
-  font-weight: 700;
-  border: none;
-  border-radius: 14px;
-  letter-spacing: 0.02em;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  white-space: nowrap;
-}
-
-.course-calendar-btn--locked {
-  background: rgba(255, 255, 255, 0.05);
-  color: rgba(255, 255, 255, 0.25);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  cursor: not-allowed;
-}
-
-.course-calendar-btn--active {
-  background: linear-gradient(135deg, #6c63ff, #8b5cf6);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 4px 24px rgba(108, 99, 255, 0.35);
-  animation: courseUnlock 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.course-calendar-btn--active:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 36px rgba(108, 99, 255, 0.5);
-}
-
-@keyframes courseUnlock {
-  0% { transform: scale(0.9); opacity: 0.5; }
-  60% { transform: scale(1.04); }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-.course-calendar-hint {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.25);
-  font-style: italic;
-}
-
 /* ── Footer note ─────────────────────────────────────────────── */
 .course-footer-note {
   text-align: center;
@@ -528,33 +321,6 @@
 .course-contact-link:hover {
   color: #a78bfa;
   text-decoration-color: rgba(167, 139, 250, 0.5);
-}
-
-/* ── Toast ────────────────────────────────────────────────────── */
-.course-toast {
-  position: fixed;
-  bottom: 80px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  background: #111118;
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  border-radius: 14px;
-  color: #10b981;
-  font-size: 0.88rem;
-  font-weight: 600;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
-  z-index: 10001;
-  animation: courseToastIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  white-space: nowrap;
-}
-
-@keyframes courseToastIn {
-  from { opacity: 0; transform: translateX(-50%) translateY(12px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
@@ -577,23 +343,8 @@
     gap: 16px;
   }
 
-  .course-action-arrow {
-    transform: rotate(90deg);
-    margin-top: 0;
-  }
-
   .course-price-amount {
     font-size: 2.5rem;
-  }
-
-  .course-price-original {
-    font-size: 1.15rem;
-  }
-
-  .course-trust {
-    flex-direction: column;
-    text-align: center;
-    padding: 16px 20px;
   }
 }
 
@@ -612,15 +363,7 @@
   }
 
   .course-detail-card {
-    padding: 18px 12px;
-  }
-
-  .course-pay-btn,
-  .course-calendar-btn {
-    padding: 14px 24px;
-    font-size: 0.88rem;
-    width: 100%;
-    justify-content: center;
+    padding: 18px 16px;
   }
 
   .course-action-block {
@@ -641,19 +384,5 @@
   .course-step-connector {
     left: 18px;
     top: 42px;
-  }
-
-  .course-toast {
-    left: 16px;
-    right: 16px;
-    transform: none;
-    white-space: normal;
-    font-size: 0.82rem;
-    bottom: 72px;
-  }
-
-  @keyframes courseToastIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 }

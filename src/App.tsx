@@ -7,8 +7,6 @@ import Testimonials from './components/Testimonials';
 import AboutMe from './components/AboutMe';
 import Contact from './components/Contact';
 import CourseSection from './components/CourseSection';
-import CourseFab from './components/CourseBanner';
-import CoursePopup from './components/CoursePopup';
 import './App.css';
 
 function App() {
@@ -108,9 +106,9 @@ function App() {
             </div>
             <div className="footer-availability">
               <span className="footer-avail-dot" aria-hidden="true" />
-              <span>Open to full-time opportunities &amp; freelance projects</span>
+              <span>Available for full-time roles. Bangalore &mdash; remote anywhere.</span>
             </div>
-            <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved. Designed &amp; Built with ❤️</p>
+            <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
           </div>
         </div>
       </footer>
@@ -127,8 +125,6 @@ function App() {
           </svg>
         </button>
       )}
-      <CourseFab />
-      <CoursePopup />
     </div>
   );
 }

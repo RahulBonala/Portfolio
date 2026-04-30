@@ -46,10 +46,10 @@ const Testimonials: React.FC = () => {
     <section className="section testimonials-section">
       <div className="container">
         <div className="section-eyebrow">
-          <span className="eyebrow-pill">Social Proof</span>
+          <span className="eyebrow-pill">References</span>
         </div>
-        <h2 className="section-title">Impact in Their Words</h2>
-        <p className="section-subtitle">Feedback from colleagues and stakeholders at Smiths Detection.</p>
+        <h2 className="section-title">What colleagues say</h2>
+        <p className="section-subtitle">From teams I've worked with at Smiths Detection.</p>
 
         <div className="testimonials-wrapper"
           onMouseEnter={() => setIsAutoPlaying(false)}
