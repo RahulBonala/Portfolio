@@ -7,6 +7,7 @@ import Testimonials from './components/Testimonials';
 import AboutMe from './components/AboutMe';
 import Contact from './components/Contact';
 import CourseSection from './components/CourseSection';
+import SessionPill from './components/SessionPill';
 import './App.css';
 
 function App() {
@@ -125,6 +126,9 @@ function App() {
           </svg>
         </button>
       )}
+
+      {/* Quiet shortcut to the Course section. Auto-hides when Course is in/past view. */}
+      <SessionPill />
     </div>
   );
 }
