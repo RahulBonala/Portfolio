@@ -385,3 +385,17 @@
     display: inline-flex;
   }
 }
+
+/* ── Very small screens — keep the pill inside the viewport ── */
+@media (max-width: 480px) {
+  .header-pill {
+    padding: 6px 10px;
+    max-width: calc(100vw - 24px);
+  }
+
+  /* Social links live in the footer and Contact section; drop the
+     icon cluster here so the pill no longer overflows the viewport. */
+  .header-pill .icon-btn {
+    display: none;
+  }
+}
