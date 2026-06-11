@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTheme } from '../hooks/useTheme';
 import './Header.css';
 
 const NAV_LINKS = [
@@ -13,6 +14,7 @@ const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, toggle: toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -63,8 +65,8 @@ const Header: React.FC = () => {
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-bar">
-        <a href="#home" className="header-mark" aria-label="RB — back to top">
-          <span className="header-mark-initials">RB</span>
+        <a href="#home" className="header-mark" aria-label="Rahul Bonala — back to top">
+          <span className="header-mark-name">Rahul Bonala</span>
           <span className="header-mark-status" aria-hidden="true" />
         </a>
 
@@ -86,8 +88,29 @@ const Header: React.FC = () => {
         </nav>
 
         <div className="header-actions">
-          <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf" className="header-resume">
-            Resume
+          <button
+            type="button"
+            className="header-theme"
+            onClick={toggleTheme}
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+          >
+            {theme === 'dark' ? (
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="4" />
+                <path d="M12 2v2" /><path d="M12 20v2" />
+                <path d="m4.93 4.93 1.41 1.41" /><path d="m17.66 17.66 1.41 1.41" />
+                <path d="M2 12h2" /><path d="M20 12h2" />
+                <path d="m6.34 17.66-1.41 1.41" /><path d="m19.07 4.93-1.41 1.41" />
+              </svg>
+            ) : (
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+          </button>
+          <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf" className="header-resume" aria-label="Download resume">
+            <span className="header-resume-label">Resume</span>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="7 10 12 15 17 10" />
@@ -125,6 +148,7 @@ const Header: React.FC = () => {
           <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>GitHub</a>
           <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>LinkedIn</a>
           <a href="mailto:rahulbonala2002@gmail.com" tabIndex={isMenuOpen ? 0 : -1}>Email</a>
+          <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf" tabIndex={isMenuOpen ? 0 : -1}>Resume</a>
         </div>
       </div>
     </header>

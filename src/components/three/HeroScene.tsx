@@ -1,9 +1,15 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const ACCENT = '#c8f542';
-const INK = '#f2f2ef';
+/** Theme colors come from the CSS custom properties so light mode matches. */
+function readThemeColors() {
+  const styles = getComputedStyle(document.documentElement);
+  return {
+    accent: styles.getPropertyValue('--accent').trim() || '#c8f542',
+    ink: styles.getPropertyValue('--ink').trim() || '#f2f2ef',
+  };
+}
 
 /**
  * A multi-agent network: nodes scattered on a flattened shell, linked when
@@ -12,8 +18,22 @@ const INK = '#f2f2ef';
  */
 function Network({ count }: { count: number }) {
   const group = useRef<THREE.Group>(null);
+  const pointsMat = useRef<THREE.PointsMaterial>(null);
+  const linesMat = useRef<THREE.LineBasicMaterial>(null);
   const setDpr = useThree((s) => s.setDpr);
   const fps = useRef({ frames: 0, last: 0, degraded: false });
+  const initial = useMemo(() => readThemeColors(), []);
+
+  // Follow live theme switches without remounting the WebGL context
+  useEffect(() => {
+    const obs = new MutationObserver(() => {
+      const { accent, ink } = readThemeColors();
+      pointsMat.current?.color.set(accent);
+      linesMat.current?.color.set(ink);
+    });
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => obs.disconnect();
+  }, []);
 
   const { positions, linePositions } = useMemo(() => {
     // Seeded PRNG (mulberry32) — pure, and the constellation is stable across renders
@@ -84,8 +104,9 @@ function Network({ count }: { count: number }) {
           <bufferAttribute attach="attributes-position" args={[positions, 3]} />
         </bufferGeometry>
         <pointsMaterial
+          ref={pointsMat}
           size={0.045}
-          color={ACCENT}
+          color={initial.accent}
           transparent
           opacity={0.9}
           sizeAttenuation
@@ -96,7 +117,13 @@ function Network({ count }: { count: number }) {
         <bufferGeometry>
           <bufferAttribute attach="attributes-position" args={[linePositions, 3]} />
         </bufferGeometry>
-        <lineBasicMaterial color={INK} transparent opacity={0.1} depthWrite={false} />
+        <lineBasicMaterial
+          ref={linesMat}
+          color={initial.ink}
+          transparent
+          opacity={0.1}
+          depthWrite={false}
+        />
       </lineSegments>
     </group>
   );

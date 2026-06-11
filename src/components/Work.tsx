@@ -15,76 +15,45 @@ const ARCHIVE = [
   { name: 'Waggle App', kind: 'Marketplace — trusted dog walkers', live: 'https://waggle-app-pied.vercel.app/', proto: 'https://www.figma.com/make/4FaGz8I3cnyPdCtSFmGpOm/Waggle-Mobile-App-Design?node-id=0-1&p=f&fullscreen=1' },
 ];
 
-/** SVG diagram for the migration project — two stacks, one moving bridge */
-const MigrationVisual = () => (
-  <svg className="work-svg" viewBox="0 0 560 400" role="img" aria-label="Diagram of a frontend platform migration from one stack to another">
+/**
+ * SVG diagram for the live sessions — a clean top-down flow:
+ * (your project + my AI workflow) -> one hour together -> a written next step.
+ * All colors are CSS classes (Work.css) so both themes render correctly.
+ */
+const CourseVisual = () => (
+  <svg className="work-svg course-visual" viewBox="0 0 560 400" role="img" aria-label="Diagram of a live working session: your project plus my AI workflow go into one hour together, and you leave with a written next step">
     <defs>
-      <marker id="mig-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-        <path d="M 0 0 L 10 5 L 0 10 z" fill="#c8f542" />
+      <marker id="cv-arrow" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path className="cv-arrowhead" d="M 0 0 L 10 5 L 0 10 z" />
       </marker>
     </defs>
-    {/* legacy stack */}
-    <g>
-      <rect x="40" y="80" width="170" height="44" rx="8" fill="none" stroke="rgba(242,242,239,0.3)" />
-      <rect x="40" y="140" width="170" height="44" rx="8" fill="none" stroke="rgba(242,242,239,0.22)" />
-      <rect x="40" y="200" width="170" height="44" rx="8" fill="none" stroke="rgba(242,242,239,0.14)" />
-      <text x="125" y="107" textAnchor="middle" fill="rgba(242,242,239,0.55)" fontSize="13" fontFamily="Fira Code, monospace">storefront</text>
-      <text x="125" y="167" textAnchor="middle" fill="rgba(242,242,239,0.45)" fontSize="13" fontFamily="Fira Code, monospace">checkout</text>
-      <text x="125" y="227" textAnchor="middle" fill="rgba(242,242,239,0.35)" fontSize="13" fontFamily="Fira Code, monospace">accounts</text>
-      <text x="125" y="55" textAnchor="middle" fill="rgba(242,242,239,0.4)" fontSize="11" fontFamily="Fira Code, monospace" letterSpacing="2">FLIPKART STACK</text>
-    </g>
-    {/* migration arrows */}
-    <g stroke="#c8f542" strokeWidth="1.5" fill="none" strokeDasharray="6 5">
-      <path d="M 218 102 C 290 102, 290 102, 348 102" markerEnd="url(#mig-arrow)" />
-      <path d="M 218 162 C 290 162, 290 162, 348 162" markerEnd="url(#mig-arrow)" />
-      <path d="M 218 222 C 290 222, 290 222, 348 222" markerEnd="url(#mig-arrow)" />
-    </g>
-    {/* new stack */}
-    <g>
-      <rect x="352" y="80" width="170" height="44" rx="8" fill="rgba(200,245,66,0.07)" stroke="#c8f542" />
-      <rect x="352" y="140" width="170" height="44" rx="8" fill="rgba(200,245,66,0.05)" stroke="rgba(200,245,66,0.6)" />
-      <rect x="352" y="200" width="170" height="44" rx="8" fill="none" stroke="rgba(200,245,66,0.35)" />
-      <text x="437" y="107" textAnchor="middle" fill="#c8f542" fontSize="13" fontFamily="Fira Code, monospace">storefront</text>
-      <text x="437" y="167" textAnchor="middle" fill="rgba(200,245,66,0.8)" fontSize="13" fontFamily="Fira Code, monospace">checkout</text>
-      <text x="437" y="227" textAnchor="middle" fill="rgba(200,245,66,0.6)" fontSize="13" fontFamily="Fira Code, monospace">accounts</text>
-      <text x="437" y="55" textAnchor="middle" fill="rgba(200,245,66,0.7)" fontSize="11" fontFamily="Fira Code, monospace" letterSpacing="2">CUREFOODS STACK</text>
-    </g>
-    {/* live traffic line */}
-    <g>
-      <line x1="40" y1="300" x2="522" y2="300" stroke="rgba(242,242,239,0.18)" />
-      <circle cx="120" cy="300" r="3" fill="#c8f542" />
-      <circle cx="280" cy="300" r="3" fill="#c8f542" />
-      <circle cx="440" cy="300" r="3" fill="#c8f542" />
-      <text x="281" y="330" textAnchor="middle" fill="rgba(242,242,239,0.4)" fontSize="11" fontFamily="Fira Code, monospace" letterSpacing="2">LIVE ORDERS — ZERO DOWNTIME ALLOWED</text>
-    </g>
-  </svg>
-);
 
-/** SVG diagram for the course — a workflow loop, person + AI */
-const CourseVisual = () => (
-  <svg className="work-svg" viewBox="0 0 560 400" role="img" aria-label="Diagram of a live working session: your project plus AI tools, one hour, a written next step">
-    <g fill="none" stroke="rgba(242,242,239,0.25)">
-      <circle cx="280" cy="190" r="120" strokeDasharray="4 6" />
-    </g>
+    {/* Inputs */}
     <g>
-      <rect x="200" y="40" width="160" height="42" rx="21" fill="rgba(200,245,66,0.08)" stroke="#c8f542" />
-      <text x="280" y="66" textAnchor="middle" fill="#c8f542" fontSize="13" fontFamily="Fira Code, monospace">your project</text>
+      <rect className="cv-pill cv-pill--accent" x="70" y="36" width="190" height="44" rx="22" />
+      <text className="cv-text cv-text--accent" x="165" y="63" textAnchor="middle">your project</text>
+      <rect className="cv-pill" x="300" y="36" width="190" height="44" rx="22" />
+      <text className="cv-text" x="395" y="63" textAnchor="middle">my ai workflow</text>
     </g>
-    <g>
-      <rect x="60" y="240" width="150" height="42" rx="21" fill="none" stroke="rgba(242,242,239,0.35)" />
-      <text x="135" y="266" textAnchor="middle" fill="rgba(242,242,239,0.7)" fontSize="13" fontFamily="Fira Code, monospace">my workflow</text>
+
+    {/* Connectors into the hour */}
+    <g className="cv-flow">
+      <line x1="195" y1="84" x2="243" y2="139" markerEnd="url(#cv-arrow)" />
+      <line x1="365" y1="84" x2="317" y2="139" markerEnd="url(#cv-arrow)" />
     </g>
-    <g>
-      <rect x="350" y="240" width="150" height="42" rx="21" fill="none" stroke="rgba(242,242,239,0.35)" />
-      <text x="425" y="266" textAnchor="middle" fill="rgba(242,242,239,0.7)" fontSize="13" fontFamily="Fira Code, monospace">ai tools</text>
+
+    {/* The hour */}
+    <circle className="cv-ring" cx="280" cy="200" r="78" />
+    <circle className="cv-core" cx="280" cy="200" r="62" />
+    <text className="cv-hour" x="280" y="200" textAnchor="middle">1 hour</text>
+    <text className="cv-hour-sub" x="280" y="226" textAnchor="middle">live · together</text>
+
+    {/* Output */}
+    <g className="cv-flow">
+      <line x1="280" y1="266" x2="280" y2="300" markerEnd="url(#cv-arrow)" />
     </g>
-    <g stroke="#c8f542" strokeWidth="1.5" fill="none">
-      <path d="M 230 85 C 170 130, 140 180, 135 236" />
-      <path d="M 330 85 C 390 130, 420 180, 425 236" />
-      <path d="M 215 261 L 345 261" strokeDasharray="5 5" />
-    </g>
-    <text x="280" y="200" textAnchor="middle" fill="rgba(242,242,239,0.9)" fontSize="30" fontFamily="Syne, sans-serif" fontWeight="700">1 hour</text>
-    <text x="280" y="350" textAnchor="middle" fill="rgba(242,242,239,0.45)" fontSize="12" fontFamily="Fira Code, monospace" letterSpacing="2">YOU LEAVE WITH A WRITTEN NEXT STEP</text>
+    <rect className="cv-pill cv-pill--accent" x="120" y="312" width="320" height="44" rx="22" />
+    <text className="cv-text cv-text--accent" x="280" y="339" textAnchor="middle">a written next step</text>
   </svg>
 );
 
@@ -107,22 +76,6 @@ const PROJECTS = [
   },
   {
     index: '02',
-    meta: 'Production Engineering · Now',
-    title: 'CureFoods × Flipkart',
-    tagline: 'Migrating a live platform without dropping an order.',
-    story:
-      'A live food-tech platform is moving off Flipkart’s commerce stack and onto CureFoods’ own — while real orders keep flowing. I lead the frontend side of that migration: auditing what exists, rebuilding it on the new foundation at feature parity first, and keeping every seam invisible to the customers ordering dinner through it.',
-    points: [
-      'Large-scale production code where mistakes are measured in live orders, not mockups',
-      'Parity-first migration strategy — rebuild faithfully, then improve deliberately',
-      'Coordination across two engineering organisations and their release trains',
-    ],
-    stack: ['React', 'TypeScript', 'Production tooling'],
-    links: [{ label: 'Private work — ask me about it', href: '#contact' }],
-    visual: <MigrationVisual />,
-  },
-  {
-    index: '03',
     meta: 'AI Agents · Experiment',
     title: 'BYOC — SDLC Agents',
     tagline: 'What if the agency was software?',
@@ -138,7 +91,7 @@ const PROJECTS = [
     visual: <img src={byocImg} alt="Build Your Own Company configurator" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
-    index: '04',
+    index: '03',
     meta: 'Teaching · Live Sessions',
     title: 'AI Tools for Builders',
     tagline: 'Not a video library. A working session.',
@@ -198,7 +151,7 @@ const Work: React.FC = () => {
           <em>002</em> Selected work
         </div>
         <h2 className="sec-title" data-reveal="up">
-          Four things<br />
+          Three things<br />
           <span className="accent-word">worth your time.</span>
         </h2>
       </div>

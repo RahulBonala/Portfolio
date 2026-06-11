@@ -1,6 +1,6 @@
-# Design Guidelines — v3 (futuristic editorial, dark only)
+# Design Guidelines — v3 (futuristic editorial, dark-first)
 
-The reference for working on this portfolio after the 2026 redesign. The previous light/dark "product designer" system was replaced wholesale with a dark editorial system positioning Rahul as a **frontend developer with deep AI expertise**.
+The reference for working on this portfolio after the 2026 redesign. A dark-first editorial system positioning Rahul as a **product designer & developer specialising in AI-native UI/UX** (currently at Ginthi.ai). A light theme exists as a toggle; dark is the default and the identity.
 
 > The controlling rule is unchanged: **don't make it look like AI slop.** Every other rule is downstream of that. The redesign dodges the 2026 slop palette (dark + purple/cyan glow + glassmorphism + bento grids) on purpose.
 
@@ -8,14 +8,14 @@ The reference for working on this portfolio after the 2026 redesign. The previou
 
 ## 1. Voice and principles
 
-- **Specificity over abstraction.** Real numbers, real employers, real stacks. "Leading the Flipkart → CureFoods frontend migration" — yes. "Production impact at scale" alone — no.
+- **Specificity over abstraction.** Real numbers, real employers, real stacks — but never name client companies or partner organisations that should stay private. Describe that work qualitatively instead.
 - **One signature per page.** The signature is the Syne display type + electric lime on near-black. Everything else stays quiet (neutral grays, hairlines).
 - **First person, conversational, no buzzwords.** Past tense for shipped work.
-- **Honest claims only.** Metrics shown (95% CSAT, 80% faster workflows, 70% fewer tickets) come from verified Smiths Detection work. Don't invent numbers for work that doesn't have them — describe scope qualitatively instead (see the CureFoods copy).
+- **Honest claims only.** Metrics shown (95% CSAT, 80% faster workflows, 70% fewer tickets) come from verified Smiths Detection work. Don't invent numbers for work that doesn't have them — describe scope qualitatively instead.
 
 ## 2. Tokens
 
-All tokens live in [src/index.css](src/index.css). Single dark theme — there is no light mode and no theme toggle.
+All tokens live in [src/index.css](src/index.css). Two themes: **dark (default)** = near-black + electric lime; **light** = off-white + the v2 indigo (`#4f46e5`). The toggle lives in the header; `useTheme` ([src/hooks/useTheme.ts](src/hooks/useTheme.ts)) persists the choice and a pre-paint script in index.html prevents flash. Never hardcode a theme color — everything (including the SVG diagrams and the three.js scene) reads the CSS variables.
 
 | Token | Value | Use |
 |---|---|---|
@@ -27,7 +27,7 @@ All tokens live in [src/index.css](src/index.css). Single dark theme — there i
 | `--accent` | `#c8f542` (electric lime) | The one accent. CTAs, labels, meters, highlights |
 | `--accent-ink` | `#0a0c02` | Text on top of accent |
 
-Fonts: **Syne** (600–800, display, always uppercase for headings), **Plus Jakarta Sans** (body), **Fira Code** (mono labels). Loaded from Google Fonts in [index.html](index.html).
+Fonts: **Syne** (700/800, display, always uppercase for headings), **Plus Jakarta Sans** (body), **Fira Code** (mono labels). Loaded from Google Fonts in [index.html](index.html).
 
 Type rules:
 - Section headings use `.sec-title`; sized with `clamp()` floors small enough that the longest single word fits a 375px viewport (Syne 800 is an extended face — always test "ENGINEER", "SOMETHING", "BESTANSWERS.AI").
@@ -37,7 +37,7 @@ Type rules:
 
 - **Lenis** smooth scroll, driven by the GSAP ticker (set up in [src/App.tsx](src/App.tsx)). Anchor clicks route through `lenis.scrollTo`.
 - **Global reveal**: any element with `data-reveal` (`up | left | right | scale`) animates in once via ScrollTrigger; `data-reveal-group` staggers direct children. Ease is `expo.out` — never linear.
-- **Scene changes**: hero content/visual scrub out on scroll; Work media + giant indexes parallax at different speeds; Approach pins and crossfades beliefs (desktop only via `gsap.matchMedia`).
+- **Scene changes**: hero content/visual scrub out on scroll; Work media + giant indexes parallax at different speeds; Approach pins and swaps beliefs **strictly sequentially** — never crossfade them, overlapping statements read as broken (desktop only via `gsap.matchMedia`; narrow viewports get a static stacked list).
 - **Custom cursor** ([Cursor.tsx](src/components/Cursor.tsx)): an accent dot that expands over interactives, `data-cursor-label` adds a word. Fine-pointer devices only. (v2 banned this; v3 ships it deliberately as part of the futuristic direction — keep it restrained, never add trails/physics.)
 - **Preloader** ([Preloader.tsx](src/components/Preloader.tsx)): once per session, hard cap well under 2s, dispatches `rb:preloader-done` which the hero intro waits for.
 - **Reduced motion**: every system (Lenis, reveals, pin, cursor, preloader, 3D) checks `prefers-reduced-motion` and turns itself off. Content must be fully readable with zero JS animation.
@@ -74,7 +74,7 @@ src/
     ├── Hero.tsx         — 3D hero + intro choreography + facts strip
     ├── three/HeroScene.tsx — lazy R3F particle network
     ├── About.tsx        — statement, prose, numbers, timeline
-    ├── Work.tsx         — 4 project worlds + archive (data inline)
+    ├── Work.tsx         — 3 project worlds + archive (data inline)
     ├── Skills.tsx       — segment-meter specimen rows
     ├── Approach.tsx     — pinned manifesto + quotes
     ├── Contact.tsx      — direct email + EmailJS form

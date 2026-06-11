@@ -8,29 +8,41 @@
   <link rel="icon" type="image/svg+xml" href="/logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="dark light" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Apply persisted theme before first paint to avoid flash (default: dark) -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('portfolio-theme');
+        var theme = (stored === 'light' || stored === 'dark') ? stored : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+    })();
+  </script>
 
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="dn7zrSFJ9YeU3Xf_YiNrlGOqahY9XnfirkrEmUio5IY" />
 
   <meta name="theme-color" content="#060607" />
 
-  <!-- Title & Description — tuned for "Rahul frontend developer AI" -->
-  <title>Rahul Bonala — Frontend Developer & AI Engineer</title>
+  <!-- Title & Description -->
+  <title>Rahul Bonala — Product Designer & Developer</title>
   <meta name="description"
-    content="Rahul Bonala is a frontend developer building AI-native products. Creator of BestAnswers.AI, leading the Flipkart → CureFoods frontend migration, and teaching AI Tools for Builders. Based in Bangalore, working globally." />
+    content="Rahul Bonala is a product designer and developer specialising in AI-native UI/UX. Building at Ginthi.ai, creator of BestAnswers.AI, and teaching AI Tools for Builders. Based in Bangalore, working globally." />
   <meta name="keywords"
-    content="Rahul frontend developer AI, Rahul Bonala, AI engineer, React developer Bangalore, BestAnswers.AI, frontend migration" />
+    content="Rahul Bonala, product designer AI, UI UX designer Bangalore, product developer, BestAnswers.AI, AI Tools for Builders" />
   <meta name="author" content="Sri Sai Rahul Bonala" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://rahulbonala.me/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Rahul Bonala — Frontend Developer & AI Engineer" />
+  <meta property="og:title" content="Rahul Bonala — Product Designer & Developer" />
   <meta property="og:description"
-    content="Frontend developer building AI-native products. Creator of BestAnswers.AI. Leading a large-scale production frontend migration. Teaching AI Tools for Builders." />
+    content="Product designer and developer specialising in AI-native UI/UX. Creator of BestAnswers.AI. Teaching AI Tools for Builders." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rahulbonala.me/" />
   <meta property="og:image" content="https://rahulbonala.me/og-image.png" />
@@ -39,11 +51,11 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rahul Bonala — Frontend Developer & AI Engineer" />
+  <meta name="twitter:title" content="Rahul Bonala — Product Designer & Developer" />
   <meta name="twitter:description"
-    content="Frontend developer building AI-native products — BestAnswers.AI, large-scale production migrations, and the AI Tools for Builders course." />
+    content="Product designer and developer specialising in AI-native UI/UX — BestAnswers.AI, live products, and the AI Tools for Builders course." />
   <meta name="twitter:image" content="https://rahulbonala.me/og-image.png" />
-  <meta name="twitter:image:alt" content="Rahul Bonala — frontend developer and AI engineer portfolio" />
+  <meta name="twitter:image:alt" content="Rahul Bonala — product designer and developer portfolio" />
 
   <!-- Structured data — Person -->
   <script type="application/ld+json">
@@ -52,8 +64,8 @@
     "@type": "Person",
     "name": "Sri Sai Rahul Bonala",
     "url": "https://rahulbonala.me/",
-    "jobTitle": "Frontend Developer & AI Engineer",
-    "knowsAbout": ["React", "TypeScript", "AI tools", "Frontend architecture", "UI engineering"],
+    "jobTitle": "Product Designer & Developer",
+    "knowsAbout": ["Product design", "UI/UX", "AI tools", "React", "TypeScript", "Figma"],
     "address": { "@type": "PostalAddress", "addressLocality": "Bangalore", "addressCountry": "IN" },
     "sameAs": [
       "https://github.com/rahulbonala",

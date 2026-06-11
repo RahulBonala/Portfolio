@@ -11,12 +11,12 @@ const NUMBERS = [
 const TIMELINE = [
   {
     period: 'Now',
-    role: 'Frontend Engineer — platform migration lead',
-    org: 'CureFoods × Flipkart',
-    note: 'Leading the frontend migration of a live food-tech platform off Flipkart’s commerce stack and onto CureFoods’ own — with production traffic flowing the whole time.',
+    role: 'Product Designer — AI specialist (UI/UX)',
+    org: 'Ginthi.ai',
+    note: 'Designing and developing a live tech platform with production traffic flowing the whole time — AI-native UI and UX, from concept to shipped code.',
   },
   {
-    period: '2023 —',
+    period: 'Jan 2023 – Apr 2026',
     role: 'UI/UX Designer & Developer',
     org: 'Smiths Detection',
     note: 'Designed and built service consoles used daily by engineers across Europe, APAC, and North America. React, Java, and Python behind the screens.',
@@ -53,11 +53,12 @@ const About: React.FC = () => {
               first the React in front, then the Java and Python behind it.
             </p>
             <p>
-              That habit compounded. Today I work as a frontend engineer leading a
-              production migration from Flipkart&apos;s commerce stack to CureFoods&apos;
-              own platform — the kind of work where mistakes are measured in live orders,
-              not mockups. Nights and weekends, I build with AI: BestAnswers.AI puts four
-              models in a room and makes them argue before you get an answer.
+              That habit compounded. Today I&apos;m the product designer and AI
+              specialist at Ginthi.ai, designing and developing a live platform with
+              production traffic flowing the whole time — the kind of work where
+              mistakes show up in front of real users, not in mockups. Nights and
+              weekends, I build with AI: BestAnswers.AI puts four models in a room
+              and makes them argue before you get an answer.
             </p>
             <p>
               And because the fastest way to sharpen a workflow is to teach it, I run{' '}

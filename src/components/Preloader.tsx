@@ -67,7 +67,7 @@ const Preloader: React.FC = () => {
     <div className={`preloader ${phase === 'exiting' ? 'preloader--exit' : ''}`} aria-hidden="true">
       <div className="preloader-inner">
         <span className="preloader-mark">RB</span>
-        <span className="preloader-tag">Frontend &times; AI</span>
+        <span className="preloader-tag">Design &times; Code &times; AI</span>
       </div>
       <span className="preloader-count">{progress.toString().padStart(3, '0')}</span>
     </div>

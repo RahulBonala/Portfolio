@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal portfolio for **Sri Sai Rahul Bonala** — Frontend Developer & AI Engineer.
+Personal portfolio for **Sri Sai Rahul Bonala** — Product Designer & Developer (AI-native UI/UX).
 
 Live at [rahulbonala.me](https://rahulbonala.me).
 

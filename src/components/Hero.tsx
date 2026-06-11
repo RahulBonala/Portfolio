@@ -17,9 +17,9 @@ const supportsWebGL = () => {
 };
 
 const FACTS = [
-  { k: 'Now', v: 'Leading the Flipkart → CureFoods frontend migration' },
+  { k: 'Now', v: 'Product Designer — AI specialist at Ginthi.ai' },
   { k: 'Built', v: 'BestAnswers.AI — multi-agent answer engine' },
-  { k: 'Teaching', v: 'AI Tools for Builders — live course' },
+  { k: 'Teaching', v: 'AI Tools for Builders — live sessions' },
   { k: 'Based', v: 'Bangalore, India — working globally' },
 ];
 
@@ -126,7 +126,8 @@ const Hero: React.FC = () => {
         {/* Static SVG constellation — the graceful fallback when WebGL is off */}
         {!show3D && (
           <svg className="hero-fallback-net" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
-            <g stroke="rgba(242,242,239,0.12)" strokeWidth="1">
+            {/* Colors come from CSS (Hero.css) so both themes work */}
+            <g className="net-lines" strokeWidth="1">
               <line x1="120" y1="160" x2="320" y2="90" /><line x1="320" y1="90" x2="520" y2="180" />
               <line x1="520" y1="180" x2="730" y2="120" /><line x1="320" y1="90" x2="420" y2="300" />
               <line x1="120" y1="160" x2="240" y2="380" /><line x1="240" y1="380" x2="420" y2="300" />
@@ -134,7 +135,7 @@ const Hero: React.FC = () => {
               <line x1="640" y1="360" x2="780" y2="480" /><line x1="240" y1="380" x2="380" y2="510" />
               <line x1="380" y1="510" x2="600" y2="470" /><line x1="600" y1="470" x2="780" y2="480" />
             </g>
-            <g fill="#c8f542">
+            <g className="net-nodes">
               <circle cx="120" cy="160" r="3.5" /><circle cx="320" cy="90" r="2.5" />
               <circle cx="520" cy="180" r="3" /><circle cx="730" cy="120" r="2.5" />
               <circle cx="420" cy="300" r="4" /><circle cx="240" cy="380" r="2.5" />
@@ -160,15 +161,15 @@ const Hero: React.FC = () => {
         </p>
 
         <h1 className="hero-title">
-          <span className="hero-line"><span className="hero-line-inner">Frontend</span></span>
-          <span className="hero-line"><span className="hero-line-inner">engineer <em>for</em></span></span>
+          <span className="hero-line"><span className="hero-line-inner">Product</span></span>
+          <span className="hero-line"><span className="hero-line-inner">designer <em>for</em></span></span>
           <span className="hero-line"><span className="hero-line-inner"><em>the</em> AI era<span className="hero-dot">.</span></span></span>
         </h1>
 
         <p className="hero-sub">
-          I build production interfaces at scale — currently leading a live
-          platform migration from Flipkart&apos;s stack to CureFoods&apos; own —
-          and I ship AI products of my own, like BestAnswers.AI.
+          I design AI-native products and write the code that ships them —
+          because handoff is where most good ideas quietly die. Right now
+          that&apos;s at Ginthi.ai, and on my own products like BestAnswers.AI.
         </p>
 
         <div className="hero-ctas">

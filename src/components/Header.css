@@ -29,11 +29,13 @@
 .header-mark {
   display: flex;
   align-items: flex-start;
-  gap: 5px;
+  gap: 6px;
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 1.15rem;
-  letter-spacing: -0.01em;
+  font-size: 1.02rem;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .header-mark-status {
@@ -98,7 +100,27 @@
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
+}
+
+.header-theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  color: var(--ink);
+  transition: border-color var(--transition-fast), color var(--transition-fast),
+    background var(--transition-fast), transform var(--transition-fast);
+}
+
+.header-theme:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-faint);
+  transform: rotate(15deg);
 }
 
 .header-resume {
@@ -221,7 +243,17 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 860px) {
+@media (max-width: 1060px) {
+  .header-nav ul {
+    gap: 14px;
+  }
+
+  .header-link-index {
+    display: none;
+  }
+}
+
+@media (max-width: 880px) {
   .header-nav {
     display: none;
   }
@@ -232,5 +264,33 @@
 
   .header-resume {
     padding: 7px 13px;
+  }
+}
+
+@media (max-width: 540px) {
+  /* Icon-only resume button so the full-name mark + actions fit 375px */
+  .header-resume-label {
+    display: none;
+  }
+
+  .header-resume {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+
+  .header-mark {
+    font-size: 0.88rem;
+  }
+
+  .header-theme {
+    width: 34px;
+    height: 34px;
+  }
+
+  .header-actions {
+    gap: 8px;
   }
 }

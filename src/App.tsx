@@ -124,7 +124,7 @@ function App() {
       <footer className="footer">
         <div className="container footer-inner">
           <p className="footer-name">Sri Sai Rahul Bonala</p>
-          <p className="footer-role">Frontend Developer · AI Engineer · Teacher</p>
+          <p className="footer-role">Product Designer · Developer · Teacher</p>
           <div className="footer-links">
             <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span className="footer-dot">·</span>

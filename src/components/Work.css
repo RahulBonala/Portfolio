@@ -80,7 +80,7 @@
   width: 78%;
   max-height: 78%;
   object-fit: contain;
-  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.3));
   transition: transform 0.6s var(--ease-out);
 }
 
@@ -91,6 +91,61 @@
 .work-svg {
   width: 92%;
   height: auto;
+}
+
+/* ── Course visual (theme-aware via tokens) ─────────────────── */
+.course-visual .cv-pill {
+  fill: var(--bg-panel);
+  stroke: var(--hairline-strong);
+}
+
+.course-visual .cv-pill--accent {
+  fill: var(--accent-faint);
+  stroke: var(--accent);
+}
+
+.course-visual .cv-text {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  fill: var(--ink-secondary);
+}
+
+.course-visual .cv-text--accent {
+  fill: var(--accent);
+}
+
+.course-visual .cv-flow line {
+  stroke: var(--accent);
+  stroke-width: 1.6;
+}
+
+.course-visual .cv-arrowhead {
+  fill: var(--accent);
+}
+
+.course-visual .cv-ring {
+  fill: none;
+  stroke: var(--hairline);
+  stroke-dasharray: 4 6;
+}
+
+.course-visual .cv-core {
+  fill: var(--bg-raised);
+  stroke: var(--hairline-strong);
+}
+
+.course-visual .cv-hour {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 700;
+  fill: var(--ink);
+}
+
+.course-visual .cv-hour-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  fill: var(--ink-muted);
 }
 
 /* ── Info ───────────────────────────────────────────────────── */
@@ -233,7 +288,9 @@
 
 .work-archive-row {
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) 2fr auto;
+  /* Fixed first/last column widths so the middle column starts at the same x
+     in every row (each li is its own grid — auto columns would drift) */
+  grid-template-columns: minmax(120px, 220px) 1fr 190px;
   gap: 20px;
   align-items: baseline;
   padding: 18px 0;
@@ -265,6 +322,7 @@
 .work-archive-links {
   display: flex;
   gap: 18px;
+  justify-content: flex-end;
 }
 
 .work-archive-links a {

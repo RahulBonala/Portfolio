@@ -63,17 +63,21 @@ const Approach: React.FC = () => {
         scrollTrigger: {
           trigger: '.approach-stage',
           start: 'top top',
-          end: '+=220%',
+          end: '+=240%',
           pin: true,
-          scrub: 0.6,
+          scrub: 0.5,
         },
       });
 
+      // Strictly sequential: hold → fade the old one fully out → bring the
+      // new one in. No crossfade, so statements never overlap mid-scroll.
       beliefs.forEach((b, i) => {
         if (i === 0) return;
-        tl.to(beliefs[i - 1], { opacity: 0, yPercent: -6, duration: 1, ease: 'power2.in' }, i)
-          .fromTo(b, { opacity: 0, yPercent: 6 }, { opacity: 1, yPercent: 0, duration: 1, ease: 'power2.out' }, i + 0.35);
+        tl.to({}, { duration: 0.7 })
+          .to(beliefs[i - 1], { opacity: 0, yPercent: -8, duration: 0.45, ease: 'power1.in' })
+          .fromTo(b, { opacity: 0, yPercent: 8 }, { opacity: 1, yPercent: 0, duration: 0.45, ease: 'power1.out' });
       });
+      tl.to({}, { duration: 0.7 }); // rest on the last belief before unpinning
 
       return () => {
         gsap.set(beliefs, { clearProps: 'all' });

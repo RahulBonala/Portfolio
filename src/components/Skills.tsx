@@ -14,7 +14,7 @@ const DOMAINS: Domain[] = [
   {
     domain: 'Frontend core',
     skills: [
-      { name: 'React', note: 'Daily driver — production apps and migrations', level: 0.92 },
+      { name: 'React', note: 'Daily driver — production apps at scale', level: 0.92 },
       { name: 'TypeScript', note: 'Every project, strict mode on', level: 0.86 },
       { name: 'CSS & Motion', note: 'GSAP, scroll choreography, layout systems', level: 0.88 },
       { name: 'Three.js / R3F', note: 'Structural 3D — this page included', level: 0.66 },

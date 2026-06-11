@@ -4,7 +4,8 @@
    Fonts are loaded via <link> in index.html.
    ============================================================ */
 
-:root {
+:root,
+:root[data-theme='dark'] {
   color-scheme: dark;
   --header-height: 72px;
 
@@ -45,6 +46,29 @@
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 18px;
+}
+
+/* ── Light theme — white base, indigo accent ────────────────── */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --bg: #f7f8fb;
+  --bg-raised: #ffffff;
+  --bg-panel: #eef0f5;
+  --ink: #0f172a;
+  --ink-secondary: rgba(15, 23, 42, 0.74);
+  --ink-muted: rgba(15, 23, 42, 0.58);
+  --ink-faint: rgba(15, 23, 42, 0.32);
+  --hairline: rgba(15, 23, 42, 0.1);
+  --hairline-strong: rgba(15, 23, 42, 0.2);
+
+  --accent: #4f46e5; /* the indigo from v2 */
+  --accent-dim: rgba(79, 70, 229, 0.32);
+  --accent-faint: rgba(79, 70, 229, 0.07);
+  --accent-ink: #ffffff;
+
+  --color-success: #16a34a;
+  --color-error: #dc2626;
 }
 
 /* ── Reset ──────────────────────────────────────────────────── */
