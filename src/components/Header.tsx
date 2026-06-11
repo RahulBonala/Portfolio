@@ -147,7 +147,7 @@ const Header: React.FC = () => {
         <div className="menu-overlay-foot">
           <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>GitHub</a>
           <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>LinkedIn</a>
-          <a href="mailto:rahulbonala2002@gmail.com" tabIndex={isMenuOpen ? 0 : -1}>Email</a>
+          <a href="mailto:rahulbonala06@gmail.com" tabIndex={isMenuOpen ? 0 : -1}>Email</a>
           <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf" tabIndex={isMenuOpen ? 0 : -1}>Resume</a>
         </div>
       </div>

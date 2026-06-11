@@ -76,30 +76,6 @@
   font-size: 0.7rem;
 }
 
-.footer-availability {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.78rem;
-  color: var(--ink-muted);
-  margin-bottom: 8px;
-}
-
-.footer-avail-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--color-success);
-  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.25);
-  flex-shrink: 0;
-  animation: pulse-dot 2.5s ease-in-out infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.25); }
-  50% { box-shadow: 0 0 0 5px rgba(74, 222, 128, 0.08); }
-}
-
 .footer-copy {
   font-size: 0.74rem;
   color: var(--ink-muted);

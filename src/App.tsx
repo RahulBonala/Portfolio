@@ -130,13 +130,9 @@ function App() {
             <span className="footer-dot">·</span>
             <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
             <span className="footer-dot">·</span>
-            <a href="mailto:rahulbonala2002@gmail.com">Email</a>
+            <a href="mailto:rahulbonala06@gmail.com">Email</a>
             <span className="footer-dot">·</span>
             <a href="#work">Work</a>
-          </div>
-          <div className="footer-availability">
-            <span className="footer-avail-dot" aria-hidden="true" />
-            <span>Open to roles, freelance, and collaborations. Bangalore — remote anywhere.</span>
           </div>
           <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
         </div>

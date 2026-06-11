@@ -1,5 +1,7 @@
 /* Native cursor stays available — the dot augments rather than replaces,
-   except over interactive elements where the dot becomes the affordance. */
+   except over interactive elements where the dot becomes the affordance.
+   No blend modes: they invert the accent (indigo read as yellow on light),
+   so the dot is always the literal theme accent. */
 .cursor {
   position: fixed;
   top: 0;
@@ -8,15 +10,16 @@
   height: 10px;
   border-radius: 50%;
   background: var(--accent);
+  border: 1.5px solid transparent;
   pointer-events: none;
   z-index: 9998;
   opacity: 0;
+  /* background intentionally not transitioned — it must snap with the theme */
   transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out),
-    opacity 0.2s ease, background 0.25s var(--ease-out);
+    opacity 0.2s ease, border-color 0.25s var(--ease-out);
   display: flex;
   align-items: center;
   justify-content: center;
-  mix-blend-mode: difference;
 }
 
 .cursor--visible {
@@ -26,7 +29,8 @@
 .cursor--hover {
   width: 44px;
   height: 44px;
-  background: #fff; /* pure white inverts cleanly under difference blend */
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border-color: var(--accent);
 }
 
 .cursor--down {
@@ -37,8 +41,8 @@
 .cursor--label {
   width: 76px;
   height: 76px;
-  mix-blend-mode: normal;
   background: var(--accent);
+  border-color: transparent;
 }
 
 .cursor--label::after {

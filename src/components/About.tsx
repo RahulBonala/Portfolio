@@ -13,7 +13,7 @@ const TIMELINE = [
     period: 'Now',
     role: 'Product Designer — AI specialist (UI/UX)',
     org: 'Ginthi.ai',
-    note: 'Designing and developing a live tech platform with production traffic flowing the whole time — AI-native UI and UX, from concept to shipped code.',
+    note: 'I design and build Ginthi’s web platforms end to end — the interfaces, the code behind them, and the AI tooling that keeps both moving fast. Day to day that means working closely with the team to ship on schedule without letting the customer experience slip.',
   },
   {
     period: 'Jan 2023 – Apr 2026',
@@ -73,8 +73,8 @@ const About: React.FC = () => {
               alt="Sri Sai Rahul Bonala — portrait"
               loading="lazy"
               decoding="async"
-              width="380"
-              height="420"
+              width="374"
+              height="450"
             />
             <figcaption>
               <span>Bangalore, IST</span>
