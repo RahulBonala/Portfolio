@@ -34,22 +34,33 @@ const Hero: React.FC = () => {
     const saveData = (navigator as { connection?: { saveData?: boolean } }).connection?.saveData;
     if (reduced || saveData || !supportsWebGL()) return;
 
+    // Parsing three.js + creating a WebGL context is a ~1s main-thread task —
+    // wait until after window load + a settle delay so it never delays paint.
     let cancelled = false;
+    let timer = 0;
     const mount = () => {
       if (!cancelled) setShow3D(true);
     };
-    const useIdle = 'requestIdleCallback' in window;
-    const handle = useIdle
-      ? window.requestIdleCallback(mount, { timeout: 1500 })
-      : window.setTimeout(mount, 600);
+    const schedule = () => {
+      timer = window.setTimeout(() => {
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(mount, { timeout: 3000 });
+        } else {
+          mount();
+        }
+      }, 800);
+    };
+
+    if (document.readyState === 'complete') {
+      schedule();
+    } else {
+      window.addEventListener('load', schedule, { once: true });
+    }
 
     return () => {
       cancelled = true;
-      if (useIdle) {
-        window.cancelIdleCallback(handle);
-      } else {
-        clearTimeout(handle);
-      }
+      clearTimeout(timer);
+      window.removeEventListener('load', schedule);
     };
   }, []);
 
@@ -58,21 +69,20 @@ const Hero: React.FC = () => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
-      const intro = gsap.timeline({ paused: true });
-      intro
-        .fromTo('.hero-line-inner', { yPercent: 112 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1 })
-        .fromTo('.hero-eyebrow', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 0.25)
-        .fromTo('.hero-sub', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.5)
-        .fromTo('.hero-ctas', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.62)
-        .fromTo('.hero-facts > *', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.07 }, 0.75)
-        .fromTo('.hero-scrollhint', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.1);
-
+      // The timeline is built lazily at play time so the headline stays
+      // painted (LCP) instead of being hidden while the preloader runs.
       let played = false;
       const play = () => {
-        if (!played) {
-          played = true;
-          intro.play();
-        }
+        if (played) return;
+        played = true;
+        gsap
+          .timeline()
+          .fromTo('.hero-line-inner', { yPercent: 112 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1 })
+          .fromTo('.hero-eyebrow', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 0.25)
+          .fromTo('.hero-sub', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.5)
+          .fromTo('.hero-ctas', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.62)
+          .fromTo('.hero-facts > *', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.07 }, 0.75)
+          .fromTo('.hero-scrollhint', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.1);
       };
 
       let preloaded = false;
@@ -85,7 +95,7 @@ const Hero: React.FC = () => {
       } else {
         window.addEventListener('rb:preloader-done', play, { once: true });
         // Safety net in case the preloader never fires (e.g. storage blocked)
-        setTimeout(play, 2400);
+        setTimeout(play, 1700);
       }
 
       // Scene-change on scroll: content drifts up and fades as About arrives

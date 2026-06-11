@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './Preloader.css';
 
 const SESSION_KEY = 'rb-preloaded';
-const MAX_DURATION = 1400; // well under the 2s budget
+const MAX_DURATION = 900; // well under the 2s budget; keeps LCP early
 
 /**
  * Branded loading screen. Counts up while the page settles, then wipes away.
@@ -10,13 +10,20 @@ const MAX_DURATION = 1400; // well under the 2s budget
  */
 const Preloader: React.FC = () => {
   const [progress, setProgress] = useState(0);
-  const [phase, setPhase] = useState<'loading' | 'exiting' | 'done'>(() => {
+  // Starts 'done' so client hydration matches the prerendered HTML (which has
+  // no preloader); the mount effect below switches it on for first visits.
+  const [phase, setPhase] = useState<'loading' | 'exiting' | 'done'>('done');
+
+  useEffect(() => {
     try {
-      if (sessionStorage.getItem(SESSION_KEY) === '1') return 'done';
+      if (sessionStorage.getItem(SESSION_KEY) === '1') return;
     } catch { /* sessionStorage unavailable */ }
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'done';
-    return 'loading';
-  });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Intentional post-hydration activation: the server HTML must not contain
+    // the preloader, so it can only switch on after mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setPhase('loading');
+  }, []);
 
   useEffect(() => {
     if (phase !== 'loading') return;
@@ -50,7 +57,7 @@ const Preloader: React.FC = () => {
       sessionStorage.setItem(SESSION_KEY, '1');
     } catch { /* ignore */ }
     window.dispatchEvent(new Event('rb:preloader-done')); // lets the hero start its entrance
-    const t = setTimeout(() => setPhase('done'), 700); // matches CSS wipe duration
+    const t = setTimeout(() => setPhase('done'), 500); // matches CSS wipe duration
     return () => clearTimeout(t);
   }, [phase]);
 

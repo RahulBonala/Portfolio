@@ -14,7 +14,7 @@
   --bg-panel: #101013;
   --ink: #f2f2ef;
   --ink-secondary: rgba(242, 242, 239, 0.64);
-  --ink-muted: rgba(242, 242, 239, 0.42);
+  --ink-muted: rgba(242, 242, 239, 0.56); /* ≥4.5:1 on --bg for small text */
   --ink-faint: rgba(242, 242, 239, 0.24);
   --hairline: rgba(242, 242, 239, 0.1);
   --hairline-strong: rgba(242, 242, 239, 0.18);

@@ -8,12 +8,22 @@ export default defineConfig({
     sourcemap: false,
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom'],
-          // Heavy 3D stack stays in its own lazy chunk — only fetched on capable devices
-          three: ['three', '@react-three/fiber'],
-          motion: ['gsap', 'lenis'],
-          emailjs: ['@emailjs/browser'],
+        // Function form so shared deps (e.g. scheduler) stay with react in
+        // vendor — the object form pulled them into the three chunk and made
+        // the whole 3D stack an eager static dependency of the entry.
+        manualChunks(id: string) {
+          if (!id.includes('node_modules')) return;
+          if (
+            id.includes('/three/') ||
+            id.includes('@react-three') ||
+            id.includes('react-reconciler') ||
+            id.includes('its-fine')
+          ) {
+            return 'three'; // lazy — only fetched on capable devices
+          }
+          if (id.includes('gsap') || id.includes('lenis')) return 'motion';
+          if (id.includes('@emailjs')) return 'emailjs';
+          return 'vendor';
         },
         assetFileNames: 'assets/[name]-[hash][extname]',
         chunkFileNames: 'chunks/[name]-[hash].js',

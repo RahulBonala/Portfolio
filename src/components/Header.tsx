@@ -63,7 +63,7 @@ const Header: React.FC = () => {
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-bar">
-        <a href="#home" className="header-mark" aria-label="Back to top">
+        <a href="#home" className="header-mark" aria-label="RB — back to top">
           <span className="header-mark-initials">RB</span>
           <span className="header-mark-status" aria-hidden="true" />
         </a>
