@@ -1,122 +1,50 @@
 /* ============================================================
-   GLOBAL STYLES — Rahul Bonala Portfolio
-   Fonts are loaded via <link> in index.html (preconnected + variable).
+   GLOBAL STYLES — Rahul Bonala Portfolio (v3, dark editorial)
+   One theme. Near-black base, one electric accent, hairline grid.
+   Fonts are loaded via <link> in index.html.
    ============================================================ */
 
-/* ── Design Tokens — Light theme (default) ──────────────────── */
-:root,
-:root[data-theme='light'] {
-  color-scheme: light;
-  --header-height: 80px;
+:root {
+  color-scheme: dark;
+  --header-height: 72px;
 
-  /* Brand */
-  --primary-color: #4f46e5;
-  --primary-light: #6366f1;
-  --primary-dark: #3730a3;
-  --primary-contrast: #ffffff;
-  --accent-color: #ec4899;
+  /* Base */
+  --bg: #060607;
+  --bg-raised: #0c0c0e;
+  --bg-panel: #101013;
+  --ink: #f2f2ef;
+  --ink-secondary: rgba(242, 242, 239, 0.64);
+  --ink-muted: rgba(242, 242, 239, 0.42);
+  --ink-faint: rgba(242, 242, 239, 0.24);
+  --hairline: rgba(242, 242, 239, 0.1);
+  --hairline-strong: rgba(242, 242, 239, 0.18);
 
-  /* Surfaces */
-  --bg-color: #f8f9ff;
-  --surface-color: #ffffff;
-  --surface-subtle: #f1f5f9;
-  --surface-elevated: #ffffff;
-  --border-color: #e2e8f0;
-  --border-subtle: rgba(15, 23, 42, 0.06);
-  --overlay-color: rgba(15, 23, 42, 0.55);
-
-  /* Text */
-  --text-color: #0f172a;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
-  --text-faint: #94a3b8;
-  --white: #ffffff;
+  /* The one electric accent */
+  --accent: #c8f542;
+  --accent-dim: rgba(200, 245, 66, 0.32);
+  --accent-faint: rgba(200, 245, 66, 0.08);
+  --accent-ink: #0a0c02; /* text on top of accent */
 
   /* Semantic */
-  --color-success: #10b981;
-  --color-success-bg: #f0fdf4;
-  --color-success-border: #bbf7d0;
-  --color-error: #dc2626;
-  --color-error-bg: #fff7f5;
-  --color-error-border: #fecaca;
-  --color-warning: #f59e0b;
-  --color-warning-bg: #fffbeb;
-  --color-info: #3b82f6;
+  --color-success: #4ade80;
+  --color-error: #f87171;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
-  --shadow-lg: 0 20px 48px rgba(15, 23, 42, 0.12), 0 8px 16px rgba(15, 23, 42, 0.06);
-  --shadow-glow: 0 8px 24px rgba(99, 102, 241, 0.3);
+  /* Fonts */
+  --font-display: 'Syne', 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-mono: 'Fira Code', 'SF Mono', monospace;
 
-  /* Radius */
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
-  --radius-xl: 28px;
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.2s var(--ease-out);
+  --transition-med: 0.4s var(--ease-out);
+  --transition-slow: 0.8s var(--ease-out);
 
-  /* Font */
-  --font-main: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-  --font-mono: 'Fira Code', 'Courier New', monospace;
-
-  /* Transitions */
-  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-med: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-theme: 0.35s ease;
-
-  /* Type scale */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-md: 1.125rem;
-  --text-lg: 1.25rem;
-  --text-xl: 1.5rem;
-  --text-2xl: 2rem;
-  --text-3xl: 2.5rem;
-  --text-4xl: 3rem;
-
-  /* Line heights */
-  --leading-tight: 1.25;
-  --leading-snug: 1.4;
-  --leading-normal: 1.6;
-  --leading-relaxed: 1.75;
-  --leading-loose: 1.9;
-}
-
-/* ── Dark theme tokens ──────────────────────────────────────── */
-:root[data-theme='dark'] {
-  color-scheme: dark;
-
-  --primary-color: #818cf8;
-  --primary-light: #a5b4fc;
-  --primary-dark: #6366f1;
-  --primary-contrast: #0a0b10;
-  --accent-color: #f472b6;
-
-  --bg-color: #0a0b10;
-  --surface-color: #12141c;
-  --surface-subtle: #161922;
-  --surface-elevated: #1a1d27;
-  --border-color: rgba(255, 255, 255, 0.08);
-  --border-subtle: rgba(255, 255, 255, 0.04);
-  --overlay-color: rgba(0, 0, 0, 0.7);
-
-  --text-color: #f1f5f9;
-  --text-secondary: #cbd5e1;
-  --text-muted: #94a3b8;
-  --text-faint: #64748b;
-
-  --color-success-bg: rgba(16, 185, 129, 0.08);
-  --color-success-border: rgba(16, 185, 129, 0.3);
-  --color-error-bg: rgba(220, 38, 38, 0.08);
-  --color-error-border: rgba(220, 38, 38, 0.3);
-  --color-warning-bg: rgba(245, 158, 11, 0.08);
-
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.2);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
-  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55), 0 8px 16px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 8px 24px rgba(129, 140, 248, 0.25);
+  /* Layout */
+  --gutter: clamp(20px, 4vw, 56px);
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
 }
 
 /* ── Reset ──────────────────────────────────────────────────── */
@@ -134,20 +62,9 @@
 }
 
 *:focus-visible {
-  outline: 3px solid var(--primary-color);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 4px;
-}
-
-button:focus-visible,
-a:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--primary-color);
-  outline-offset: 3px;
-  border-radius: 6px;
-  box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary-color) 18%, transparent);
 }
 
 html {
@@ -156,29 +73,26 @@ html {
   font-size: 16px;
 }
 
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
 body {
   font-family: var(--font-main);
-  line-height: var(--leading-relaxed);
-  color: var(--text-color);
-  background-color: var(--bg-color);
+  line-height: 1.7;
+  color: var(--ink);
+  background-color: var(--bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  font-size: var(--text-base);
+  font-size: 1rem;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
-  font-feature-settings: 'ss01', 'cv11';
-  transition: background-color var(--transition-theme), color var(--transition-theme);
-}
-
-/* Headings inherit body font but get a slightly tighter optical setting */
-h1, h2, h3, h4 {
-  font-feature-settings: 'ss01';
-  transition: font-variation-settings 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-input, textarea, select, button {
-  color-scheme: inherit;
 }
 
 a {
@@ -195,6 +109,8 @@ button {
   cursor: pointer;
   border: none;
   font-family: inherit;
+  background: none;
+  color: inherit;
 }
 
 img {
@@ -203,50 +119,69 @@ img {
   display: block;
 }
 
-/* ── Utilities ──────────────────────────────────────────────── */
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ── Layout utilities ───────────────────────────────────────── */
 .container {
-  max-width: 1160px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 28px;
+  padding: 0 var(--gutter);
 }
 
 .section {
-  padding: 80px 0 72px;
+  position: relative;
+  padding: clamp(96px, 14vh, 160px) 0;
   scroll-margin-top: var(--header-height);
-  scroll-padding-top: var(--header-height);
 }
 
-@media (max-width: 768px) {
-  .section {
-    padding: 60px 0 52px;
-  }
+/* Mono label that opens every section — "001 / About" style */
+.sec-label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: clamp(32px, 5vh, 56px);
 }
 
-@media (max-width: 480px) {
-  .section {
-    padding: 48px 0 40px;
-  }
+.sec-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--hairline);
 }
 
-.section-title {
-  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+.sec-label em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+/* Big display heading shared across sections */
+.sec-title {
+  font-family: var(--font-display);
   font-weight: 800;
-  margin-bottom: 12px;
-  text-align: center;
-  color: var(--text-color);
-  letter-spacing: -0.03em;
-  line-height: var(--leading-tight);
+  /* Floor sized so the longest single word ("SOMETHING") fits a 375px viewport */
+  font-size: clamp(1.9rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  overflow-wrap: break-word;
+  color: var(--ink);
 }
 
-.section-subtitle {
-  text-align: center;
-  color: var(--text-muted);
-  font-size: clamp(0.95rem, 1.5vw, 1.05rem);
-  margin-bottom: 48px;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-  line-height: var(--leading-relaxed);
+.sec-title .accent-word {
+  color: var(--accent);
+}
+
+/* Reveal primitives — animated by GSAP, visible by default (no-JS safe) */
+[data-reveal] {
+  will-change: transform, opacity;
 }
 
 /* ── Scrollbar ──────────────────────────────────────────────── */
@@ -255,16 +190,16 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--surface-subtle);
+  background: var(--bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--text-faint);
+  background: var(--ink-faint);
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary-color);
+  background: var(--accent-dim);
 }
 
 /* ── Reduced Motion ─────────────────────────────────────────── */
@@ -280,58 +215,5 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-    transform: none !important;
   }
-
-  .fade-in-section,
-  .fade-in-section.visible {
-    opacity: 1 !important;
-    transform: none !important;
-    transition: none !important;
-  }
-
-  .blob-1,
-  .blob-2,
-  .scroll-line,
-  .chip-top-right,
-  .chip-bottom {
-    animation: none !important;
-  }
-}
-
-/* ── Mobile ─────────────────────────────────────────────────── */
-@media (max-width: 600px) {
-  .container {
-    padding: 0 18px;
-  }
-
-  .section {
-    padding: 64px 0;
-  }
-
-  .section-title {
-    margin-bottom: 10px;
-  }
-}
-
-/* ── Section Eyebrow Pill (global utility) ──────────────────── */
-.section-eyebrow {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 14px;
-}
-
-.eyebrow-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: color-mix(in srgb, var(--primary-color) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--primary-color) 20%, transparent);
-  border-radius: 100px;
-  padding: 5px 16px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary-color);
 }

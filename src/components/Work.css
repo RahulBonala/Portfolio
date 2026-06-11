@@ -1,0 +1,308 @@
+.work {
+  border-top: 1px solid var(--hairline);
+  overflow: hidden;
+}
+
+.work .sec-title {
+  margin-bottom: clamp(64px, 10vh, 120px);
+}
+
+/* ── Project worlds ─────────────────────────────────────────── */
+.work-list {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(96px, 16vh, 200px);
+}
+
+.work-item {
+  position: relative;
+}
+
+.work-index {
+  position: absolute;
+  top: -0.18em;
+  right: 2vw;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(7rem, 22vw, 19rem);
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--hairline-strong);
+  pointer-events: none;
+  user-select: none;
+}
+
+.work-item--flip .work-index {
+  right: auto;
+  left: 2vw;
+}
+
+.work-item-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+}
+
+.work-item--flip .work-item-grid {
+  direction: rtl;
+}
+
+.work-item--flip .work-item-grid > * {
+  direction: ltr;
+}
+
+/* ── Media ──────────────────────────────────────────────────── */
+.work-media {
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  overflow: hidden;
+  aspect-ratio: 7 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-media-inner {
+  width: 100%;
+  height: 112%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.work-media img {
+  width: 78%;
+  max-height: 78%;
+  object-fit: contain;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.5));
+  transition: transform 0.6s var(--ease-out);
+}
+
+.work-media:hover img {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.work-svg {
+  width: 92%;
+  height: auto;
+}
+
+/* ── Info ───────────────────────────────────────────────────── */
+.work-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.work-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  /* Sized so "BESTANSWERS.AI" (unbreakable token) fits its column */
+  font-size: clamp(1.5rem, 2.7vw, 2.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+  margin-bottom: 8px;
+}
+
+.work-tagline {
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--ink-secondary);
+  margin-bottom: 20px;
+}
+
+.work-story {
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: var(--ink-secondary);
+  margin-bottom: 22px;
+  max-width: 56ch;
+}
+
+.work-points {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.work-points li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.work-points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 10px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* ── Stack chips ────────────────────────────────────────────── */
+.work-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.work-chip {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+  border: 1px solid var(--hairline);
+  border-radius: 100px;
+  padding: 5px 13px;
+}
+
+/* ── Links / booking ────────────────────────────────────────── */
+.work-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.work-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  font-size: 0.94rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
+  transition: color var(--transition-fast), gap var(--transition-fast);
+}
+
+.work-link:hover {
+  color: var(--accent);
+  gap: 13px;
+}
+
+.work-booking {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.work-booking-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+
+/* Razorpay injects its own button — keep its container tidy */
+.razorpay-button-container {
+  min-height: 46px;
+}
+
+/* ── Archive ────────────────────────────────────────────────── */
+.work-archive {
+  margin-top: clamp(96px, 14vh, 180px);
+}
+
+.work-archive-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+}
+
+.work-archive-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 1fr) 2fr auto;
+  gap: 20px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--hairline);
+  transition: padding-left var(--transition-med), background var(--transition-med);
+}
+
+.work-archive-row:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.work-archive-row:hover {
+  padding-left: 12px;
+  background: linear-gradient(90deg, var(--accent-faint), transparent 60%);
+}
+
+.work-archive-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+}
+
+.work-archive-kind {
+  font-size: 0.86rem;
+  color: var(--ink-muted);
+}
+
+.work-archive-links {
+  display: flex;
+  gap: 18px;
+}
+
+.work-archive-links a {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+}
+
+.work-archive-links a:hover {
+  color: var(--accent);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .work-item-grid,
+  .work-item--flip .work-item-grid {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+
+  .work-index {
+    font-size: clamp(6rem, 26vw, 10rem);
+    top: -0.5em;
+  }
+
+  .work-media {
+    aspect-ratio: 16 / 10;
+  }
+}
+
+@media (max-width: 600px) {
+  .work-archive-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .work-archive-kind {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}

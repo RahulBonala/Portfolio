@@ -1,134 +1,146 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+import Preloader from './components/Preloader';
+import Cursor from './components/Cursor';
 import Header from './components/Header';
-import ProfileSection from './components/ProfileSection';
-import ProcessShowcase from './components/ProcessShowcase';
-import Projects from './components/Projects';
-import Testimonials from './components/Testimonials';
-import AboutMe from './components/AboutMe';
+import Hero from './components/Hero';
+import About from './components/About';
+import Work from './components/Work';
+import Skills from './components/Skills';
+import Approach from './components/Approach';
 import Contact from './components/Contact';
-import CourseSection from './components/CourseSection';
-import SessionPill from './components/SessionPill';
 import './App.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 function App() {
-  const mainRef = useRef<HTMLElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
 
-  // Scroll visibility states
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [showBackToTop, setShowBackToTop] = useState(false);
-
+  // Smooth scroll (Lenis) driven by the GSAP ticker, keeping ScrollTrigger in sync
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      setScrollProgress(Math.min(100, Math.round(progress)));
-      setShowBackToTop(scrollTop > 600);
-    };
+    if (prefersReducedMotion()) return;
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const lenis = new Lenis({ autoRaf: false, lerp: 0.115 });
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const raf = (time: number) => lenis.raf(time * 1000);
+    gsap.ticker.add(raf);
+    gsap.ticker.lagSmoothing(0);
+
+    // Anchor links go through Lenis so smooth scroll and ScrollTrigger agree
+    const onClick = (e: MouseEvent) => {
+      const anchor = (e.target as HTMLElement).closest('a[href^="#"]');
+      if (!anchor) return;
+      const id = anchor.getAttribute('href');
+      if (!id || id === '#') return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target as HTMLElement, { offset: -24 });
+    };
+    document.addEventListener('click', onClick);
+
+    return () => {
+      document.removeEventListener('click', onClick);
+      gsap.ticker.remove(raf);
+      lenis.destroy();
+    };
   }, []);
 
-  useEffect(() => {
-    const sections = mainRef.current?.querySelectorAll<HTMLElement>('.section');
-    if (!sections) return;
+  // Global scroll-reveal system: any [data-reveal] element animates in once.
+  // Parents with [data-reveal-group] stagger their direct children instead.
+  useLayoutEffect(() => {
+    if (prefersReducedMotion()) return;
 
-    sections.forEach((section, index) => {
-      if (index === 0) return;
-      section.classList.add('fade-in-section');
-    });
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const el = entry.target as HTMLElement;
-          if (entry.isIntersecting) {
-            el.classList.add('visible');
-            el.classList.remove('exit-top');
-          } else {
-            const rect = entry.boundingClientRect;
-            if (rect.top < 0) {
-              el.classList.add('exit-top');
-              el.classList.remove('visible');
-            } else {
-              el.classList.remove('visible', 'exit-top');
-            }
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
+        const dir = el.dataset.reveal || 'up';
+        gsap.fromTo(
+          el,
+          {
+            opacity: 0,
+            y: dir === 'up' ? 56 : 0,
+            x: dir === 'left' ? -56 : dir === 'right' ? 56 : 0,
+            scale: dir === 'scale' ? 0.94 : 1,
+          },
+          {
+            opacity: 1,
+            x: 0,
+            y: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: 'expo.out',
+            delay: Number(el.dataset.revealDelay || 0),
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
           }
-        });
-      },
-      { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
-    );
+        );
+      });
 
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
+      gsap.utils.toArray<HTMLElement>('[data-reveal-group]').forEach((group) => {
+        gsap.fromTo(
+          group.children,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            ease: 'expo.out',
+            stagger: 0.09,
+            scrollTrigger: { trigger: group, start: 'top 86%', once: true },
+          }
+        );
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" ref={rootRef}>
       {/* Skip to main content — keyboard accessibility */}
       <a href="#home" className="skip-to-content">
         Skip to main content
       </a>
 
-      {/* Scroll progress bar */}
-      <div 
-        className="scroll-progress-bar" 
-        style={{ width: `${scrollProgress}%` }}
-        role="progressbar"
-        aria-valuenow={scrollProgress}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label="Page scroll progress"
-      />
+      <Preloader />
+      <Cursor />
       <Header />
-      <main ref={mainRef}>
-        <ProfileSection />
-        <ProcessShowcase />
-        <Projects />
-        <Testimonials />
-        <AboutMe />
-        <CourseSection />
+
+      <main>
+        <Hero />
+        <About />
+        <Work />
+        <Skills />
+        <Approach />
         <Contact />
       </main>
+
       <footer className="footer">
-        <div className="container">
-          <div className="footer-inner">
-            <p className="footer-name">Sri Sai Rahul Bonala</p>
-            <p className="footer-role">Product Designer · UI/UX · Developer</p>
-            <div className="footer-links">
-              <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <span className="footer-dot">·</span>
-              <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
-              <span className="footer-dot">·</span>
-              <a href="mailto:rahulbonala2002@gmail.com">Email</a>
-              <span className="footer-dot">·</span>
-              <a href="#projects">Projects</a>
-            </div>
-            <div className="footer-availability">
-              <span className="footer-avail-dot" aria-hidden="true" />
-              <span>Available for full-time roles. Bangalore &mdash; remote anywhere.</span>
-            </div>
-            <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
+        <div className="container footer-inner">
+          <p className="footer-name">Sri Sai Rahul Bonala</p>
+          <p className="footer-role">Frontend Developer · AI Engineer · Teacher</p>
+          <div className="footer-links">
+            <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <span className="footer-dot">·</span>
+            <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <span className="footer-dot">·</span>
+            <a href="mailto:rahulbonala2002@gmail.com">Email</a>
+            <span className="footer-dot">·</span>
+            <a href="#work">Work</a>
           </div>
+          <div className="footer-availability">
+            <span className="footer-avail-dot" aria-hidden="true" />
+            <span>Open to roles, freelance, and collaborations. Bangalore — remote anywhere.</span>
+          </div>
+          <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
         </div>
       </footer>
-
-      {/* Back to Top */}
-      {showBackToTop && (
-        <button
-          className="back-to-top"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Back to top of page"
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="18 15 12 9 6 15" />
-          </svg>
-        </button>
-      )}
-
-      {/* Quiet shortcut to the Course section. Auto-hides when Course is in/past view. */}
-      <SessionPill />
     </div>
   );
 }

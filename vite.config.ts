@@ -10,9 +10,11 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
+          // Heavy 3D stack stays in its own lazy chunk — only fetched on capable devices
+          three: ['three', '@react-three/fiber'],
+          motion: ['gsap', 'lenis'],
           emailjs: ['@emailjs/browser'],
         },
-        // Hash asset filenames for cache busting
         assetFileNames: 'assets/[name]-[hash][extname]',
         chunkFileNames: 'chunks/[name]-[hash].js',
         entryFileNames: '[name]-[hash].js',
@@ -23,6 +25,6 @@ export default defineConfig({
     cssCodeSplit: true,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'],
+    include: ['react', 'react-dom', 'gsap', 'lenis'],
   },
 })

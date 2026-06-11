@@ -1,16 +1,16 @@
 # Portfolio
 
-Personal portfolio for **Sri Sai Rahul Bonala** — Product Designer (UI/UX & Developer).
+Personal portfolio for **Sri Sai Rahul Bonala** — Frontend Developer & AI Engineer.
 
 Live at [rahulbonala.me](https://rahulbonala.me).
 
 ## Tech stack
 
-- React 19 + TypeScript
-- Vite 7
-- Plus Jakarta Sans (variable) + Fira Code
-- EmailJS for the contact form
-- Razorpay for session payments
+- React 19 + TypeScript + Vite 7
+- Three.js + React Three Fiber (lazy-loaded 3D hero with CSS/SVG fallback)
+- GSAP ScrollTrigger + Lenis (scroll choreography)
+- Syne + Plus Jakarta Sans + Fira Code
+- EmailJS for the contact form, Razorpay for session payments
 
 ## Scripts
 
@@ -23,6 +23,6 @@ npm run preview   # preview the production build locally
 
 ## Design system
 
-See [DESIGN-GUIDELINES.md](DESIGN-GUIDELINES.md) for the full design system — tokens, component patterns, voice principles, motion rules, accessibility checklist, and the explicit list of anti-patterns we deliberately avoid.
+See [DESIGN-GUIDELINES.md](DESIGN-GUIDELINES.md) for the v3 system — dark editorial tokens, the motion system (reveals, pinning, cursor, preloader), the 3D layer's performance gates, and the anti-pattern list.
 
 That doc is the source of truth for anything visual or content-related on this site. If something on the page conflicts with the guidelines, the guidelines win and the page gets fixed.

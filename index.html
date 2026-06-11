@@ -8,64 +8,68 @@
   <link rel="icon" type="image/svg+xml" href="/logo.svg" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <meta name="color-scheme" content="light dark" />
-
+  <meta name="color-scheme" content="dark" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Apply persisted theme before first paint to avoid flash -->
-  <script>
-    (function () {
-      try {
-        var stored = localStorage.getItem('portfolio-theme');
-        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = (stored === 'light' || stored === 'dark') ? stored : (prefersDark ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-        document.documentElement.style.colorScheme = theme;
-      } catch (e) { /* localStorage unavailable — fall back to default */ }
-    })();
-  </script>
 
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="dn7zrSFJ9YeU3Xf_YiNrlGOqahY9XnfirkrEmUio5IY" />
 
-  <!-- Theme color (indigo brand) -->
-  <meta name="theme-color" content="#4f46e5" />
+  <meta name="theme-color" content="#060607" />
 
-  <!-- Title & Description -->
-  <title>Rahul Bonala | Product Designer</title>
+  <!-- Title & Description — tuned for "Rahul frontend developer AI" -->
+  <title>Rahul Bonala — Frontend Developer & AI Engineer</title>
   <meta name="description"
-    content="Portfolio of Rahul Bonala — Product Designer (UI/UX & Developer) with 3+ years building AI-native digital products. Expert in Figma, interaction design, and WCAG-compliant solutions." />
+    content="Rahul Bonala is a frontend developer building AI-native products. Creator of BestAnswers.AI, leading the Flipkart → CureFoods frontend migration, and teaching AI Tools for Builders. Based in Bangalore, working globally." />
+  <meta name="keywords"
+    content="Rahul frontend developer AI, Rahul Bonala, AI engineer, React developer Bangalore, BestAnswers.AI, frontend migration" />
+  <meta name="author" content="Sri Sai Rahul Bonala" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://rahulbonala.me/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Rahul Bonala | Product Designer" />
+  <meta property="og:title" content="Rahul Bonala — Frontend Developer & AI Engineer" />
   <meta property="og:description"
-    content="Product Designer (UI/UX & Developer) with 3+ years building scalable, AI-native digital products. View case studies and live prototypes." />
+    content="Frontend developer building AI-native products. Creator of BestAnswers.AI. Leading a large-scale production frontend migration. Teaching AI Tools for Builders." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rahulbonala.me/" />
-  <meta property="og:image" content="https://rahulbonala.me/logo.svg" />
+  <meta property="og:image" content="https://rahulbonala.me/og-image.png" />
   <meta property="og:locale" content="en_US" />
-  <meta property="og:site_name" content="Rahul Bonala Portfolio" />
+  <meta property="og:site_name" content="Rahul Bonala" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rahul Bonala | Product Designer" />
+  <meta name="twitter:title" content="Rahul Bonala — Frontend Developer & AI Engineer" />
   <meta name="twitter:description"
-    content="Product Designer & Developer — AI-native products, Figma, WCAG. View portfolio at rahulbonala.me" />
-  <meta name="twitter:image" content="https://rahulbonala.me/logo.svg" />
-  <meta name="twitter:image:alt" content="Rahul Bonala — Product Designer portfolio preview" />
+    content="Frontend developer building AI-native products — BestAnswers.AI, large-scale production migrations, and the AI Tools for Builders course." />
+  <meta name="twitter:image" content="https://rahulbonala.me/og-image.png" />
+  <meta name="twitter:image:alt" content="Rahul Bonala — frontend developer and AI engineer portfolio" />
+
+  <!-- Structured data — Person -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Sri Sai Rahul Bonala",
+    "url": "https://rahulbonala.me/",
+    "jobTitle": "Frontend Developer & AI Engineer",
+    "knowsAbout": ["React", "TypeScript", "AI tools", "Frontend architecture", "UI engineering"],
+    "address": { "@type": "PostalAddress", "addressLocality": "Bangalore", "addressCountry": "IN" },
+    "sameAs": [
+      "https://github.com/rahulbonala",
+      "https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/"
+    ]
+  }
+  </script>
 
   <!-- Sitemap hint -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
-  <!-- Preconnect Google Fonts -->
+  <!-- Fonts: Syne (display) + Plus Jakarta Sans (body) + Fira Code (mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <!-- Plus Jakarta Sans (variable, primary) + Fira Code (monospace) -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Fira+Code:wght@400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Fira+Code:wght@400;500&display=swap"
     rel="stylesheet" />
 </head>
 

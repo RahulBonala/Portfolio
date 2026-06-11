@@ -1,0 +1,59 @@
+/* Native cursor stays available — the dot augments rather than replaces,
+   except over interactive elements where the dot becomes the affordance. */
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out),
+    opacity 0.2s ease, background 0.25s var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mix-blend-mode: difference;
+}
+
+.cursor--visible {
+  opacity: 1;
+}
+
+.cursor--hover {
+  width: 44px;
+  height: 44px;
+  background: #fff; /* pure white inverts cleanly under difference blend */
+}
+
+.cursor--down {
+  width: 18px;
+  height: 18px;
+}
+
+.cursor--label {
+  width: 76px;
+  height: 76px;
+  mix-blend-mode: normal;
+  background: var(--accent);
+}
+
+.cursor--label::after {
+  content: attr(data-label);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  text-align: center;
+}
+
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor {
+    display: none;
+  }
+}

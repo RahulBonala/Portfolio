@@ -1,401 +1,236 @@
-/* ============================================================
-   HEADER — Floating pill-shaped navbar (matches light theme)
-   ============================================================ */
-
 .header {
-    position: fixed;
-    top: 20px;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 900;
+  transition: background var(--transition-med), border-color var(--transition-med);
+  border-bottom: 1px solid transparent;
 }
 
-/* ── The pill ─────────────────────────────────────────────── */
-.header-pill {
-    pointer-events: all;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    background: color-mix(in srgb, var(--surface-color) 88%, transparent);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid var(--border-color);
-    border-radius: 100px;
-    padding: 6px 16px;
-    box-shadow: var(--shadow-md);
-    transition: background-color var(--transition-theme), border-color var(--transition-theme);
+.header.scrolled {
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--hairline);
 }
 
-[data-theme='dark'] .header-pill {
-    background: rgba(18, 20, 28, 0.85);
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-/* ── Nav links ────────────────────────────────────────────── */
-.nav ul {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav li {
-  list-style: none;
-}
-
-.nav-link {
-  cursor: pointer;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  padding: 7px 16px;
-  border-radius: 100px;
-  transition: color 0.2s ease, background 0.2s ease;
-  white-space: nowrap;
-  letter-spacing: 0.01em;
-  user-select: none;
-  background: none;
-  border: none;
-  font-family: inherit;
-  display: block;
-}
-
-.nav-link:hover {
-  color: var(--primary-color);
-  background: color-mix(in srgb, var(--primary-color) 8%, transparent);
-}
-
-.nav-link.active {
-  color: var(--primary-contrast);
-  font-weight: 700;
-  background: var(--primary-color);
-  box-shadow: 0 2px 8px color-mix(in srgb, var(--primary-color) 30%, transparent);
-}
-
-.nav-link.active:hover {
-  background: var(--primary-dark);
-  color: var(--primary-contrast);
-}
-
-/* ── Separator ───────────────────────────────────────────── */
-.nav-separator {
-    display: inline-block;
-    width: 1px;
-    height: 20px;
-    background: var(--border-color);
-    margin: 0 8px;
-    flex-shrink: 0;
-}
-
-/* ── Social icon buttons ─────────────────────────────────── */
-.nav-icons {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.icon-btn {
+.header-bar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding: 0 var(--gutter);
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+/* ── Mark ───────────────────────────────────────────────────── */
+.header-mark {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+}
+
+.header-mark-status {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  color: var(--text-muted);
-  transition: color 0.2s ease, background 0.2s ease;
-  text-decoration: none;
+  background: var(--accent);
+  margin-top: 5px;
+}
+
+/* ── Nav ────────────────────────────────────────────────────── */
+.header-nav ul {
+  display: flex;
+  gap: clamp(16px, 2.4vw, 34px);
+}
+
+.header-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--ink-secondary);
+  padding: 6px 2px;
   position: relative;
 }
 
-/* Invisible tap area expansion to 44px */
-.icon-btn::after {
+.header-link-index {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  color: var(--ink-faint);
+  transition: color var(--transition-fast);
+}
+
+.header-link::after {
   content: '';
   position: absolute;
-  inset: -4px;
-  border-radius: 50%;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: right var(--transition-med);
 }
 
-.icon-btn:hover {
-    color: var(--primary-color);
-    background: color-mix(in srgb, var(--primary-color) 8%, transparent);
+.header-link:hover,
+.header-link.active {
+  color: var(--ink);
 }
 
-/* ── Theme Toggle ────────────────────────────────────────── */
-.theme-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    cursor: pointer;
-    transition: color 0.2s ease, background 0.2s ease;
-    margin-right: 4px;
+.header-link:hover .header-link-index,
+.header-link.active .header-link-index {
+  color: var(--accent);
 }
 
-.theme-toggle:hover {
-    color: var(--primary-color);
-    background: color-mix(in srgb, var(--primary-color) 8%, transparent);
+.header-link.active::after,
+.header-link:hover::after {
+  right: 0;
 }
 
-.theme-toggle svg {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.theme-toggle:hover svg {
-    transform: rotate(15deg);
-}
-
-/* ── Hamburger (mobile only) ─────────────────────────────── */
-.hamburger {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 44px;
-    height: 44px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    z-index: 1001;
-    border-radius: 50%;
-    transition: background 0.2s ease;
-    margin-left: 4px;
-}
-
-.hamburger:hover {
-    background: color-mix(in srgb, var(--text-color) 6%, transparent);
-}
-
-.hamburger-line {
-    display: block;
-    width: 18px;
-    height: 2px;
-    background-color: var(--text-color);
-    border-radius: 2px;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, background-color var(--transition-theme);
-    transform-origin: center;
-}
-
-.hamburger.active .hamburger-line:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
-}
-
-.hamburger.active .hamburger-line:nth-child(2) {
-    opacity: 0;
-    transform: scaleX(0);
-}
-
-.hamburger.active .hamburger-line:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-}
-
-/* ── Mobile overlay ──────────────────────────────────────── */
-.nav-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.25);
-    backdrop-filter: blur(3px);
-    -webkit-backdrop-filter: blur(3px);
-    z-index: 999;
-    animation: fadeIn 0.25s ease;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-/* ── Responsive ───────────────────────────────────────────── */
-@media (max-width: 768px) {
-    .header {
-        top: 12px;
-    }
-
-    .nav,
-    .nav-separator {
-        display: none;
-    }
-
-    .nav-icons {
-        gap: 2px;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .nav.open {
-        display: flex;
-        position: fixed;
-        top: 68px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: color-mix(in srgb, var(--surface-color) 96%, transparent);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid var(--border-color);
-        border-radius: 20px;
-        padding: 12px;
-        z-index: 1000;
-        min-width: 200px;
-        box-shadow: var(--shadow-lg);
-        animation: slideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .nav.open ul {
-        flex-direction: column;
-        gap: 4px;
-        width: 100%;
-    }
-
-    .nav.open li {
-        font-size: 1rem;
-        padding: 12px 20px;
-        border-radius: 12px;
-        width: 100%;
-        text-align: center;
-    }
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateX(-50%) translateY(-10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-}
-
-/* ── Resume Download Button ──────────────────────────────── */
-.resume-btn {
-  display: inline-flex;
+/* ── Actions ────────────────────────────────────────────────── */
+.header-actions {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 16px;
-  border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  background: color-mix(in srgb, var(--primary-color) 8%, transparent);
-  border: 1.5px solid color-mix(in srgb, var(--primary-color) 25%, transparent);
-  text-decoration: none;
-  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
-  letter-spacing: 0.01em;
-  white-space: nowrap;
-  margin-right: 4px;
+  gap: 18px;
 }
 
-.resume-btn:hover {
-  background: var(--primary-color);
-  color: var(--primary-contrast);
-  border-color: var(--primary-color);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-color) 30%, transparent);
-}
-
-@media (max-width: 768px) {
-  .resume-btn {
-    font-size: 0.78rem;
-    padding: 6px 13px;
-  }
-}
-
-.header.scrolled .header-pill {
-  box-shadow: var(--shadow-lg);
-  background: color-mix(in srgb, var(--surface-color) 96%, transparent);
-}
-
-[data-theme='dark'] .header.scrolled .header-pill {
-  background: rgba(18, 20, 28, 0.96);
-}
-
-/* ── Course Button — always visible, all breakpoints ─────── */
-.nav-course-btn {
+.header-resume {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 7px 16px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  border: 1px solid var(--hairline-strong);
   border-radius: 100px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: #6c63ff;
-  background: rgba(108, 99, 255, 0.08);
-  border: 1.5px solid rgba(108, 99, 255, 0.22);
-  cursor: pointer;
-  font-family: inherit;
-  white-space: nowrap;
-  letter-spacing: 0.02em;
-  transition: background 0.25s ease, color 0.25s ease,
-              border-color 0.25s ease, transform 0.2s ease,
-              box-shadow 0.25s ease;
-  flex-shrink: 0;
+  padding: 8px 16px;
+  transition: border-color var(--transition-fast), color var(--transition-fast),
+    background var(--transition-fast);
 }
 
-.nav-course-btn:hover {
-  background: #6c63ff;
-  color: #fff;
-  border-color: #6c63ff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 14px rgba(108, 99, 255, 0.3);
+.header-resume:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-faint);
 }
 
-.nav-course-btn--active {
-  background: #6c63ff;
-  color: #fff;
-  border-color: #6c63ff;
-  box-shadow: 0 2px 10px rgba(108, 99, 255, 0.35);
-}
-
-.nav-course-btn--active:hover {
-  background: #5a52e0;
-  border-color: #5a52e0;
-}
-
-.nav-course-btn--mobile {
+/* ── Burger (mobile) ────────────────────────────────────────── */
+.header-burger {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  align-items: center;
 }
 
-@media (max-width: 768px) {
-  .nav-course-btn {
-    font-size: 0.78rem;
-    padding: 6px 13px;
-    gap: 6px;
-  }
-
-  .nav-course-btn--mobile {
-    display: inline-flex;
-  }
+.header-burger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--ink);
+  transition: transform 0.3s var(--ease-out), opacity 0.3s;
 }
 
-/* ── Very small screens — keep the pill inside the viewport ── */
-@media (max-width: 480px) {
-  .header-pill {
-    padding: 6px 10px;
-    max-width: calc(100vw - 24px);
-  }
+.header-burger.open span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
 
-  /* Social links live in the footer and Contact section; drop the
-     icon cluster here so the pill no longer overflows the viewport. */
-  .header-pill .icon-btn {
+.header-burger.open span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* ── Mobile overlay menu ────────────────────────────────────── */
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease-out), visibility 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 var(--gutter);
+}
+
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.menu-overlay li {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+
+.menu-overlay.open li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-overlay a {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 9vw, 3.2rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  padding: 10px 0;
+  color: var(--ink);
+}
+
+.menu-overlay a:active {
+  color: var(--accent);
+}
+
+.menu-overlay-index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+}
+
+.menu-overlay-foot {
+  position: absolute;
+  bottom: 40px;
+  left: var(--gutter);
+  display: flex;
+  gap: 22px;
+}
+
+.menu-overlay-foot a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .header-nav {
     display: none;
+  }
+
+  .header-burger {
+    display: flex;
+  }
+
+  .header-resume {
+    padding: 7px 13px;
   }
 }
