@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
 import './Header.css';
 
@@ -15,6 +16,8 @@ const Header: React.FC = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme, toggle: toggleTheme } = useTheme();
+  const { pathname } = useLocation();
+  const onHome = pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -65,25 +68,28 @@ const Header: React.FC = () => {
   return (
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-bar">
-        <a href="#home" className="header-mark" aria-label="Rahul Bonala — back to top">
+        <Link to="/" className="header-mark" aria-label="Rahul Bonala — home">
           <span className="header-mark-name">Rahul Bonala</span>
           <span className="header-mark-status" aria-hidden="true" />
-        </a>
+        </Link>
 
         <nav className="header-nav" role="navigation" aria-label="Main navigation">
           <ul>
-            {NAV_LINKS.map(({ id, label, index }) => (
-              <li key={id}>
-                <a
-                  href={`#${id}`}
-                  className={`header-link ${activeSection === id ? 'active' : ''}`}
-                  aria-current={activeSection === id ? 'page' : undefined}
-                >
-                  <span className="header-link-index">{index}</span>
-                  {label}
-                </a>
-              </li>
-            ))}
+            {NAV_LINKS.map(({ id, label, index }) => {
+              const active = onHome && activeSection === id;
+              return (
+                <li key={id}>
+                  <Link
+                    to={`/#${id}`}
+                    className={`header-link ${active ? 'active' : ''}`}
+                    aria-current={active ? 'page' : undefined}
+                  >
+                    <span className="header-link-index" aria-hidden="true">{index}</span>
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
@@ -136,10 +142,10 @@ const Header: React.FC = () => {
           <ul>
             {NAV_LINKS.map(({ id, label, index }, i) => (
               <li key={id} style={{ transitionDelay: isMenuOpen ? `${0.08 + i * 0.05}s` : '0s' }}>
-                <a href={`#${id}`} onClick={closeMenu} tabIndex={isMenuOpen ? 0 : -1}>
-                  <span className="menu-overlay-index">{index}</span>
+                <Link to={`/#${id}`} onClick={closeMenu} tabIndex={isMenuOpen ? 0 : -1}>
+                  <span className="menu-overlay-index" aria-hidden="true">{index}</span>
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

@@ -1,20 +1,9 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
 
-const HeroScene = lazy(() => import('./three/HeroScene'));
-
 gsap.registerPlugin(ScrollTrigger);
-
-const supportsWebGL = () => {
-  try {
-    const canvas = document.createElement('canvas');
-    return !!(canvas.getContext('webgl2') || canvas.getContext('webgl'));
-  } catch {
-    return false;
-  }
-};
 
 const FACTS = [
   { k: 'Now', v: 'Product Designer — AI specialist at Ginthi.ai' },
@@ -23,66 +12,93 @@ const FACTS = [
   { k: 'Based', v: 'Bangalore, India — working globally' },
 ];
 
+/**
+ * Self-referential hero visual: a live miniature of the BestAnswers debate
+ * graph — four persona nodes exchange messages and converge on a verdict.
+ * Pure SVG + SMIL motion (hidden under prefers-reduced-motion via CSS),
+ * theme-aware through CSS custom properties, ≤30% visual weight by design.
+ */
+const DebateGraph = () => {
+  const personas = [
+    { id: 'p1', label: 'researcher', x: 120, y: 110 },
+    { id: 'p2', label: 'engineer', x: 80, y: 290 },
+    { id: 'p3', label: 'friend', x: 150, y: 460 },
+    { id: 'p4', label: 'academic', x: 330, y: 60 },
+  ];
+  const verdict = { x: 560, y: 280 };
+
+  return (
+    <svg className="hero-graph" viewBox="0 0 760 560" aria-hidden="true" focusable="false">
+      {/* debate edges between personas */}
+      <g className="hg-edge hg-edge--debate">
+        <path id="hg-d1" d="M 120 110 C 90 180, 85 220, 80 290" />
+        <path id="hg-d2" d="M 80 290 C 100 360, 120 400, 150 460" />
+        <path id="hg-d3" d="M 120 110 C 190 80, 250 65, 330 60" />
+      </g>
+
+      {/* persona → verdict edges */}
+      <g className="hg-edge">
+        <path id="hg-e1" d="M 120 110 C 300 130, 440 190, 560 280" />
+        <path id="hg-e2" d="M 80 290 C 250 290, 410 285, 560 280" />
+        <path id="hg-e3" d="M 150 460 C 320 430, 450 360, 560 280" />
+        <path id="hg-e4" d="M 330 60 C 430 110, 510 190, 560 280" />
+      </g>
+
+      {/* messages travelling toward the verdict (SMIL; hidden under PRM) */}
+      <g className="hg-dots">
+        {[
+          { path: '#hg-e1', dur: '5.2s', begin: '0s' },
+          { path: '#hg-e2', dur: '4.6s', begin: '1.4s' },
+          { path: '#hg-e3', dur: '5.8s', begin: '2.6s' },
+          { path: '#hg-e4', dur: '4.9s', begin: '3.4s' },
+        ].map((d, i) => (
+          <circle key={i} className="hg-dot" r="3.5">
+            <animateMotion dur={d.dur} begin={d.begin} repeatCount="indefinite" rotate="none">
+              <mpath href={d.path} />
+            </animateMotion>
+          </circle>
+        ))}
+      </g>
+
+      {/* persona nodes */}
+      {personas.map((p) => (
+        <g key={p.id} className="hg-node">
+          <circle cx={p.x} cy={p.y} r="7" className="hg-node-dot" />
+          <circle cx={p.x} cy={p.y} r="14" className="hg-node-ring" />
+          <text x={p.x + 22} y={p.y + 4} className="hg-label">{p.label}</text>
+        </g>
+      ))}
+
+      {/* verdict node */}
+      <g className="hg-node hg-node--verdict">
+        <circle cx={verdict.x} cy={verdict.y} r="11" className="hg-node-dot" />
+        <circle cx={verdict.x} cy={verdict.y} r="22" className="hg-node-ring hg-verdict-pulse" />
+        <text x={verdict.x + 32} y={verdict.y + 4} className="hg-label hg-label--verdict">verdict</text>
+      </g>
+    </svg>
+  );
+};
+
 const Hero: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [show3D, setShow3D] = useState(false);
-
-  // Mount the 3D scene only after the page is idle, and only on capable
-  // devices — everyone else keeps the CSS/SVG fallback already in place.
-  useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const saveData = (navigator as { connection?: { saveData?: boolean } }).connection?.saveData;
-    if (reduced || saveData || !supportsWebGL()) return;
-
-    // Parsing three.js + creating a WebGL context is a ~1s main-thread task —
-    // wait until after window load + a settle delay so it never delays paint.
-    let cancelled = false;
-    let timer = 0;
-    const mount = () => {
-      if (!cancelled) setShow3D(true);
-    };
-    const schedule = () => {
-      timer = window.setTimeout(() => {
-        if ('requestIdleCallback' in window) {
-          window.requestIdleCallback(mount, { timeout: 3000 });
-        } else {
-          mount();
-        }
-      }, 800);
-    };
-
-    if (document.readyState === 'complete') {
-      schedule();
-    } else {
-      window.addEventListener('load', schedule, { once: true });
-    }
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-      window.removeEventListener('load', schedule);
-    };
-  }, []);
 
   // Entrance choreography — waits for the preloader wipe on first visit
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const ctx = gsap.context(() => {
-      // The timeline is built lazily at play time so the headline stays
-      // painted (LCP) instead of being hidden while the preloader runs.
       let played = false;
       const play = () => {
         if (played) return;
         played = true;
         gsap
           .timeline()
-          .fromTo('.hero-line-inner', { yPercent: 112 }, { yPercent: 0, duration: 1.1, ease: 'expo.out', stagger: 0.1 })
-          .fromTo('.hero-eyebrow', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' }, 0.25)
-          .fromTo('.hero-sub', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.5)
-          .fromTo('.hero-ctas', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out' }, 0.62)
-          .fromTo('.hero-facts > *', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', stagger: 0.07 }, 0.75)
-          .fromTo('.hero-scrollhint', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 1.1);
+          .fromTo('.hero-line-inner', { yPercent: 110 }, { yPercent: 0, duration: 0.7, ease: 'power3.out', stagger: 0.08 })
+          .fromTo('.hero-eyebrow', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.15)
+          .fromTo('.hero-sub', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.3)
+          .fromTo('.hero-ctas', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }, 0.4)
+          .fromTo('.hero-facts > *', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out', stagger: 0.05 }, 0.5)
+          .fromTo('.hero-scrollhint', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 0.8);
       };
 
       let preloaded = false;
@@ -94,21 +110,19 @@ const Hero: React.FC = () => {
         play();
       } else {
         window.addEventListener('rb:preloader-done', play, { once: true });
-        // Safety net in case the preloader never fires (e.g. storage blocked)
-        setTimeout(play, 1700);
+        setTimeout(play, 1700); // safety net if the preloader never fires
       }
 
       // Scene-change on scroll: content drifts up and fades as About arrives
       const hero = sectionRef.current;
       gsap.to('.hero-content', {
-        yPercent: -14,
-        opacity: 0.25,
+        yPercent: -10,
+        opacity: 0.3,
         ease: 'none',
         scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
       });
       gsap.to('.hero-visual', {
-        scale: 1.12,
-        opacity: 0.4,
+        opacity: 0.35,
         ease: 'none',
         scrollTrigger: { trigger: hero, start: 'top top', end: 'bottom top', scrub: true },
       });
@@ -119,38 +133,11 @@ const Hero: React.FC = () => {
 
   return (
     <section id="home" className="hero" ref={sectionRef} aria-label="Introduction">
-      {/* Visual layer: CSS gradient + grid always on; WebGL network on top when capable */}
+      {/* Visual layer: gradient + grid + the BestAnswers debate-graph miniature */}
       <div className="hero-visual" aria-hidden="true">
         <div className="hero-bg-gradient" />
         <div className="hero-bg-grid" />
-        {/* Static SVG constellation — the graceful fallback when WebGL is off */}
-        {!show3D && (
-          <svg className="hero-fallback-net" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid slice">
-            {/* Colors come from CSS (Hero.css) so both themes work */}
-            <g className="net-lines" strokeWidth="1">
-              <line x1="120" y1="160" x2="320" y2="90" /><line x1="320" y1="90" x2="520" y2="180" />
-              <line x1="520" y1="180" x2="730" y2="120" /><line x1="320" y1="90" x2="420" y2="300" />
-              <line x1="120" y1="160" x2="240" y2="380" /><line x1="240" y1="380" x2="420" y2="300" />
-              <line x1="420" y1="300" x2="640" y2="360" /><line x1="640" y1="360" x2="730" y2="120" />
-              <line x1="640" y1="360" x2="780" y2="480" /><line x1="240" y1="380" x2="380" y2="510" />
-              <line x1="380" y1="510" x2="600" y2="470" /><line x1="600" y1="470" x2="780" y2="480" />
-            </g>
-            <g className="net-nodes">
-              <circle cx="120" cy="160" r="3.5" /><circle cx="320" cy="90" r="2.5" />
-              <circle cx="520" cy="180" r="3" /><circle cx="730" cy="120" r="2.5" />
-              <circle cx="420" cy="300" r="4" /><circle cx="240" cy="380" r="2.5" />
-              <circle cx="640" cy="360" r="3" /><circle cx="780" cy="480" r="2.5" />
-              <circle cx="380" cy="510" r="3" /><circle cx="600" cy="470" r="2.5" />
-            </g>
-          </svg>
-        )}
-        {show3D && (
-          <Suspense fallback={null}>
-            <div className="hero-canvas">
-              <HeroScene />
-            </div>
-          </Suspense>
-        )}
+        <DebateGraph />
       </div>
 
       <div className="container hero-content">

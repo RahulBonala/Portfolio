@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import PaymentButton from './PaymentButton';
 import bestAnswerImg from '../assets/bestanswer-logo.webp';
 import byocImg from '../assets/byoc-logo.webp';
 import './Work.css';
@@ -71,7 +71,10 @@ const PROJECTS = [
       'Built solo, end to end: product strategy, UI, and architecture',
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Tailwind', 'Multi-LLM'],
-    links: [{ label: 'Visit live site', href: 'https://bestanswersai.com/' }],
+    links: [
+      { label: 'Read the case study', href: '/work/bestanswers' },
+      { label: 'Visit live site', href: 'https://bestanswersai.com/' },
+    ],
     visual: <img src={bestAnswerImg} alt="BestAnswers.AI interface" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
@@ -102,10 +105,9 @@ const PROJECTS = [
       'My actual workflow — Figma, AI tools, and code where it matters',
       'Full refund if it didn’t help. The pitch is the work, not the price.',
     ],
-    stack: ['1:1 · live', '₹49 per session', 'Calendly after checkout'],
-    links: [],
+    stack: ['1:1 · live', 'Real project', 'Written follow-up'],
+    links: [{ label: 'How the sessions work', href: '/teach' }],
     visual: <CourseVisual />,
-    booking: true,
   },
 ];
 
@@ -184,27 +186,29 @@ const Work: React.FC = () => {
                 </div>
 
                 <div className="work-actions" data-reveal="up">
-                  {p.links.map((l) => (
-                    <a
-                      key={l.label}
-                      href={l.href}
-                      className="work-link"
-                      data-cursor-label="Open"
-                      {...(l.href.startsWith('http')
-                        ? { target: '_blank', rel: 'noopener noreferrer' }
-                        : {})}
-                    >
-                      {l.label}
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
-                      </svg>
-                    </a>
-                  ))}
-                  {p.booking && (
-                    <div className="work-booking">
-                      <PaymentButton />
-                      <p className="work-booking-note">₹49 · Calendly opens right after payment · full refund if it didn’t help</p>
-                    </div>
+                  {p.links.map((l) =>
+                    l.href.startsWith('/') ? (
+                      <Link key={l.label} to={l.href} className="work-link" data-cursor-label="Open">
+                        {l.label}
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
+                        </svg>
+                      </Link>
+                    ) : (
+                      <a
+                        key={l.label}
+                        href={l.href}
+                        className="work-link"
+                        data-cursor-label="Open"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {l.label}
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
+                        </svg>
+                      </a>
+                    )
                   )}
                 </div>
               </div>

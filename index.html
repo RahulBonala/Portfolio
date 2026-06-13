@@ -77,12 +77,23 @@
   <!-- Sitemap hint -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
-  <!-- Fonts: Syne (display) + Plus Jakarta Sans (body) + Fira Code (mono) -->
+  <!-- Fonts: Syne (display) + Plus Jakarta Sans (body) + Fira Code (mono).
+       Loaded ASYNC (preload as style → swap to stylesheet onload) so the font
+       request never blocks first paint. display=optional means the font either
+       arrives in time or the page uses the fallback for that visit — so the
+       large display headline can never cause a swap-in layout shift (CLS=0). -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Fira+Code:wght@400;500&display=swap"
-    rel="stylesheet" />
+    rel="preload"
+    as="style"
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Fira+Code:wght@400;500&display=optional"
+    onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Fira+Code:wght@400;500&display=optional" />
+  </noscript>
 </head>
 
 <body>

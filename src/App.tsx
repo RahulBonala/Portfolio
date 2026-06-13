@@ -1,16 +1,15 @@
-import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import { Routes, Route, Navigate, useLocation, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import { scrollState, scrollToTop, scrollToHash } from './lib/scroll';
 import Preloader from './components/Preloader';
 import Cursor from './components/Cursor';
 import Header from './components/Header';
-import Hero from './components/Hero';
-import About from './components/About';
-import Work from './components/Work';
-import Skills from './components/Skills';
-import Approach from './components/Approach';
-import Contact from './components/Contact';
+import Home from './pages/Home';
+import CaseStudy from './pages/CaseStudy';
+import Teach from './pages/Teach';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,21 +18,37 @@ const prefersReducedMotion = () =>
   typeof window !== 'undefined' &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-function App() {
-  const rootRef = useRef<HTMLDivElement>(null);
+/** Scrolls to top (or to the hash target) on every route change. */
+function ScrollManager() {
+  const { pathname, hash } = useLocation();
 
+  useEffect(() => {
+    // Let the new page lay out before measuring hash targets
+    requestAnimationFrame(() => {
+      if (hash && scrollToHash(hash)) return;
+      scrollToTop();
+      ScrollTrigger.refresh();
+    });
+  }, [pathname, hash]);
+
+  return null;
+}
+
+function App() {
   // Smooth scroll (Lenis) driven by the GSAP ticker, keeping ScrollTrigger in sync
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
     const lenis = new Lenis({ autoRaf: false, lerp: 0.115 });
+    scrollState.lenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
 
     const raf = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
 
-    // Anchor links go through Lenis so smooth scroll and ScrollTrigger agree
+    // Same-page anchor links go through Lenis so smooth scroll and
+    // ScrollTrigger agree; router links are left to react-router.
     const onClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest('a[href^="#"]');
       if (!anchor) return;
@@ -50,75 +65,46 @@ function App() {
       document.removeEventListener('click', onClick);
       gsap.ticker.remove(raf);
       lenis.destroy();
+      scrollState.lenis = null;
     };
   }, []);
 
-  // Global scroll-reveal system: any [data-reveal] element animates in once.
-  // Parents with [data-reveal-group] stagger their direct children instead.
-  useLayoutEffect(() => {
-    if (prefersReducedMotion()) return;
-
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray<HTMLElement>('[data-reveal]').forEach((el) => {
-        const dir = el.dataset.reveal || 'up';
-        gsap.fromTo(
-          el,
-          {
-            opacity: 0,
-            y: dir === 'up' ? 56 : 0,
-            x: dir === 'left' ? -56 : dir === 'right' ? 56 : 0,
-            scale: dir === 'scale' ? 0.94 : 1,
-          },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            scale: 1,
-            duration: 1.2,
-            ease: 'expo.out',
-            delay: Number(el.dataset.revealDelay || 0),
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          }
-        );
-      });
-
-      gsap.utils.toArray<HTMLElement>('[data-reveal-group]').forEach((group) => {
-        gsap.fromTo(
-          group.children,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            ease: 'expo.out',
-            stagger: 0.09,
-            scrollTrigger: { trigger: group, start: 'top 86%', once: true },
-          }
-        );
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
+  // Debounced refresh keeps ScrollTrigger positions correct across viewport
+  // resizes and orientation changes (the audit's "resize blackout" class).
+  useEffect(() => {
+    let timer = 0;
+    const onResize = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => ScrollTrigger.refresh(), 200);
+    };
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+    };
   }, []);
 
   return (
-    <div className="App" ref={rootRef}>
+    <div className="App">
       {/* Skip to main content — keyboard accessibility */}
-      <a href="#home" className="skip-to-content">
+      <a href="#main" className="skip-to-content">
         Skip to main content
       </a>
 
       <Preloader />
       <Cursor />
+      <ScrollManager />
       <Header />
 
-      <main>
-        <Hero />
-        <About />
-        <Work />
-        <Skills />
-        <Approach />
-        <Contact />
+      <main id="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/work/:slug" element={<CaseStudy />} />
+          <Route path="/teach" element={<Teach />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </main>
 
       <footer className="footer">
@@ -127,12 +113,12 @@ function App() {
           <p className="footer-role">Product Designer · Developer · Teacher</p>
           <div className="footer-links">
             <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            <span className="footer-dot">·</span>
+            <span className="footer-dot" aria-hidden="true">·</span>
             <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <span className="footer-dot">·</span>
+            <span className="footer-dot" aria-hidden="true">·</span>
             <a href="mailto:rahulbonala06@gmail.com">Email</a>
-            <span className="footer-dot">·</span>
-            <a href="#work">Work</a>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <Link to="/teach">Live sessions</Link>
           </div>
           <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
         </div>

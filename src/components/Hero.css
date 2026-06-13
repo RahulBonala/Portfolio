@@ -36,24 +36,75 @@
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
 }
 
-.hero-canvas,
-.hero-fallback-net {
+/* ── BestAnswers debate-graph miniature (≤30% visual weight) ── */
+.hero-graph {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  right: -2%;
+  transform: translateY(-50%);
+  width: min(56vw, 760px);
+  height: auto;
+  opacity: 0.5;
+  pointer-events: none;
 }
 
-.hero-fallback-net {
-  opacity: 0.85;
+.hg-edge path {
+  fill: none;
+  stroke: var(--hairline-strong);
+  stroke-width: 1;
 }
 
-.hero-fallback-net .net-lines {
-  stroke: var(--hairline);
+.hg-edge--debate path {
+  stroke-dasharray: 3 5;
+  opacity: 0.7;
 }
 
-.hero-fallback-net .net-nodes {
+.hg-dot {
   fill: var(--accent);
+}
+
+.hg-node-dot {
+  fill: var(--accent);
+}
+
+.hg-node-ring {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1;
+  opacity: 0.4;
+}
+
+.hg-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  fill: var(--ink-muted);
+}
+
+.hg-node--verdict .hg-node-dot {
+  fill: var(--accent);
+}
+
+.hg-label--verdict {
+  fill: var(--ink-secondary);
+  font-weight: 500;
+}
+
+.hg-verdict-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: hg-pulse 3s ease-in-out infinite;
+}
+
+@keyframes hg-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.35); }
+}
+
+/* Reduced motion: freeze SMIL message dots and the verdict pulse */
+@media (prefers-reduced-motion: reduce) {
+  .hg-dots { display: none; }
+  .hg-verdict-pulse { animation: none; }
 }
 
 /* ── Content ────────────────────────────────────────────────── */

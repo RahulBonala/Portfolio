@@ -42,6 +42,18 @@
   color: var(--ink);
 }
 
+.about-inline-link {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+  transition: color var(--transition-fast);
+}
+
+.about-inline-link:hover {
+  color: var(--accent);
+}
+
 .about-photo {
   position: relative;
   max-width: 340px;
@@ -77,17 +89,19 @@
   color: var(--ink-muted);
 }
 
-/* ── Numbers ────────────────────────────────────────────────── */
+/* ── Numbers (each is a link to its substantiating case-study section) ── */
 .about-numbers {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--hairline);
   margin-bottom: clamp(56px, 9vh, 104px);
 }
 
 .about-number {
+  display: block;
   padding: 28px 24px 28px 0;
   border-right: 1px solid var(--hairline);
+  transition: background var(--transition-med), padding-left var(--transition-med);
 }
 
 .about-number + .about-number {
@@ -98,7 +112,12 @@
   border-right: none;
 }
 
+.about-number:hover {
+  background: linear-gradient(180deg, var(--accent-faint), transparent 70%);
+}
+
 .about-number-value {
+  display: block;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: clamp(2rem, 3.6vw, 3rem);
@@ -108,9 +127,26 @@
 }
 
 .about-number-label {
+  display: block;
   font-size: 0.84rem;
   line-height: 1.5;
-  color: var(--ink-muted);
+  color: var(--ink-secondary);
+}
+
+.about-number-cue {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  opacity: 0.65;
+  transition: opacity var(--transition-fast);
+}
+
+.about-number:hover .about-number-cue {
+  opacity: 1;
 }
 
 /* ── Timeline ───────────────────────────────────────────────── */
@@ -169,18 +205,20 @@
   }
 
   .about-numbers {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 
-  .about-number:nth-child(2) {
+  .about-number {
     border-right: none;
-  }
-
-  .about-number:nth-child(n + 3) {
     border-top: 1px solid var(--hairline);
+    padding: 22px 0;
   }
 
-  .about-number:nth-child(3) {
+  .about-number:first-child {
+    border-top: none;
+  }
+
+  .about-number + .about-number {
     padding-left: 0;
   }
 }

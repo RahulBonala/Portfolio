@@ -1,11 +1,28 @@
+import { Link } from 'react-router-dom';
 import profileImg from '../assets/profile-headshot.jpg';
 import './About.css';
 
+// Every performance metric links to the case-study section that proves it.
+// `context` is the one-line methodology shown on hover / for screen readers.
 const NUMBERS = [
-  { value: '95%', label: 'CSAT held across four regions' },
-  { value: '80%', label: 'faster maintenance workflows shipped' },
-  { value: '70%', label: 'drop in support tickets after testing' },
-  { value: '3+', label: 'years shipping production software' },
+  {
+    value: '95%',
+    label: 'CSAT across three regions',
+    href: '/work/smiths-detection#outcomes',
+    context: 'NEEDS CONTENT: how CSAT was measured (survey, sample size, period)',
+  },
+  {
+    value: '80%',
+    label: 'faster maintenance workflows',
+    href: '/work/smiths-detection#outcomes',
+    context: 'NEEDS CONTENT: baseline vs. post-launch task time and how it was timed',
+  },
+  {
+    value: '70%',
+    label: 'fewer support tickets',
+    href: '/work/smiths-detection#outcomes',
+    context: 'NEEDS CONTENT: ticket volume before/after and the window compared',
+  },
 ];
 
 const TIMELINE = [
@@ -13,7 +30,9 @@ const TIMELINE = [
     period: 'Now',
     role: 'Product Designer — AI specialist (UI/UX)',
     org: 'Ginthi.ai',
-    note: 'I design and build Ginthi’s web platforms end to end — the interfaces, the code behind them, and the AI tooling that keeps both moving fast. Day to day that means working closely with the team to ship on schedule without letting the customer experience slip.',
+    // NEEDS CONTENT: replace the bracketed specifics with 2–3 real shipped
+    // things and one concrete number (users, time saved, launch date, etc.)
+    note: 'I own design and front-end build for Ginthi’s web platform — shipping [NEEDS CONTENT: e.g. the onboarding flow, the X dashboard, the Y feature] and the AI tooling that speeds the team up. [NEEDS CONTENT: one number — e.g. “cut design-to-prod time by ~N%” or “launched N screens in N weeks”.]',
   },
   {
     period: 'Jan 2023 – Apr 2026',
@@ -38,9 +57,9 @@ const About: React.FC = () => {
         </div>
 
         <h2 className="about-statement" data-reveal="up">
-          Handoff is where good ideas die.
+          I design the thing,
           <br />
-          <span className="about-statement-accent">So I stopped handing off.</span>
+          <span className="about-statement-accent">then I build the thing.</span>
         </h2>
 
         <div className="about-grid">
@@ -48,22 +67,22 @@ const About: React.FC = () => {
             <p>
               I started as a designer at Smiths Detection, drawing the service consoles
               that maintenance engineers across Europe, APAC, and North America use every
-              day. Then I noticed the pattern: the distance between a design and the
-              shipped thing is where quality leaks out. So I learned to close it myself —
-              first the React in front, then the Java and Python behind it.
+              day. Then I noticed where quality leaks out — the distance between a design
+              and the shipped thing. So I learned to close it myself: first the React in
+              front, then the Java and Python behind it.
             </p>
             <p>
               That habit compounded. Today I&apos;m the product designer and AI
               specialist at Ginthi.ai, designing and developing a live platform with
-              production traffic flowing the whole time — the kind of work where
-              mistakes show up in front of real users, not in mockups. Nights and
-              weekends, I build with AI: BestAnswers.AI puts four models in a room
-              and makes them argue before you get an answer.
+              production traffic flowing the whole time. Nights and weekends, I build
+              with AI: BestAnswers.AI puts four models in a room and makes them argue
+              before you get an answer.
             </p>
             <p>
               And because the fastest way to sharpen a workflow is to teach it, I run{' '}
-              <strong>AI Tools for Builders</strong> — live sessions where designers and
-              developers learn to ship with AI the way I do daily.
+              <Link to="/teach" className="about-inline-link">AI Tools for Builders</Link>{' '}
+              — live sessions where designers and developers learn to ship with AI the
+              way I do daily.
             </p>
           </div>
 
@@ -83,15 +102,18 @@ const About: React.FC = () => {
           </figure>
         </div>
 
-        {/* Verified outcomes from shipped work */}
-        <dl className="about-numbers" data-reveal-group>
-          {NUMBERS.map(({ value, label }) => (
-            <div className="about-number" key={label}>
-              <dt className="about-number-value">{value}</dt>
-              <dd className="about-number-label">{label}</dd>
-            </div>
+        {/* Verified outcomes — each links to the section that substantiates it */}
+        <div className="about-numbers" data-reveal-group>
+          {NUMBERS.map(({ value, label, href, context }) => (
+            <Link className="about-number" key={label} to={href} title={context}>
+              <span className="about-number-value">{value}</span>
+              <span className="about-number-label">
+                {label}
+                <span className="about-number-cue" aria-hidden="true">See how →</span>
+              </span>
+            </Link>
           ))}
-        </dl>
+        </div>
 
         <ol className="about-timeline" data-reveal-group>
           {TIMELINE.map(({ period, role, org, note }) => (

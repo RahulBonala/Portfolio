@@ -1,119 +1,52 @@
-import { useLayoutEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Approach.css';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const BELIEFS = [
-  {
-    index: 'I',
-    line: 'Design and code are one job.',
-    sub: 'I do both ends myself, so nothing gets lost in translation. The screens I draw are the screens I ship.',
-  },
-  {
-    index: 'II',
-    line: 'AI is not a feature. It is the workflow.',
-    sub: 'I build AI products, ship with AI tools daily, and teach others to do the same. That loop is the edge.',
-  },
-  {
-    index: 'III',
-    line: 'Speed is a feature. Taste is the moat.',
-    sub: 'Anyone can generate ten options in a minute now. Knowing which one to keep — that is the job.',
-  },
-];
-
-const QUOTES = [
-  {
-    quote:
-      'What sets Rahul apart is his understanding of both design and engineering. He doesn’t just hand over pretty screens — he ensures every design is actually buildable and scalable.',
-    who: 'Product Stakeholder, Europe Operations — Smiths Detection',
-  },
-  {
-    quote:
-      'Rahul automated our internal reporting pipeline in Python, cutting 6-hour manual tasks to 15 minutes. A rare combination of analytical and creative thinking.',
-    who: 'Cross-Functional Team Lead, APAC — Smiths Detection',
-  },
-];
-
+/**
+ * One principle, expanded with a concrete example — no scroll-jacking,
+ * no pinned stage. Flows as a normal block. The anonymous testimonial
+ * quotes were removed (no named, permissioned references available yet —
+ * see [NEEDS CONTENT] below).
+ */
 const Approach: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Desktop: pin the stage and crossfade beliefs as the user scrolls through.
-  // Mobile / reduced motion: beliefs simply stack and reveal normally.
-  useLayoutEffect(() => {
-    const mm = gsap.matchMedia();
-
-    mm.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
-      const beliefs = gsap.utils.toArray<HTMLElement>('.approach-belief');
-      // Absolute children anchor to the container's padding box, so the
-      // gutter must be re-applied as left/right offsets
-      gsap.set(beliefs, {
-        position: 'absolute',
-        top: 0,
-        bottom: 0,
-        left: 'var(--gutter)',
-        right: 'var(--gutter)',
-        opacity: 0,
-        yPercent: 6,
-      });
-      gsap.set(beliefs[0], { opacity: 1, yPercent: 0 });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.approach-stage',
-          start: 'top top',
-          end: '+=240%',
-          pin: true,
-          scrub: 0.5,
-        },
-      });
-
-      // Strictly sequential: hold → fade the old one fully out → bring the
-      // new one in. No crossfade, so statements never overlap mid-scroll.
-      beliefs.forEach((b, i) => {
-        if (i === 0) return;
-        tl.to({}, { duration: 0.7 })
-          .to(beliefs[i - 1], { opacity: 0, yPercent: -8, duration: 0.45, ease: 'power1.in' })
-          .fromTo(b, { opacity: 0, yPercent: 8 }, { opacity: 1, yPercent: 0, duration: 0.45, ease: 'power1.out' });
-      });
-      tl.to({}, { duration: 0.7 }); // rest on the last belief before unpinning
-
-      return () => {
-        gsap.set(beliefs, { clearProps: 'all' });
-      };
-    });
-
-    return () => mm.revert();
-  }, []);
-
   return (
-    <section id="approach" className="section approach" ref={sectionRef}>
+    <section id="approach" className="section approach">
       <div className="container">
         <div className="sec-label">
           <em>004</em> Approach
         </div>
-      </div>
 
-      <div className="approach-stage">
-        <div className="container approach-stage-inner">
-          {BELIEFS.map(({ index, line, sub }) => (
-            <div className="approach-belief" key={index}>
-              <span className="approach-belief-index" aria-hidden="true">{index}</span>
-              <h3 className="approach-belief-line">{line}</h3>
-              <p className="approach-belief-sub">{sub}</p>
-            </div>
-          ))}
+        <h2 className="approach-line" data-reveal="up">
+          Design and code are <span className="approach-accent">one job.</span>
+        </h2>
+
+        <div className="approach-body" data-reveal="up">
+          <p>
+            Most teams split the work: a designer hands a mockup to an engineer, and
+            the gap between them is where intent leaks out — the spacing drifts, the
+            empty state never gets built, the animation that made the idea legible
+            gets dropped for time. I close that gap by doing both ends myself.
+          </p>
+          <p>
+            BestAnswers.AI is the clearest example. The core idea — four AI personas
+            arguing, then a judge merging the strongest reasoning — only works if you
+            can <em>see</em> the disagreement. I couldn&apos;t spec that in a static
+            frame, so I designed it in code: built the debate view, watched four real
+            model responses land, found that simultaneous streaming read as chaos,
+            and redesigned the sequencing right there in the same file. Design
+            decision and implementation were the same act. The verdict graph in this
+            page&apos;s hero is that same idea, miniaturised.
+          </p>
+          <p className="approach-note">
+            {/* [NEEDS CONTENT: optional — one measured outcome from BestAnswers
+                (e.g. user-tested comprehension lift, or usage number) to close
+                this paragraph with a number rather than a claim] */}
+            That loop — design a little, build a little, let the running thing correct
+            the next decision — is how everything here gets made.
+          </p>
         </div>
-      </div>
 
-      <div className="container approach-quotes" data-reveal-group>
-        {QUOTES.map(({ quote, who }) => (
-          <blockquote className="approach-quote" key={who}>
-            <p>“{quote}”</p>
-            <cite>{who}</cite>
-          </blockquote>
-        ))}
+        {/* [NEEDS CONTENT: named testimonials — name + title + company +
+            explicit permission to publish. Until provided, no quotes render
+            here (anonymous ones were removed per the audit). */}
       </div>
     </section>
   );

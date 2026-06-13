@@ -1,0 +1,306 @@
+.case {
+  padding: calc(var(--header-height) + clamp(40px, 7vh, 88px)) 0 clamp(80px, 12vh, 140px);
+}
+
+.case-narrow {
+  max-width: 880px;
+}
+
+/* ── Head ───────────────────────────────────────────────────── */
+.case-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.case-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 5.6vw, 4rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  margin-bottom: clamp(18px, 3vh, 28px);
+}
+
+.case-summary {
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+  color: var(--ink-secondary);
+  max-width: 60ch;
+  margin-bottom: clamp(28px, 4vh, 40px);
+}
+
+.case-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  padding: 22px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: clamp(28px, 4vh, 40px);
+}
+
+.case-meta dt {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 5px;
+}
+
+.case-meta dd {
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.case-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent-ink);
+  background: var(--accent);
+  padding: 12px 22px;
+  border-radius: 100px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.case-live:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* ── Sections ───────────────────────────────────────────────── */
+.case-section {
+  padding: clamp(40px, 7vh, 72px) 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.case-section:first-of-type {
+  border-top: none;
+}
+
+.case-h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.case-h2-n {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+}
+
+.case-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-secondary);
+  margin: 28px 0 14px;
+}
+
+.case-lead {
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--ink);
+  margin-bottom: 18px;
+  max-width: 36ch;
+}
+
+.case-body {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--ink-secondary);
+  max-width: 68ch;
+  margin-bottom: 1.3em;
+}
+
+.case-body:last-child {
+  margin-bottom: 0;
+}
+
+.case-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 68ch;
+}
+
+.case-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-secondary);
+}
+
+.case-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 12px;
+  height: 1px;
+  background: var(--accent);
+}
+
+/* ── Rejected directions ────────────────────────────────────── */
+.case-rejected {
+  display: flex;
+  flex-direction: column;
+  max-width: 68ch;
+}
+
+.case-rejected li {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.8fr) 1.4fr;
+  gap: 20px;
+  padding: 16px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.case-rejected li:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.case-rejected-name {
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: line-through;
+  text-decoration-color: var(--ink-faint);
+}
+
+.case-rejected-why {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* ── Figures ────────────────────────────────────────────────── */
+.cs-figure {
+  margin: 32px 0 0;
+}
+
+.cs-figure-frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background:
+    repeating-linear-gradient(45deg, transparent, transparent 10px, var(--hairline) 10px, var(--hairline) 11px),
+    var(--bg-raised);
+}
+
+.cs-figure-frame span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.cs-figure figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+.cs-figure--placeholder figcaption {
+  color: var(--color-error);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+}
+
+/* ── Outcomes ───────────────────────────────────────────────── */
+.case-outcomes {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.case-outcome {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 24px;
+  padding: 22px 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.case-outcome:last-child {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.case-outcome-metric {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1;
+  color: var(--accent);
+}
+
+.case-outcome-label {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 5px;
+}
+
+.case-outcome-method {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--ink-muted);
+}
+
+/* ── Foot ───────────────────────────────────────────────────── */
+.case-foot {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 40px;
+  border-top: 1px solid var(--hairline);
+  margin-top: clamp(40px, 7vh, 72px);
+}
+
+.case-foot-link {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+}
+
+.case-foot-link:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .case-rejected li,
+  .case-outcome {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .case-outcome-metric {
+    margin-bottom: 4px;
+  }
+}
