@@ -36,69 +36,76 @@
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
 }
 
-/* ── BestAnswers debate-graph miniature (≤30% visual weight) ── */
+/* ── BestAnswers debate-graph miniature (ambient, ≤30% visual weight) ──
+   Calm and premium: thin hairline edges, dim idle persona nodes, and the
+   verdict node as the single slow point of emphasis. */
 .hero-graph {
   position: absolute;
   top: 50%;
   right: -2%;
   transform: translateY(-50%);
-  width: min(56vw, 760px);
+  width: min(54vw, 720px);
   height: auto;
-  opacity: 0.5;
+  opacity: 0.42;
   pointer-events: none;
 }
 
 .hg-edge path {
   fill: none;
   stroke: var(--hairline-strong);
-  stroke-width: 1;
+  stroke-width: 0.65;
+  opacity: 0.6;
 }
 
 .hg-edge--debate path {
-  stroke-dasharray: 3 5;
-  opacity: 0.7;
+  stroke-dasharray: 2 6;
+  opacity: 0.4;
 }
 
 .hg-dot {
   fill: var(--accent);
+  opacity: 0.85;
 }
 
+/* idle persona nodes sit quietly in the background */
 .hg-node-dot {
-  fill: var(--accent);
+  fill: var(--ink-muted);
 }
 
 .hg-node-ring {
   fill: none;
-  stroke: var(--accent);
-  stroke-width: 1;
-  opacity: 0.4;
+  stroke: var(--ink-faint);
+  stroke-width: 0.75;
+  opacity: 0.5;
 }
 
 .hg-label {
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.04em;
-  fill: var(--ink-muted);
+  fill: var(--ink-faint);
 }
 
+/* the verdict is the one element that gets the accent + the slow pulse */
 .hg-node--verdict .hg-node-dot {
   fill: var(--accent);
 }
 
 .hg-label--verdict {
-  fill: var(--ink-secondary);
+  fill: var(--ink-muted);
   font-weight: 500;
 }
 
 .hg-verdict-pulse {
+  stroke: var(--accent);
   transform-box: fill-box;
   transform-origin: center;
-  animation: hg-pulse 3s ease-in-out infinite;
+  animation: hg-pulse 7s ease-in-out infinite;
 }
 
 @keyframes hg-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.15; transform: scale(1.35); }
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.12; transform: scale(1.45); }
 }
 
 /* Reduced motion: freeze SMIL message dots and the verdict pulse */
@@ -311,6 +318,21 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  /* On narrow screens, simplify the graph to a clean ambient constellation:
+     drop the mono labels (they read as clutter behind the CTAs) and let the
+     nodes + edges + verdict sit faintly behind the content. */
+  .hg-label {
+    display: none;
+  }
+
+  .hero-graph {
+    width: 150%;
+    right: -28%;
+    opacity: 0.3;
+  }
+}
+
 @media (max-width: 900px) {
   .hero-facts {
     grid-template-columns: repeat(2, 1fr);

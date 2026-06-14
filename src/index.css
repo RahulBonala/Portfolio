@@ -80,15 +80,29 @@
   padding: 0;
 }
 
-/* ── Focus Visible — WCAG 2.4.7 / 2.4.11 ───────────────────── */
+/* ── Focus Visible — WCAG 2.4.7 / 2.4.11 ───────────────────────
+   Keyboard focus only. A two-layer ring stays visible on every surface,
+   including accent-filled buttons: a page-coloured gap separates the
+   element from a solid accent outline, so contrast holds in both themes. */
 *:focus {
   outline: none;
 }
 
 *:focus-visible {
   outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--bg);
+  border-radius: 3px;
+}
+
+/* On accent-filled controls, the inner gap reads against the fill and the
+   accent outline reads against the page — visible from both sides. */
+.hero-cta-primary:focus-visible,
+.form-submit:focus-visible,
+.case-live:focus-visible,
+.form-success-mark:focus-visible {
+  outline-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--bg);
 }
 
 html {
@@ -226,6 +240,24 @@ img {
   background: var(--accent-dim);
 }
 
+/* ── Theme dissolve ─────────────────────────────────────────────
+   View Transitions API path: cross-fade the whole document on toggle. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 360ms;
+  animation-timing-function: ease;
+}
+
+/* Fallback path (no View Transitions): briefly transition colours on swap. */
+html.theme-anim,
+html.theme-anim *,
+html.theme-anim *::before,
+html.theme-anim *::after {
+  transition: background-color 340ms ease, color 340ms ease,
+    border-color 340ms ease, fill 340ms ease, stroke 340ms ease,
+    box-shadow 340ms ease !important;
+}
+
 /* ── Reduced Motion ─────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -239,5 +271,10 @@ img {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }

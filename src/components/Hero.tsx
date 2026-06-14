@@ -44,18 +44,30 @@ const DebateGraph = () => {
         <path id="hg-e4" d="M 330 60 C 430 110, 510 190, 560 280" />
       </g>
 
-      {/* messages travelling toward the verdict (SMIL; hidden under PRM) */}
+      {/* messages drifting slowly toward the verdict (SMIL; hidden under PRM).
+          Long durations + ease-in-out so the motion is ambient, not energetic. */}
       <g className="hg-dots">
         {[
-          { path: '#hg-e1', dur: '5.2s', begin: '0s' },
-          { path: '#hg-e2', dur: '4.6s', begin: '1.4s' },
-          { path: '#hg-e3', dur: '5.8s', begin: '2.6s' },
-          { path: '#hg-e4', dur: '4.9s', begin: '3.4s' },
+          { path: '#hg-e1', dur: '11s', begin: '0s' },
+          { path: '#hg-e2', dur: '12.5s', begin: '3.2s' },
+          { path: '#hg-e3', dur: '13s', begin: '6.1s' },
+          { path: '#hg-e4', dur: '11.5s', begin: '8.4s' },
         ].map((d, i) => (
-          <circle key={i} className="hg-dot" r="3.5">
-            <animateMotion dur={d.dur} begin={d.begin} repeatCount="indefinite" rotate="none">
+          <circle key={i} className="hg-dot" r="3">
+            <animateMotion
+              dur={d.dur}
+              begin={d.begin}
+              repeatCount="indefinite"
+              rotate="none"
+              calcMode="spline"
+              keyTimes="0;1"
+              keyPoints="0;1"
+              keySplines="0.42 0 0.58 1"
+            >
               <mpath href={d.path} />
             </animateMotion>
+            {/* fade in/out at the ends so dots don't pop at the nodes */}
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.12;0.8;1" dur={d.dur} begin={d.begin} repeatCount="indefinite" />
           </circle>
         ))}
       </g>

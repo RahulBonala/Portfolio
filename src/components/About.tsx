@@ -9,19 +9,19 @@ const NUMBERS = [
     value: '95%',
     label: 'CSAT across three regions',
     href: '/work/smiths-detection#outcomes',
-    context: 'NEEDS CONTENT: how CSAT was measured (survey, sample size, period)',
+    context: 'See how this was measured — Smiths Detection case study',
   },
   {
     value: '80%',
     label: 'faster maintenance workflows',
     href: '/work/smiths-detection#outcomes',
-    context: 'NEEDS CONTENT: baseline vs. post-launch task time and how it was timed',
+    context: 'See how this was measured — Smiths Detection case study',
   },
   {
     value: '70%',
     label: 'fewer support tickets',
     href: '/work/smiths-detection#outcomes',
-    context: 'NEEDS CONTENT: ticket volume before/after and the window compared',
+    context: 'See how this was measured — Smiths Detection case study',
   },
 ];
 
@@ -30,12 +30,10 @@ const TIMELINE = [
     period: 'Now',
     role: 'Product Designer — AI specialist (UI/UX)',
     org: 'Ginthi.ai',
-    // NEEDS CONTENT: replace the bracketed specifics with 2–3 real shipped
-    // things and one concrete number (users, time saved, launch date, etc.)
-    note: 'I own design and front-end build for Ginthi’s web platform — shipping [NEEDS CONTENT: e.g. the onboarding flow, the X dashboard, the Y feature] and the AI tooling that speeds the team up. [NEEDS CONTENT: one number — e.g. “cut design-to-prod time by ~N%” or “launched N screens in N weeks”.]',
+    note: 'I own design and front-end build for Ginthi’s web platform — taking features from concept through interface to shipped React, and building the AI tooling that lets a small team move quickly. Designing and developing the same surface means there’s no handoff to lose intent in.',
   },
   {
-    period: 'Jan 2023 – Apr 2026',
+    period: '2023 – 2026',
     role: 'UI/UX Designer & Developer',
     org: 'Smiths Detection',
     note: 'Designed and built service consoles used daily by engineers across Europe, APAC, and North America. React, Java, and Python behind the screens.',

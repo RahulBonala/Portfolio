@@ -2,9 +2,8 @@ import './Approach.css';
 
 /**
  * One principle, expanded with a concrete example — no scroll-jacking,
- * no pinned stage. Flows as a normal block. The anonymous testimonial
- * quotes were removed (no named, permissioned references available yet —
- * see [NEEDS CONTENT] below).
+ * no pinned stage. Flows as a normal block. Anonymous testimonial quotes
+ * were removed; add named, permissioned references here when available.
  */
 const Approach: React.FC = () => {
   return (
@@ -36,17 +35,10 @@ const Approach: React.FC = () => {
             page&apos;s hero is that same idea, miniaturised.
           </p>
           <p className="approach-note">
-            {/* [NEEDS CONTENT: optional — one measured outcome from BestAnswers
-                (e.g. user-tested comprehension lift, or usage number) to close
-                this paragraph with a number rather than a claim] */}
             That loop — design a little, build a little, let the running thing correct
             the next decision — is how everything here gets made.
           </p>
         </div>
-
-        {/* [NEEDS CONTENT: named testimonials — name + title + company +
-            explicit permission to publish. Until provided, no quotes render
-            here (anonymous ones were removed per the audit). */}
       </div>
     </section>
   );
