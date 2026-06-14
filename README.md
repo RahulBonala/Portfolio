@@ -7,8 +7,8 @@ Live at [rahulbonala.me](https://rahulbonala.me).
 ## Tech stack
 
 - React 19 + TypeScript + Vite 7
-- Three.js + React Three Fiber (lazy-loaded 3D hero with CSS/SVG fallback)
-- GSAP ScrollTrigger + Lenis (scroll choreography)
+- react-router (multi-route: home, case studies, /teach) with per-route prerendering + hydration
+- GSAP ScrollTrigger + Lenis (scroll choreography); animated SVG debate-graph hero (no 3D runtime)
 - Syne + Plus Jakarta Sans + Fira Code
 - EmailJS for the contact form, Razorpay for session payments
 
