@@ -14,6 +14,7 @@ const ROUTES = [
   { path: '/work/bestanswers', out: 'work/bestanswers/index.html' },
   { path: '/work/smiths-detection', out: 'work/smiths-detection/index.html' },
   { path: '/teach', out: 'teach/index.html' },
+  { path: '/teach/booked', out: 'teach/booked/index.html' },
 ];
 
 // Entry filename is content-hashed — find it

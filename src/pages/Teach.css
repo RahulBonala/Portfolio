@@ -140,6 +140,73 @@
   color: var(--accent);
 }
 
+/* ── Slots badge + price layout on the booking card ─────────── */
+.teach-price-row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.teach-slots {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  background: var(--accent-faint);
+  border-radius: 100px;
+  padding: 4px 11px;
+  align-self: center;
+}
+
+/* ── Booked confirmation page ───────────────────────────────── */
+.booked-inner {
+  max-width: 640px;
+}
+
+.booked-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+
+.booked-calendly {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 0 30px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 25%, transparent);
+  margin: 8px 0 clamp(36px, 6vh, 56px);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.booked-calendly:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--accent) 34%, transparent);
+}
+
+.booked .teach-foot a {
+  color: var(--ink);
+  border-bottom: 1px solid var(--accent);
+}
+
 @media (max-width: 720px) {
   .teach-steps {
     grid-template-columns: 1fr;

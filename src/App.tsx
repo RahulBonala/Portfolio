@@ -7,9 +7,11 @@ import { scrollState, scrollToTop, scrollToHash } from './lib/scroll';
 import Preloader from './components/Preloader';
 import Cursor from './components/Cursor';
 import Header from './components/Header';
+import BookCta from './components/BookCta';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import Teach from './pages/Teach';
+import Booked from './pages/Booked';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -103,9 +105,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
           <Route path="/teach" element={<Teach />} />
+          <Route path="/teach/booked" element={<Booked />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
+
+      {/* Persistent path to booking for anyone landing on the portfolio */}
+      <BookCta />
 
       <footer className="footer">
         <div className="container footer-inner">

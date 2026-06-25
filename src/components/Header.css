@@ -104,6 +104,25 @@
   gap: 12px;
 }
 
+/* Primary booking CTA in the header — the immediate, above-the-fold path */
+.header-book {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 100px;
+  padding: 9px 18px;
+  white-space: nowrap;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.header-book:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
 .header-theme {
   display: inline-flex;
   align-items: center;
@@ -227,6 +246,23 @@
   color: var(--accent);
 }
 
+/* Book CTA pinned above the nav items in the mobile menu */
+.menu-overlay a.menu-overlay-book {
+  align-self: flex-start;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border-radius: 100px;
+  padding: 12px 22px;
+  margin-bottom: 28px;
+}
+
 .menu-overlay-foot {
   position: absolute;
   bottom: 40px;
@@ -265,6 +301,14 @@
 
   .header-resume {
     padding: 7px 13px;
+  }
+}
+
+@media (max-width: 620px) {
+  /* Header gets tight on phones — the floating CTA + mobile-menu entry carry
+     booking here, so drop the inline header Book button. */
+  .header-book {
+    display: none;
   }
 }
 

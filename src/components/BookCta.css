@@ -1,0 +1,96 @@
+.book-cta {
+  position: fixed;
+  right: clamp(14px, 3vw, 28px);
+  bottom: clamp(14px, 3vw, 28px);
+  z-index: 850; /* below header (900), above content */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+  pointer-events: none;
+}
+
+.book-cta.is-shown {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* "Limited slots" tag floating above the pill */
+.book-cta-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--hairline);
+  border-radius: 100px;
+  padding: 4px 11px;
+  margin-right: 4px;
+}
+
+.book-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px; /* ≥44px tap target */
+  padding: 0 22px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--accent) 28%, transparent);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.book-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px color-mix(in srgb, var(--accent) 36%, transparent);
+}
+
+/* small availability dot — the one subtle pulse on the site */
+.book-cta-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-ink);
+  opacity: 0.55;
+  animation: book-cta-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes book-cta-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@media (max-width: 480px) {
+  .book-cta-tag {
+    display: none; /* keep the corner uncluttered on small phones */
+  }
+
+  .book-cta-btn {
+    font-size: 0.9rem;
+    padding: 0 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book-cta {
+    transition: none;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .book-cta-dot {
+    animation: none;
+    opacity: 0.6;
+  }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import PaymentButton from '../components/PaymentButton';
+import { BOOKING } from '../lib/booking';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
@@ -47,10 +48,13 @@ const Teach: React.FC = () => {
         <section className="teach-book" data-reveal="up" aria-labelledby="teach-book-h">
           <div className="teach-book-copy">
             <h2 id="teach-book-h" className="teach-book-title">Book a session</h2>
-            <p className="teach-price"><span className="teach-price-num">₹49</span> per session</p>
+            <div className="teach-price-row">
+              <p className="teach-price"><span className="teach-price-num">{BOOKING.price}</span> per session</p>
+              <span className="teach-slots">{BOOKING.slotsLabel}</span>
+            </div>
             <p className="teach-book-note">
-              Calendly opens right after payment so you can pick a time. Full refund if
-              it didn’t help — the pitch is the work, not the price.
+              Pay below and you’ll be taken straight to the scheduler to pick your time.
+              Full refund if it didn’t help — the pitch is the work, not the price.
             </p>
           </div>
           <div className="teach-book-action">
