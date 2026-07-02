@@ -43,9 +43,13 @@ const Preloader: React.FC = () => {
       }
     };
     raf = requestAnimationFrame(tick);
+    // rAF never fires in hidden/background tabs, which would leave the body
+    // scroll-locked forever — force the exit once the budget elapses.
+    const failsafe = window.setTimeout(() => setPhase('exiting'), MAX_DURATION + 300);
 
     return () => {
       cancelAnimationFrame(raf);
+      clearTimeout(failsafe);
       document.body.style.overflow = '';
     };
   }, [phase]);

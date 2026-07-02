@@ -4,14 +4,31 @@
   left: 0;
   right: 0;
   z-index: 900;
-  transition: background var(--transition-med), border-color var(--transition-med);
+  transition: border-color var(--transition-med);
   border-bottom: 1px solid transparent;
 }
 
-.header.scrolled {
+/* The scrolled backdrop lives on a pseudo-element: backdrop-filter on .header
+   itself would make it the containing block for fixed descendants, shrinking
+   the full-screen .menu-overlay to the header bar (transparent menu bug). */
+.header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
   background: color-mix(in srgb, var(--bg) 82%, transparent);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  opacity: 0;
+  transition: opacity var(--transition-med);
+  pointer-events: none;
+}
+
+.header.scrolled::before {
+  opacity: 1;
+}
+
+.header.scrolled {
   border-bottom-color: var(--hairline);
 }
 
