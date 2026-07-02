@@ -7,7 +7,7 @@
   line-height: 1.75;
   color: var(--ink-secondary);
   max-width: 52ch;
-  margin: 22px 0 clamp(36px, 6vh, 64px);
+  margin: 18px 0 clamp(24px, 4vh, 44px);
 }
 
 /* ── Direct email — the frictionless path ───────────────────── */
@@ -16,7 +16,7 @@
   align-items: baseline;
   gap: 22px;
   flex-wrap: wrap;
-  margin-bottom: clamp(48px, 8vh, 88px);
+  margin-bottom: clamp(28px, 5vh, 52px);
 }
 
 .contact-email {

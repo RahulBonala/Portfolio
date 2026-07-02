@@ -4,14 +4,14 @@
 }
 
 .work .sec-title {
-  margin-bottom: clamp(64px, 10vh, 120px);
+  margin-bottom: clamp(36px, 6vh, 72px);
 }
 
 /* ── Project worlds ─────────────────────────────────────────── */
 .work-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(96px, 16vh, 200px);
+  gap: clamp(56px, 10vh, 120px);
 }
 
 .work-item {
@@ -274,7 +274,7 @@
 
 /* ── Archive ────────────────────────────────────────────────── */
 .work-archive {
-  margin-top: clamp(96px, 14vh, 180px);
+  margin-top: clamp(56px, 9vh, 110px);
 }
 
 .work-archive-title {

@@ -5,12 +5,12 @@
 .skills-sub {
   font-size: 0.95rem;
   color: var(--ink-muted);
-  margin: 18px 0 clamp(48px, 7vh, 80px);
+  margin: 16px 0 clamp(28px, 4.5vh, 52px);
   max-width: 56ch;
 }
 
 .receipt-group {
-  margin-bottom: clamp(36px, 6vh, 60px);
+  margin-bottom: clamp(28px, 4.5vh, 48px);
 }
 
 .receipt-group:last-child {

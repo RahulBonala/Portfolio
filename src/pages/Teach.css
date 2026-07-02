@@ -18,7 +18,7 @@
 
 /* ── Teach ──────────────────────────────────────────────────── */
 .teach {
-  padding: calc(var(--header-height) + clamp(48px, 8vh, 96px)) 0 clamp(80px, 12vh, 140px);
+  padding: calc(var(--header-height) + clamp(32px, 5vh, 64px)) 0 clamp(56px, 9vh, 104px);
 }
 
 .teach-eyebrow {
@@ -46,14 +46,14 @@
   font-size: clamp(1rem, 1.4vw, 1.18rem);
   line-height: 1.8;
   color: var(--ink-secondary);
-  margin-bottom: clamp(56px, 9vh, 96px);
+  margin-bottom: clamp(32px, 5vh, 56px);
 }
 
 .teach-steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: clamp(24px, 4vw, 48px);
-  margin-bottom: clamp(56px, 9vh, 96px);
+  margin-bottom: clamp(36px, 6vh, 64px);
 }
 
 .teach-step-n {

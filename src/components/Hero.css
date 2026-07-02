@@ -239,7 +239,7 @@
   position: relative;
   z-index: 1;
   border-top: 1px solid var(--hairline);
-  margin-top: clamp(40px, 7vh, 80px);
+  margin-top: clamp(28px, 4.5vh, 56px);
 }
 
 .hero-facts {

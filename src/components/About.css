@@ -10,7 +10,7 @@
   line-height: 1.12;
   letter-spacing: -0.02em;
   max-width: 18ch;
-  margin-bottom: clamp(48px, 8vh, 88px);
+  margin-bottom: clamp(28px, 5vh, 56px);
 }
 
 .about-statement-accent {
@@ -23,7 +23,7 @@
   grid-template-columns: minmax(0, 1.5fr) minmax(240px, 1fr);
   gap: clamp(40px, 6vw, 96px);
   align-items: start;
-  margin-bottom: clamp(56px, 9vh, 104px);
+  margin-bottom: clamp(36px, 6vh, 64px);
 }
 
 .about-prose p {
@@ -94,7 +94,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   border-top: 1px solid var(--hairline);
-  margin-bottom: clamp(56px, 9vh, 104px);
+  margin-bottom: clamp(36px, 6vh, 64px);
 }
 
 .about-number {
