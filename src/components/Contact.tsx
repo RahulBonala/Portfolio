@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
+import { RB_EVENTS } from '../lib/robomark';
 import './Contact.css';
 
 // ────────────────────────────────────────────────────────────
@@ -51,6 +52,8 @@ const Contact: React.FC = () => {
     try {
       await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current!, EMAILJS_PUBLIC_KEY);
       setStatus('success');
+      // Real conversion — the header robot cheers (never on the honeypot/error paths)
+      window.dispatchEvent(new Event(RB_EVENTS.celebrate));
       setFormData({ name: '', email: '', message: '', _gotcha: '' });
       setTimeout(() => setStatus('idle'), 5000);
     } catch (err) {

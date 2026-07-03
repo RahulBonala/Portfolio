@@ -1,0 +1,127 @@
+/* ============================================================
+   RoboMark — Rahul's pixel-robot trademark (unit RB-01)
+   Tokens-only with baked fallbacks so this same file works on any
+   host site. All motion is one-shot class toggles with step-end
+   timing (the pixel idiom — discrete frames, never eased glides);
+   nothing here loops. The chest pixel never pulses: the site's one
+   pulsing dot belongs to BookCta.
+   ============================================================ */
+
+.robomark {
+  display: inline-flex;
+  height: 39px; /* 3px per grid cell — integer scale keeps pixels crisp */
+  color: inherit; /* shell follows the host's text color (--ink) */
+  transform-origin: 50% 100%; /* hops and squashes happen from the feet */
+}
+
+.robomark svg {
+  display: block;
+  width: auto;
+  height: 100%;
+}
+
+/* ── Pixels ── */
+.rb-shell {
+  fill: currentColor;
+}
+
+.rb-visor {
+  fill: var(--bot-visor, var(--bg, #060607));
+}
+
+.rb-acc {
+  fill: var(--accent, #c8f542);
+}
+
+/* Hidden frames (eye lids, wave arm) until a state shows them */
+.rb-eyes-lid,
+.rb-arm {
+  opacity: 0;
+}
+
+/* ── Closed eyes: sleep, blink, and press all share the lids ── */
+.robomark.is-asleep .rb-eyes-open,
+.robomark.is-blinking .rb-eyes-open,
+.robomark.is-pressed .rb-eyes-open {
+  opacity: 0;
+}
+
+.robomark.is-asleep .rb-eyes-lid,
+.robomark.is-blinking .rb-eyes-lid,
+.robomark.is-pressed .rb-eyes-lid {
+  opacity: 1;
+}
+
+/* Sleep also dims the antenna tip — static, no fade loop */
+.robomark.is-asleep .rb-tip {
+  fill: var(--ink-faint, rgba(145, 145, 145, 0.5));
+}
+
+/* ── Press: instant squash from the feet, released with the class ── */
+.robomark.is-pressed {
+  transform: scaleY(0.9);
+}
+
+/* ── Greet: the arm waves up/out twice in discrete frames, then retracts ── */
+.robomark.is-greeting .rb-arm-up {
+  animation: rb-wave-up 1.4s step-end both;
+}
+
+.robomark.is-greeting .rb-arm-out {
+  animation: rb-wave-out 1.4s step-end both;
+}
+
+@keyframes rb-wave-up {
+  0% { opacity: 1; }
+  25% { opacity: 0; }
+  50% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+
+@keyframes rb-wave-out {
+  0% { opacity: 0; }
+  25% { opacity: 1; }
+  50% { opacity: 0; }
+  75% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ── Cheer: two 2-cell hops, antenna flash, one arm pop ── */
+.robomark.is-cheering {
+  animation: rb-hop 0.9s step-end both;
+}
+
+@keyframes rb-hop {
+  0%, 40%, 80%, 100% { transform: translateY(0); }
+  20%, 60% { transform: translateY(-15%); }
+}
+
+.robomark.is-cheering .rb-tip {
+  animation: rb-tip-flash 0.9s step-end both;
+}
+
+@keyframes rb-tip-flash {
+  0%, 50%, 100% { fill: var(--accent, #c8f542); }
+  25%, 75% { fill: currentColor; }
+}
+
+.robomark.is-cheering .rb-arm-up {
+  animation: rb-cheer-arm 0.9s step-end both;
+}
+
+@keyframes rb-cheer-arm {
+  0% { opacity: 0; }
+  20% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+/* ── Reduced motion: independent backstop (the core also never
+     attaches its machinery) — the mark stays fully visible, static ── */
+@media (prefers-reduced-motion: reduce) {
+  .robomark,
+  .robomark * {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}

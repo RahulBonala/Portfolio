@@ -40,6 +40,7 @@ Type rules:
 - **Scene changes**: hero content/visual scrub out on scroll; Work media + giant indexes parallax at different speeds; Approach pins and swaps beliefs **strictly sequentially** — never crossfade them, overlapping statements read as broken (desktop only via `gsap.matchMedia`; narrow viewports get a static stacked list).
 - **Custom cursor** ([Cursor.tsx](src/components/Cursor.tsx)): an accent dot that expands over interactives, `data-cursor-label` adds a word. Fine-pointer devices only. (v2 banned this; v3 ships it deliberately as part of the futuristic direction — keep it restrained, never add trails/physics.)
 - **Preloader** ([Preloader.tsx](src/components/Preloader.tsx)): once per session, hard cap well under 2s, dispatches `rb:preloader-done` which the hero intro waits for.
+- **RoboMark** ([RoboMark.tsx](src/components/RoboMark.tsx) + framework-free core [robomark.ts](src/lib/robomark.ts)): the pixel-robot trademark in the header mark (it absorbed the old status dot — net signifier count unchanged). Rules: every animation is a one-shot class toggle with `step-end` timing (pixel idiom — discrete frames, no eased glides, structurally cannot loop); eyes follow the cursor in whole-cell snaps (fine pointer only); it sleeps after 45s idle; it cheers only on `rb:celebrate` (real conversions: contact form sent, booking landed); the chest pixel **never pulses** (BookCta keeps the site's one pulse). Ambient blink exists behind a flag and ships OFF. The core is zero-dependency and portable — it's the cross-site trademark, so copy `robomark.ts` + `RoboMark.css` to other sites rather than reinventing it.
 - **Reduced motion**: every system (Lenis, reveals, pin, cursor, preloader, 3D) checks `prefers-reduced-motion` and turns itself off. Content must be fully readable with zero JS animation.
 
 ## 4. The 3D layer
@@ -67,9 +68,11 @@ Consciously un-banned in v3 (they serve the direction, keep them tasteful): the 
 src/
 ├── App.tsx              — composition, Lenis + global reveal system, footer
 ├── index.css            — tokens + base + .sec-label/.sec-title
+├── lib/robomark.ts      — framework-free pixel-robot core (the trademark)
 └── components/
     ├── Preloader.tsx    — branded load, once per session
     ├── Cursor.tsx       — custom cursor
+    ├── RoboMark.tsx     — React wrapper for the pixel robot (lives in the header mark)
     ├── Header.tsx       — fixed bar + full-screen mobile menu
     ├── Hero.tsx         — 3D hero + intro choreography + facts strip
     ├── three/HeroScene.tsx — lazy R3F particle network

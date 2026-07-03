@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BOOKING } from '../lib/booking';
+import { RB_EVENTS } from '../lib/robomark';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
@@ -15,6 +16,8 @@ const Booked: React.FC = () => {
 
   useEffect(() => {
     document.title = 'Payment received — pick your slot · Rahul Bonala';
+    // A booking landed — the header robot cheers
+    window.dispatchEvent(new Event(RB_EVENTS.celebrate));
   }, []);
 
   return (
