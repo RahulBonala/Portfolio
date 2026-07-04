@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../hooks/useTheme';
-import RoboMark from './RoboMark';
 import './Header.css';
 
 const NAV_LINKS = [
@@ -71,8 +70,8 @@ const Header: React.FC = () => {
     <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
       <div className="header-bar">
         <Link to="/" className="header-mark" aria-label="Rahul Bonala — home">
-          <RoboMark />
           <span className="header-mark-name">Rahul Bonala</span>
+          <span className="header-mark-status" aria-hidden="true" />
         </Link>
 
         <nav className="header-nav" role="navigation" aria-label="Main navigation">

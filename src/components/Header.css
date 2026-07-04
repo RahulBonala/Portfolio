@@ -45,8 +45,8 @@
 /* ── Mark ───────────────────────────────────────────────────── */
 .header-mark {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  align-items: flex-start;
+  gap: 6px;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.02rem;
@@ -55,16 +55,12 @@
   white-space: nowrap;
 }
 
-/* The pixel-robot trademark (RoboMark) absorbed the old status dot.
-   Integer cell scales only: 39px = 3px/cell, 26px = 2px/cell. */
-@media (max-width: 480px) {
-  .header-mark .robomark {
-    height: 26px;
-  }
-
-  .header-mark {
-    gap: 8px;
-  }
+.header-mark-status {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 5px;
 }
 
 /* ── Nav ────────────────────────────────────────────────────── */
