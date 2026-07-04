@@ -1,0 +1,38 @@
+/* ============================================================
+   RoboCompanion — positioning shell for the cursor companion.
+   The sprite, frames, and state animations live in RoboMark.css;
+   this file only says WHERE the travelling robot sits.
+   ============================================================ */
+
+.robomark.robo-companion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 52px; /* 4px per grid cell (JS sets it inline too) */
+  z-index: 840; /* above content, below BookCta (850) and the header (900) */
+  pointer-events: none; /* it can never block a click or a hover */
+  will-change: transform;
+  transition: opacity 0.16s steps(2, end); /* discrete fades — the pixel idiom */
+}
+
+.robomark.robo-companion[hidden] {
+  display: none;
+}
+
+/* Asleep: dimmed as well as lidded — clearly "out of the way" */
+.robomark.robo-companion.is-asleep {
+  opacity: 0.55;
+}
+
+/* Shy: fully steps aside while a text field has focus (must win over asleep) */
+.robomark.robo-companion.is-shy {
+  opacity: 0;
+}
+
+/* The companion only exists for fine pointers with motion allowed —
+   the JS gates on the same conditions; this is the CSS backstop. */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .robomark.robo-companion {
+    display: none;
+  }
+}

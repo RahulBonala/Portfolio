@@ -59,8 +59,8 @@ const SPRITE = [
   '...iiiiii...', // body, one cell narrower than the head: the neck step
   '...iiiiii...', // chest pixel (6,9) drawn separately in accent
   '...iiiiii...',
-  '...ii..ii...', // feet
-  '...ii..ii...',
+  '............', // feet rows — drawn as swappable leg groups (stand/walk frames)
+  '............',
 ];
 
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -139,14 +139,33 @@ function buildSprite(): SVGSVGElement {
   armOut.append(cell(9, 8, 1, 1, 'rb-shell'), cell(10, 8, 1, 1, 'rb-shell'), cell(11, 8, 1, 1, 'rb-shell'));
   svg.append(armUp, armOut);
 
+  // Legs: standing pair plus two walk frames (one foot lifted a cell),
+  // swapped by is-step-a/is-step-b while the companion walks
+  const legsStand = svgEl('g', { class: 'rb-legs rb-legs-stand' });
+  legsStand.append(cell(3, 11, 2, 2, 'rb-shell'), cell(7, 11, 2, 2, 'rb-shell'));
+  const legsA = svgEl('g', { class: 'rb-legs rb-legs-a' });
+  legsA.append(cell(3, 10, 2, 2, 'rb-shell'), cell(7, 11, 2, 2, 'rb-shell'));
+  const legsB = svgEl('g', { class: 'rb-legs rb-legs-b' });
+  legsB.append(cell(3, 11, 2, 2, 'rb-shell'), cell(7, 10, 2, 2, 'rb-shell'));
+  svg.append(legsStand, legsA, legsB);
+
   return svg;
 }
 
-export function createRoboMark(host: HTMLElement, opts: RoboMarkOptions = {}): RoboMarkHandle {
-  host.classList.add('robomark');
-  host.replaceChildren(buildSprite());
-  const eyes = host.querySelector<SVGGElement>('.rb-eyes')!;
+const STATE_CLASSES = [
+  'is-asleep',
+  'is-greeting',
+  'is-cheering',
+  'is-pressed',
+  'is-blinking',
+  'is-walking',
+  'is-step-a',
+  'is-step-b',
+  'is-shy',
+];
 
+/** Shared timer bookkeeping: one-shot classes that never re-schedule themselves. */
+function timerBag(host: HTMLElement) {
   const timers = new Set<number>();
   const later = (fn: () => void, ms: number) => {
     const id = window.setTimeout(() => {
@@ -155,12 +174,23 @@ export function createRoboMark(host: HTMLElement, opts: RoboMarkOptions = {}): R
     }, ms);
     timers.add(id);
   };
-
-  /** One-shot class: added now, dropped after ms. Never re-schedules itself. */
   const flash = (cls: string, ms: number) => {
     host.classList.add(cls);
     later(() => host.classList.remove(cls), ms);
   };
+  const clearAll = () => {
+    timers.forEach((id) => window.clearTimeout(id));
+    timers.clear();
+  };
+  return { later, flash, clearAll };
+}
+
+export function createRoboMark(host: HTMLElement, opts: RoboMarkOptions = {}): RoboMarkHandle {
+  host.classList.add('robomark');
+  host.replaceChildren(buildSprite());
+  const eyes = host.querySelector<SVGGElement>('.rb-eyes')!;
+
+  const { later, flash, clearAll } = timerBag(host);
 
   // ── Dynamics attach/detach as a unit so reduced-motion can flip live ──
   let dynamic: Array<() => void> | null = null;
@@ -325,9 +355,8 @@ export function createRoboMark(host: HTMLElement, opts: RoboMarkOptions = {}): R
     if (!dynamic) return;
     dynamic.forEach((fn) => fn());
     dynamic = null;
-    timers.forEach((id) => window.clearTimeout(id));
-    timers.clear();
-    host.classList.remove('is-asleep', 'is-greeting', 'is-cheering', 'is-pressed', 'is-blinking');
+    clearAll();
+    host.classList.remove(...STATE_CLASSES);
   }
 
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -341,6 +370,333 @@ export function createRoboMark(host: HTMLElement, opts: RoboMarkOptions = {}): R
       reduced.removeEventListener('change', onReducedChange);
       host.replaceChildren();
       host.classList.remove('robomark');
+    },
+  };
+}
+
+// ────────────────────────────────────────────────────────────────
+// Companion mode — the same robot travels with the cursor.
+// ────────────────────────────────────────────────────────────────
+
+export interface RoboCompanionOptions {
+  /** Height in px — integer multiples of 13 keep the pixels crisp (default 52). */
+  size?: number;
+  /** Trail offset from the pointer so the robot never covers what you point at. */
+  offsetX?: number;
+  offsetY?: number;
+}
+
+const LERP = 0.14; // follow weight: heavy enough to trail, light enough to keep up
+const STEP_EVERY_PX = 14; // one walk frame per 14px travelled — motion is input-driven
+const WALK_MIN_DIST = 4; // closer than this it settles instead of shuffling
+const EDGE_PAD = 8;
+
+/**
+ * The cursor companion: the trademark robot trails the pointer with a
+ * little weight, walks (alternating pixel feet) while it travels, flips
+ * to face its direction, and looks up at the cursor when it rests.
+ *
+ * Every frame of motion is caused by pointer input — the walk cycle
+ * advances per pixel travelled, not per tick, so a still cursor means a
+ * still robot (the rAF loop stops entirely once it settles). Fine-pointer
+ * devices only; never created under reduced motion; pointer-events: none
+ * so it can never block a click.
+ */
+export function createRoboCompanion(
+  host: HTMLElement,
+  opts: RoboCompanionOptions = {}
+): RoboMarkHandle {
+  const size = opts.size ?? 52;
+  const offsetX = opts.offsetX ?? 26;
+  const offsetY = opts.offsetY ?? 20;
+  const width = Math.round((size * COLS) / ROWS);
+
+  host.classList.add('robomark', 'robo-companion');
+  host.style.height = `${size}px`;
+  host.hidden = true; // appears on the first pointer move
+  host.replaceChildren(buildSprite());
+  const eyes = host.querySelector<SVGGElement>('.rb-eyes')!;
+
+  const { flash, clearAll } = timerBag(host);
+
+  let dynamic: Array<() => void> | null = null;
+  let raf = 0;
+  let active = false;
+  let px = 0;
+  let py = 0;
+  let x = 0;
+  let y = 0;
+  let stepAcc = 0;
+  let stepParity = false;
+  let facingLeft = false;
+  let walking = false;
+  let ex = 0;
+  let ey = 0;
+  let lastMove = performance.now();
+  let ready = false; // activation waits for the preloader's entrance beat
+  let sawMove = false;
+
+  const listen = (
+    target: Window | Document | Element,
+    type: string,
+    fn: EventListener,
+    options?: AddEventListenerOptions
+  ) => {
+    target.addEventListener(type, fn, options);
+    dynamic!.push(() => target.removeEventListener(type, fn));
+  };
+
+  const viewport = () => {
+    const root = document.documentElement;
+    return {
+      w: window.innerWidth || root.clientWidth || root.getBoundingClientRect().width,
+      h: window.innerHeight || root.clientHeight || root.getBoundingClientRect().height,
+    };
+  };
+
+  const targetPos = (): [number, number] => {
+    const { w, h } = viewport();
+    // Near the right/bottom edges, step to the pointer's other side instead
+    // of letting the clamp slide the robot under what's being pointed at
+    let tx = px + offsetX;
+    if (tx + width > w - EDGE_PAD) tx = px - offsetX - width;
+    let ty = py + offsetY;
+    if (ty + size > h - EDGE_PAD) ty = py - offsetY - size;
+    return [
+      Math.min(Math.max(tx, EDGE_PAD), Math.max(EDGE_PAD, w - width - EDGE_PAD)),
+      Math.min(Math.max(ty, EDGE_PAD), Math.max(EDGE_PAD, h - size - EDGE_PAD)),
+    ];
+  };
+
+  const place = () => {
+    host.style.transform = `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+  };
+
+  const setWalking = (next: boolean) => {
+    if (walking === next) return;
+    walking = next;
+    host.classList.toggle('is-walking', next);
+    if (!next) {
+      host.classList.remove('is-step-a', 'is-step-b');
+      stepAcc = 0;
+    }
+  };
+
+  const setFacing = (left: boolean) => {
+    if (facingLeft === left) return;
+    facingLeft = left;
+    host.style.setProperty('--rb-face', left ? '-1' : '1');
+  };
+
+  const setEyes = (nex: number, ney: number) => {
+    if (nex === ex && ney === ey) return;
+    ex = nex;
+    ey = ney;
+    eyes.style.transform = `translate(${ex}px, ${ey}px)`;
+  };
+
+  /** Resting: look toward the cursor (mirrored when the sprite is flipped). */
+  const lookAtPointer = () => {
+    const dx = px - (x + width / 2);
+    const dy = py - (y + size / 2);
+    let nex = dx < -18 ? -1 : dx > 18 ? 1 : 0;
+    if (facingLeft) nex = -nex;
+    setEyes(nex, dy > 20 ? 1 : 0);
+  };
+
+  const loop = () => {
+    const [tx, ty] = targetPos();
+    const dx = tx - x;
+    const dy = ty - y;
+    const dist = Math.hypot(dx, dy);
+
+    if (dist < 0.5) {
+      x = tx;
+      y = ty;
+      place();
+      setWalking(false);
+      lookAtPointer();
+      raf = 0; // settled — the loop stops until the pointer moves again
+      return;
+    }
+
+    const mx = dx * LERP;
+    const my = dy * LERP;
+    x += mx;
+    y += my;
+    place();
+
+    if (mx < -0.4) setFacing(true);
+    else if (mx > 0.4) setFacing(false);
+
+    setWalking(dist > WALK_MIN_DIST);
+    if (walking) {
+      stepAcc += Math.hypot(mx, my);
+      if (stepAcc >= STEP_EVERY_PX) {
+        stepAcc = 0;
+        stepParity = !stepParity;
+        host.classList.toggle('is-step-a', stepParity);
+        host.classList.toggle('is-step-b', !stepParity);
+      }
+      setEyes(1, 0); // eyes forward, into the direction of travel
+    } else {
+      lookAtPointer();
+    }
+
+    raf = requestAnimationFrame(loop);
+  };
+
+  // One wave per session across BOTH bots: whichever is live first greets,
+  // and the shared key makes the other skip (choreography, not a double wave)
+  const greet = () => {
+    try {
+      if (sessionStorage.getItem(GREETED_KEY) === '1') return;
+      sessionStorage.setItem(GREETED_KEY, '1');
+    } catch {
+      /* sessionStorage unavailable — greet every load, still one-shot */
+    }
+    flash('is-greeting', GREET_MS);
+  };
+
+  const wake = () => {
+    lastMove = performance.now();
+    host.classList.remove('is-asleep');
+  };
+
+  const activate = () => {
+    if (active) return;
+    active = true;
+    host.hidden = false;
+    [x, y] = targetPos(); // first appearance: snap beside the cursor, no walk-in
+    place();
+    lookAtPointer();
+    greet();
+  };
+
+  const onMove = (e: Event) => {
+    const p = e as PointerEvent;
+    px = p.clientX;
+    py = p.clientY;
+    wake();
+    if (!ready) {
+      sawMove = true; // remember there is a pointer; appear once the preloader ends
+      return;
+    }
+    if (!active) activate();
+    if (!raf) raf = requestAnimationFrame(loop);
+  };
+
+  function setup() {
+    if (dynamic) return;
+    if (reduced.matches || !finePointer.matches) return;
+    dynamic = [];
+
+    // Never appear behind (or greet under) the preloader: activation waits
+    // for the same entrance beat the hero uses
+    try {
+      ready = sessionStorage.getItem('rb-preloaded') === '1';
+    } catch {
+      ready = false; // the preloader will still dispatch its event
+    }
+    if (!ready) {
+      listen(
+        window,
+        'rb:preloader-done',
+        () => {
+          ready = true;
+          if (sawMove) {
+            activate();
+            if (!raf) raf = requestAnimationFrame(loop);
+          }
+        },
+        { once: true }
+      );
+    }
+
+    listen(window, 'pointermove', onMove, { passive: true });
+
+    // Tactile echo: the companion flinches on any press (a press is also activity)
+    listen(
+      window,
+      'pointerdown',
+      () => {
+        wake();
+        if (active) flash('is-pressed', PRESS_MS);
+      },
+      { passive: true }
+    );
+
+    // Typing and scroll-reading count as activity too — the companion must
+    // not doze off next to a user who is working
+    listen(window, 'keydown', wake, { passive: true });
+    listen(window, 'scroll', wake, { passive: true });
+    listen(window, 'touchstart', wake, { passive: true });
+
+    // Shy: step out of the way whenever a text field has focus, so it never
+    // sits on top of what's being typed
+    const TEXT_FIELDS = 'input, textarea, select, [contenteditable="true"]';
+    listen(document, 'focusin', (e) => {
+      const t = e.target as HTMLElement | null;
+      if (t?.closest?.(TEXT_FIELDS)) host.classList.add('is-shy');
+    });
+    listen(document, 'focusout', () => host.classList.remove('is-shy'));
+
+    // Cheer on real conversions, queued while the tab is hidden
+    let cheerQueued = false;
+    listen(window, RB_EVENTS.celebrate, () => {
+      if (!active) return;
+      if (document.hidden) {
+        cheerQueued = true;
+        return;
+      }
+      flash('is-cheering', CHEER_MS);
+    });
+    listen(document, 'visibilitychange', () => {
+      if (!document.hidden && cheerQueued) {
+        cheerQueued = false;
+        flash('is-cheering', CHEER_MS);
+      }
+    });
+
+    // Sleep after 45s without pointer travel; any move wakes it (see onMove)
+    const idleTimer = window.setInterval(() => {
+      if (document.hidden || !active) return;
+      if (performance.now() - lastMove > SLEEP_AFTER_MS) host.classList.add('is-asleep');
+    }, IDLE_POLL_MS);
+    dynamic.push(() => window.clearInterval(idleTimer));
+  }
+
+  function teardown() {
+    if (!dynamic) return;
+    dynamic.forEach((fn) => fn());
+    dynamic = null;
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+    clearAll();
+    host.classList.remove(...STATE_CLASSES);
+    host.hidden = true;
+    active = false;
+    walking = false;
+    ready = false;
+    sawMove = false;
+  }
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = window.matchMedia('(pointer: fine)');
+  const onGateChange = () => (reduced.matches || !finePointer.matches ? teardown() : setup());
+  setup();
+  reduced.addEventListener('change', onGateChange);
+  finePointer.addEventListener('change', onGateChange);
+
+  return {
+    destroy() {
+      teardown();
+      reduced.removeEventListener('change', onGateChange);
+      finePointer.removeEventListener('change', onGateChange);
+      host.replaceChildren();
+      host.classList.remove('robomark', 'robo-companion');
     },
   };
 }

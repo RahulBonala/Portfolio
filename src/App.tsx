@@ -6,6 +6,7 @@ import Lenis from 'lenis';
 import { scrollState, scrollToTop, scrollToHash } from './lib/scroll';
 import Preloader from './components/Preloader';
 import Cursor from './components/Cursor';
+import RoboCompanion from './components/RoboCompanion';
 import Header from './components/Header';
 import BookCta from './components/BookCta';
 import Home from './pages/Home';
@@ -97,6 +98,7 @@ function App() {
 
       <Preloader />
       <Cursor />
+      <RoboCompanion />
       <ScrollManager />
       <Header />
 
