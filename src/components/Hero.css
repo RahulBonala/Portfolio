@@ -144,7 +144,7 @@
 .hero-title {
   font-family: var(--font-display);
   font-weight: 800;
-  /* Syne 800 is an extended face — sized so "ENGINEER for" fits even at 375px */
+  /* Fraunces 800 is a display face — sized so "ENGINEER for" fits even at 375px */
   font-size: clamp(1.7rem, 7.2vw, 6.2rem);
   line-height: 1;
   letter-spacing: -0.025em;

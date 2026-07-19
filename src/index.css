@@ -1,6 +1,6 @@
 /* ============================================================
    GLOBAL STYLES — Rahul Bonala Portfolio (v3, dark editorial)
-   One theme. Near-black base, one electric accent, hairline grid.
+   One theme. Near-black base, the signature orange accent, hairline grid.
    Fonts are loaded via <link> in index.html.
    ============================================================ */
 
@@ -20,20 +20,20 @@
   --hairline: rgba(242, 242, 239, 0.1);
   --hairline-strong: rgba(242, 242, 239, 0.18);
 
-  /* The one electric accent */
-  --accent: #c8f542;
-  --accent-dim: rgba(200, 245, 66, 0.32);
-  --accent-faint: rgba(200, 245, 66, 0.08);
-  --accent-ink: #0a0c02; /* text on top of accent */
+  /* The signature orange (Rahul Orange) */
+  --accent: #ff6b1a;
+  --accent-dim: rgba(255, 107, 26, 0.32);
+  --accent-faint: rgba(255, 107, 26, 0.08);
+  --accent-ink: #1b0d02; /* text on top of accent */
 
   /* Semantic */
   --color-success: #4ade80;
   --color-error: #f87171;
 
   /* Fonts */
-  --font-display: 'Syne', 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-main: 'Plus Jakarta Sans', system-ui, sans-serif;
-  --font-mono: 'Fira Code', 'SF Mono', monospace;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-main: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
 
   /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -48,7 +48,7 @@
   --radius-lg: 18px;
 }
 
-/* ── Light theme — white base, indigo accent ────────────────── */
+/* ── Light theme — white base, deep-orange accent ───────────── */
 :root[data-theme='light'] {
   color-scheme: light;
 
@@ -62,9 +62,9 @@
   --hairline: rgba(15, 23, 42, 0.1);
   --hairline-strong: rgba(15, 23, 42, 0.2);
 
-  --accent: #4f46e5; /* the indigo from v2 */
-  --accent-dim: rgba(79, 70, 229, 0.32);
-  --accent-faint: rgba(79, 70, 229, 0.07);
+  --accent: #c2410c; /* deep signature orange: AA on light */
+  --accent-dim: rgba(194, 65, 12, 0.32);
+  --accent-faint: rgba(194, 65, 12, 0.07);
   --accent-ink: #ffffff;
 
   --color-success: #16a34a;

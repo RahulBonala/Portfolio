@@ -9,7 +9,7 @@ Live at [rahulbonala.me](https://rahulbonala.me).
 - React 19 + TypeScript + Vite 7
 - react-router (multi-route: home, case studies, /teach) with per-route prerendering + hydration
 - GSAP ScrollTrigger + Lenis (scroll choreography); animated SVG debate-graph hero (no 3D runtime)
-- Syne + Plus Jakarta Sans + Fira Code
+- Fraunces + Inter + JetBrains Mono (the signature pairing)
 - EmailJS for the contact form, Razorpay for session payments
 
 ## Scripts

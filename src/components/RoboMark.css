@@ -35,7 +35,7 @@
 }
 
 .rb-acc {
-  fill: var(--accent, #c8f542);
+  fill: var(--accent, #ff6b1a);
 }
 
 /* Hidden frames (eye lids, wave arm, walk legs) until a state shows them */
@@ -123,7 +123,7 @@
 }
 
 @keyframes rb-tip-flash {
-  0%, 50%, 100% { fill: var(--accent, #c8f542); }
+  0%, 50%, 100% { fill: var(--accent, #ff6b1a); }
   25%, 75% { fill: currentColor; }
 }
 

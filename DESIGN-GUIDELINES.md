@@ -9,13 +9,13 @@ The reference for working on this portfolio after the 2026 redesign. A dark-firs
 ## 1. Voice and principles
 
 - **Specificity over abstraction.** Real numbers, real employers, real stacks — but never name client companies or partner organisations that should stay private. Describe that work qualitatively instead.
-- **One signature per page.** The signature is the Syne display type + electric lime on near-black. Everything else stays quiet (neutral grays, hairlines).
+- **One signature per page.** The signature is the Fraunces display type + the signature orange (Rahul Orange, #ff6b1a) on near-black — the same orange used as the primary across every personal project. Everything else stays quiet (neutral grays, hairlines).
 - **First person, conversational, no buzzwords.** Past tense for shipped work.
 - **Honest claims only.** Metrics shown (95% CSAT, 80% faster workflows, 70% fewer tickets) come from verified Smiths Detection work. Don't invent numbers for work that doesn't have them — describe scope qualitatively instead.
 
 ## 2. Tokens
 
-All tokens live in [src/index.css](src/index.css). Two themes: **dark (default)** = near-black + electric lime; **light** = off-white + the v2 indigo (`#4f46e5`). The toggle lives in the header; `useTheme` ([src/hooks/useTheme.ts](src/hooks/useTheme.ts)) persists the choice and a pre-paint script in index.html prevents flash. Never hardcode a theme color — everything (including the SVG diagrams and the three.js scene) reads the CSS variables.
+All tokens live in [src/index.css](src/index.css). Two themes: **dark (default)** = near-black + signature orange (`#ff6b1a`); **light** = off-white + deep orange (`#c2410c`, AA on light). The toggle lives in the header; `useTheme` ([src/hooks/useTheme.ts](src/hooks/useTheme.ts)) persists the choice and a pre-paint script in index.html prevents flash. Never hardcode a theme color — everything (including the SVG diagrams and the three.js scene) reads the CSS variables.
 
 | Token | Value | Use |
 |---|---|---|
@@ -24,13 +24,13 @@ All tokens live in [src/index.css](src/index.css). Two themes: **dark (default)*
 | `--ink` | `#f2f2ef` | Headings, primary text |
 | `--ink-secondary / -muted / -faint` | alpha steps of ink | Body / captions / decorative |
 | `--hairline` / `--hairline-strong` | white @ 10% / 18% | All borders and rules |
-| `--accent` | `#c8f542` (electric lime) | The one accent. CTAs, labels, meters, highlights |
+| `--accent` | `#ff6b1a` (signature orange) | The one accent. CTAs, labels, meters, highlights |
 | `--accent-ink` | `#0a0c02` | Text on top of accent |
 
-Fonts: **Syne** (700/800, display, always uppercase for headings), **Plus Jakarta Sans** (body), **Fira Code** (mono labels). Loaded from Google Fonts in [index.html](index.html).
+Fonts: **Fraunces** (700/800, display, always uppercase for headings), **Inter** (body), **JetBrains Mono** (mono labels). Self-hosted woff2 in public/fonts, declared in [src/fonts.css](src/fonts.css), preloaded in [index.html](index.html).
 
 Type rules:
-- Section headings use `.sec-title`; sized with `clamp()` floors small enough that the longest single word fits a 375px viewport (Syne 800 is an extended face — always test "ENGINEER", "SOMETHING", "BESTANSWERS.AI").
+- Section headings use `.sec-title`; sized with `clamp()` floors small enough that the longest single word fits a 375px viewport (always test "ENGINEER", "SOMETHING", "BESTANSWERS.AI").
 - Mono eyebrow labels (`.sec-label`) number the sections: `001 / About`.
 
 ## 3. Motion system
@@ -55,7 +55,7 @@ Type rules:
 
 ## 5. Accessibility (unchanged, non-negotiable)
 
-Skip link, focus-visible rings (accent), `aria-label` on icon-only controls, `aria-expanded`/`aria-current` where relevant, decorative SVGs `aria-hidden`, 44px touch targets, WCAG AA contrast (lime on near-black passes; lime is never used for body text), Escape closes the mobile menu, honeypot on the form.
+Skip link, focus-visible rings (accent), `aria-label` on icon-only controls, `aria-expanded`/`aria-current` where relevant, decorative SVGs `aria-hidden`, 44px touch targets, WCAG AA contrast (orange on near-black passes 6.4:1; the bright orange is never used for body text), Escape closes the mobile menu, honeypot on the form.
 
 ## 6. Anti-patterns (updated)
 
