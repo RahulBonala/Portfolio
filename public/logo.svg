@@ -1,30 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Rahul Bonala">
-  <!-- Rahul Mark System v1 — Ink pair (#19140f field / #ff6b1a glyph, 6.4:1)
-       Constellation "R": the letterform drawn as a node network. Geometry is
-       carried over from the original 2025 mark; only the palette changed, from
-       the pre-Rahul-Orange lime to the signature orange. -->
+  <!-- Rahul Mark System v2 — Ink field #19140f / orange-500 glyph, 6.4:1
+       Constellation "R", now built from bars thick enough to fuse. It resolves
+       differently by size on purpose: a node network at 512, a solid letterform
+       at 16. v1 drew it with 2-unit links and it dissolved into loose dots. -->
   <rect width="512" height="512" rx="114" fill="#19140f"/>
-  <rect x="6" y="6" width="500" height="500" rx="108" fill="none" stroke="#ff6b1a" stroke-opacity="0.24" stroke-width="6"/>
-  <svg x="116" y="116" width="280" height="280" viewBox="0 0 24 24" fill="none">
-    <!-- links: warm neutral, deliberately quiet so the nodes carry the mark -->
-    <g stroke="#fbf7f0" stroke-opacity="0.34" stroke-width="1.6" stroke-linecap="round">
-      <path d="M6.5 20.5V3.5"/>
-      <path d="M6.5 3.5h8.5"/>
-      <path d="M15 3.5 19 7.5"/>
-      <path d="M19 7.5 15 11.5"/>
-      <path d="M15 11.5H6.5"/>
-      <path d="M11.5 11.5 18.5 20.5"/>
+  <svg x="84" y="84" width="344" height="344" viewBox="0 0 24 24">
+    <g stroke="#ff6b1a" stroke-width="3.6" stroke-linecap="round" fill="none">
+      <path d="M6.5 21V3"/>
+      <path d="M6.5 3h7.5"/>
+      <path d="M14 3l4.5 4.5"/>
+      <path d="M18.5 7.5L14 12"/>
+      <path d="M14 12H6.5"/>
+      <path d="M11 12l7.5 9"/>
     </g>
-    <!-- nodes: the one strong moment -->
     <g fill="#ff6b1a">
-      <circle cx="6.5" cy="20.5" r="1.85"/>
-      <circle cx="6.5" cy="3.5" r="1.6"/>
-      <circle cx="15" cy="3.5" r="1.6"/>
-      <circle cx="19" cy="7.5" r="1.6"/>
-      <circle cx="15" cy="11.5" r="1.6"/>
-      <circle cx="18.5" cy="20.5" r="1.85"/>
+      <circle cx="6.5" cy="3" r="2.3"/>
+      <circle cx="14" cy="3" r="2.3"/>
+      <circle cx="18.5" cy="7.5" r="2.3"/>
+      <circle cx="14" cy="12" r="2.3"/>
+      <circle cx="6.5" cy="21" r="2.5"/>
+      <circle cx="18.5" cy="21" r="2.5"/>
     </g>
     <!-- the junction where stem, bar and leg meet -->
-    <circle cx="6.5" cy="11.5" r="1.35" fill="#fbf7f0"/>
+    <circle cx="6.5" cy="12" r="1.35" fill="#fbf7f0" data-role="accent"/>
   </svg>
 </svg>
