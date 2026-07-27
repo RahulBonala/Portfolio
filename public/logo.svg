@@ -1,23 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Rahul Bonala — constellation "R" mark -->
-  <rect width="64" height="64" rx="14" fill="#060607"/>
-  <rect x="0.75" y="0.75" width="62.5" height="62.5" rx="13.25" fill="none" stroke="#c8f542" stroke-opacity="0.28" stroke-width="1.5"/>
-  <!-- letterform drawn as a node network -->
-  <g stroke="#9aa08c" stroke-opacity="0.55" stroke-width="2" stroke-linecap="round">
-    <line x1="21" y1="48" x2="21" y2="16"/>
-    <line x1="21" y1="16" x2="38" y2="16"/>
-    <line x1="38" y1="16" x2="45" y2="23"/>
-    <line x1="45" y1="23" x2="38" y2="31"/>
-    <line x1="38" y1="31" x2="21" y2="31"/>
-    <line x1="32" y1="31" x2="45" y2="48"/>
-  </g>
-  <g fill="#c8f542">
-    <circle cx="21" cy="48" r="3.4"/>
-    <circle cx="21" cy="16" r="3"/>
-    <circle cx="38" cy="16" r="3"/>
-    <circle cx="45" cy="23" r="3"/>
-    <circle cx="38" cy="31" r="3"/>
-    <circle cx="45" cy="48" r="3.4"/>
-  </g>
-  <circle cx="21" cy="31" r="2.6" fill="#f2f2ef"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Rahul Bonala">
+  <!-- Rahul Mark System v1 — Ink pair (#19140f field / #ff6b1a glyph, 6.4:1)
+       Constellation "R": the letterform drawn as a node network. Geometry is
+       carried over from the original 2025 mark; only the palette changed, from
+       the pre-Rahul-Orange lime to the signature orange. -->
+  <rect width="512" height="512" rx="114" fill="#19140f"/>
+  <rect x="6" y="6" width="500" height="500" rx="108" fill="none" stroke="#ff6b1a" stroke-opacity="0.24" stroke-width="6"/>
+  <svg x="116" y="116" width="280" height="280" viewBox="0 0 24 24" fill="none">
+    <!-- links: warm neutral, deliberately quiet so the nodes carry the mark -->
+    <g stroke="#fbf7f0" stroke-opacity="0.34" stroke-width="1.6" stroke-linecap="round">
+      <path d="M6.5 20.5V3.5"/>
+      <path d="M6.5 3.5h8.5"/>
+      <path d="M15 3.5 19 7.5"/>
+      <path d="M19 7.5 15 11.5"/>
+      <path d="M15 11.5H6.5"/>
+      <path d="M11.5 11.5 18.5 20.5"/>
+    </g>
+    <!-- nodes: the one strong moment -->
+    <g fill="#ff6b1a">
+      <circle cx="6.5" cy="20.5" r="1.85"/>
+      <circle cx="6.5" cy="3.5" r="1.6"/>
+      <circle cx="15" cy="3.5" r="1.6"/>
+      <circle cx="19" cy="7.5" r="1.6"/>
+      <circle cx="15" cy="11.5" r="1.6"/>
+      <circle cx="18.5" cy="20.5" r="1.85"/>
+    </g>
+    <!-- the junction where stem, bar and leg meet -->
+    <circle cx="6.5" cy="11.5" r="1.35" fill="#fbf7f0"/>
+  </svg>
 </svg>
