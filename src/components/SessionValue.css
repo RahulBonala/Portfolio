@@ -1,0 +1,141 @@
+/* "What you actually get" — see SessionValue.tsx.
+   Tokens only, so it tracks both themes with no dark/light branch. */
+
+.session-value {
+  margin: clamp(56px, 9vh, 96px) 0;
+}
+
+.session-value-head {
+  max-width: 62ch;
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+
+.session-value-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.4vw, 46px);
+  font-weight: 500;
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.session-value-lede {
+  color: var(--ink-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── The three stages ─────────────────────────────────────── */
+
+.session-stages {
+  list-style: none;
+  margin: 0 0 clamp(28px, 4vh, 44px);
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.session-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: clamp(20px, 2.4vw, 30px);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+}
+
+/* The live hour is the thing being bought — give it the accent edge. */
+.session-stage:nth-child(2) {
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background: var(--accent-faint);
+}
+
+.session-stage-when {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.session-stage-label {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2.1vw, 23px);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.session-stage-note {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+.session-stage-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.session-stage-items li {
+  display: grid;
+  grid-template-columns: 15px 1fr;
+  gap: 11px;
+  align-items: start;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-secondary);
+}
+
+.session-tick {
+  color: var(--accent);
+  margin-top: 4px;
+}
+
+/* ── Guarantees ───────────────────────────────────────────── */
+
+.session-guarantees {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.session-guarantee {
+  padding: 18px 20px;
+  border: 1px dashed var(--hairline-strong);
+  border-radius: var(--radius-md);
+}
+
+.session-guarantee-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 5px;
+}
+
+.session-guarantee-body {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .session-stages,
+  .session-guarantees {
+    grid-template-columns: 1fr;
+  }
+}

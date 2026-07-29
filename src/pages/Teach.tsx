@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import PaymentButton from '../components/PaymentButton';
 import SessionVideo from '../components/SessionVideo';
+import SessionValue from '../components/SessionValue';
 import { BOOKING } from '../lib/booking';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
@@ -49,6 +50,10 @@ const Teach: React.FC = () => {
             </li>
           ))}
         </ol>
+
+        {/* The concrete deliverables, immediately before the price — so the
+            value is fully stated at the moment the cost appears. */}
+        <SessionValue />
 
         <section className="teach-book" data-reveal="up" aria-labelledby="teach-book-h">
           <div className="teach-book-copy">

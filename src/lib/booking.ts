@@ -19,7 +19,61 @@ export const BOOKING = {
   calendly: 'https://calendly.com/rahulbonala06',
   slotsLabel: 'Limited slots each week',
   email: 'rahulbonala06@gmail.com',
+  /** Live call length, in minutes. Must match the Calendly event's duration. */
+  durationMinutes: 60,
 } as const;
+
+/**
+ * Exactly what a buyer gets, in the order they get it.
+ *
+ * This is the page's main job: someone who has never met Rahul is deciding
+ * whether an hour with him is worth the money, and vague promises ("we'll
+ * build together") don't clear that bar. Naming the concrete artefacts —
+ * a recording, a written note, a prompt pack — is what makes it feel real.
+ *
+ * Every line here is a PROMISE. If you can't deliver one of these on every
+ * single session, delete it rather than shipping a claim you'll miss.
+ */
+export const SESSION_STAGES = [
+  {
+    when: 'Before',
+    label: 'Before we meet',
+    note: 'So the hour starts at full speed instead of on introductions.',
+    items: [
+      'You fill a short intake: what you’re building, where you’re stuck, what a win looks like.',
+      'I go through your repo, Figma file or live site beforehand — you’re not paying for me to read it on the call.',
+      'You get a one-line plan for the hour, so we both know what we’re doing before we start.',
+    ],
+  },
+  {
+    when: 'During',
+    label: 'The live hour',
+    note: 'Screen-shared, 1:1, on Google Meet. Your project — never a demo app.',
+    items: [
+      'We build on your actual project, together, for the full hour.',
+      'My real AI workflow, in the open: which tools, which prompts, and where I stop trusting them.',
+      'Every decision explained as we make it, so you can repeat it without me.',
+    ],
+  },
+  {
+    when: 'After',
+    label: 'What you keep',
+    note: 'The part most sessions skip — and the reason the hour still pays off a month later.',
+    items: [
+      'The full session recording, yours to keep.',
+      'A written note: what we figured out, what to do next, and every link I referenced.',
+      'My prompt pack and tool list — the same one I use daily, not a generic roundup.',
+      'Seven days of async follow-up over email, for the questions that surface once you’re back in the code.',
+    ],
+  },
+] as const;
+
+/** Promises that de-risk the purchase. Shown right next to the price. */
+export const SESSION_GUARANTEES = [
+  { title: 'Full refund', body: 'If the hour didn’t help, tell me and I refund it. No form, no argument.' },
+  { title: 'Free reschedule', body: 'Move your slot up to 24 hours before, as often as you need.' },
+  { title: 'A real person', body: 'You’re booking me, not a junior on my behalf. Every session, every time.' },
+] as const;
 
 /**
  * Intro video for the 1:1 session, shown on /teach above the payment button.
