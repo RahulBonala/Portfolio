@@ -16,7 +16,9 @@ export const BOOKING = {
   bookedRoute: '/teach/booked',
   razorpayButtonId: 'pl_SZtl3NKr9FohLH',
   // Scheduling link, shown on /teach/booked only after payment verification.
-  calendly: 'https://calendly.com/rahulbonala06',
+  // Points at the event itself, not the profile page — a buyer who has just
+  // paid should land on the calendar, not on a list of one thing to click.
+  calendly: 'https://calendly.com/rahulbonala06/30min',
   slotsLabel: 'Limited slots each week',
   email: 'rahulbonala06@gmail.com',
   /** Live call length, in minutes. Must match the Calendly event's duration. */
