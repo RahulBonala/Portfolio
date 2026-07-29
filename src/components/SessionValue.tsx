@@ -20,9 +20,9 @@ const SessionValue: React.FC = () => (
         What you actually get
       </h2>
       <p className="session-value-lede" data-reveal="up">
-        The call is {BOOKING.durationMinutes} minutes. The work around it — the prep before,
-        and the recording, notes and follow-up after — is what makes the hour hold up
-        a month later.
+        The call is {BOOKING.durationMinutes} minutes — a plan, not a hard stop. If you need
+        longer to understand something, we take longer. I’d rather you left clear than
+        left on time.
       </p>
     </div>
 
