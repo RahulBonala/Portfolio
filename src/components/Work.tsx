@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import bestAnswerImg from '../assets/bestanswer-logo.webp';
 import byocImg from '../assets/byoc-logo.webp';
+import stepforgeImg from '../assets/stepforge-logo.svg';
 import './Work.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,45 +58,6 @@ const CourseVisual = () => (
   </svg>
 );
 
-/**
- * SVG for Stepforge — a résumé goes in, one portable HTML file comes out,
- * with the deterministic parse doing the work and AI strictly optional.
- * Colors come from the same cv-* classes so both themes render correctly.
- */
-const StepforgeVisual = () => (
-  <svg className="work-svg course-visual" viewBox="0 0 560 400" role="img" aria-label="Diagram of the Stepforge pipeline: a résumé is extracted and parsed in the browser, reviewed by you, and rendered into one portable HTML file">
-    <defs>
-      <marker id="sf-arrow" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
-        <path className="cv-arrowhead" d="M 0 0 L 10 5 L 0 10 z" />
-      </marker>
-    </defs>
-
-    {/* Input */}
-    <rect className="cv-pill cv-pill--accent" x="170" y="26" width="220" height="44" rx="22" />
-    <text className="cv-text cv-text--accent" x="280" y="53" textAnchor="middle">your résumé</text>
-
-    <g className="cv-flow"><line x1="280" y1="74" x2="280" y2="104" markerEnd="url(#sf-arrow)" /></g>
-
-    {/* The deterministic core — happens in the visitor's own browser */}
-    <rect className="cv-pill" x="120" y="112" width="320" height="44" rx="22" />
-    <text className="cv-text" x="280" y="139" textAnchor="middle">extract + parse · in your browser</text>
-
-    <g className="cv-flow"><line x1="280" y1="160" x2="280" y2="190" markerEnd="url(#sf-arrow)" /></g>
-
-    {/* Optional AI, deliberately drawn as a side branch */}
-    <rect className="cv-pill" x="120" y="198" width="320" height="44" rx="22" />
-    <text className="cv-text" x="280" y="225" textAnchor="middle">you review every field</text>
-
-    <g className="cv-flow"><line x1="280" y1="246" x2="280" y2="276" markerEnd="url(#sf-arrow)" /></g>
-
-    {/* Output */}
-    <circle className="cv-ring" cx="280" cy="322" r="52" />
-    <circle className="cv-core" cx="280" cy="322" r="40" />
-    <text className="cv-hour" x="280" y="318" textAnchor="middle">1 file</text>
-    <text className="cv-hour-sub" x="280" y="340" textAnchor="middle">portable html</text>
-  </svg>
-);
-
 const PROJECTS = [
   {
     index: '01',
@@ -146,7 +108,7 @@ const PROJECTS = [
     ],
     stack: ['React', 'TypeScript', 'Supabase', 'Vercel Functions', 'Gemini'],
     links: [{ label: 'Visit live site', href: 'https://stepforge.co' }],
-    visual: <StepforgeVisual />,
+    visual: <img src={stepforgeImg} alt="Stepforge logo" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
     index: '04',
