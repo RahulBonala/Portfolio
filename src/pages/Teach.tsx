@@ -8,9 +8,9 @@ import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
 const STEPS = [
-  { n: '01', t: 'You bring a real project', d: 'A screen you’re stuck on, a feature you want to ship faster, an AI idea you haven’t started. Not a toy exercise — the actual thing.' },
-  { n: '02', t: 'We build for an hour, live', d: 'Screen-shared, 1:1. My actual workflow — Figma, AI tools, and code where it matters. We move your project forward, together.' },
-  { n: '03', t: 'You leave with a written note', d: 'A short summary: what we figured out, what to do next, and links to everything I referenced so you can keep going.' },
+  { n: '01', t: 'You bring an idea', d: 'Any idea — however rough. Don’t have one? I’ll help you find a simple one in the first five minutes, so we can get moving.' },
+  { n: '02', t: 'We take it to a live URL', d: 'Screen-shared, 1:1. Define, design, develop, deploy — the whole path, with free AI tools, using your idea as the example.' },
+  { n: '03', t: 'You leave able to do it again', d: 'The Playbook, every prompt we used, and the community — so the next one you build, you build without me.' },
 ];
 
 const Teach: React.FC = () => {
@@ -28,12 +28,11 @@ const Teach: React.FC = () => {
 
         <header className="teach-head">
           <p className="teach-eyebrow">AI Tools for Builders</p>
-          <h1 className="teach-title" data-reveal="up">Not a video library. A working session.</h1>
+          <h1 className="teach-title" data-reveal="up">Turn your idea into a live website. In one hour.</h1>
           <p className="teach-lede" data-reveal="up">
-            Once or twice a week I block an hour to build with someone — designer,
-            developer, or founder — on their own project, using the AI workflow I use
-            every day. It isn’t a course you watch. It’s an hour where we ship
-            something together.
+            A live, one-on-one session where I show you the complete path — from a rough
+            idea in your head to a real website on the internet. Using free AI tools.
+            Without writing a single line of code yourself.
           </p>
         </header>
 

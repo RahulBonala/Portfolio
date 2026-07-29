@@ -6,7 +6,7 @@ import './SessionValue.css';
  *
  * A visitor who arrived cold has one question: is an hour of this person's
  * time worth the money? Three vague steps don't answer it. Concrete artefacts
- * (a recording, a written note, a prompt pack) and the before/after work that
+ * (the Playbook, the prompts, the community) and the before/after work that
  * surrounds the call do — they show the hour is the middle of the deliverable,
  * not the whole of it.
  *

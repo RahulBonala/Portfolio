@@ -29,7 +29,7 @@ export const BOOKING = {
  * This is the page's main job: someone who has never met Rahul is deciding
  * whether an hour with him is worth the money, and vague promises ("we'll
  * build together") don't clear that bar. Naming the concrete artefacts —
- * a recording, a written note, a prompt pack — is what makes it feel real.
+ * the Playbook, the prompts, the community — is what makes it feel real.
  *
  * Every line here is a PROMISE. If you can't deliver one of these on every
  * single session, delete it rather than shipping a claim you'll miss.

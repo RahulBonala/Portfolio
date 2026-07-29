@@ -41,7 +41,7 @@ const ROUTES = [
     out: 'teach/index.html',
     title: 'AI Tools for Builders — a 1:1 working session · Rahul Bonala',
     description:
-      'Not a video library. One live hour, 1:1, building your real project with the AI workflow I use every day — and a written next step to take away. Full refund if it didn’t help.',
+      'Turn your idea into a live website in one hour — one-on-one, using free AI tools, with no coding. You leave with the Playbook and the prompts, able to do it again yourself.',
   },
   {
     path: '/teach/booked',
