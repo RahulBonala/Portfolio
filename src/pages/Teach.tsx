@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import PaymentButton from '../components/PaymentButton';
+import SessionVideo from '../components/SessionVideo';
 import { BOOKING } from '../lib/booking';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
@@ -35,6 +36,10 @@ const Teach: React.FC = () => {
           </p>
         </header>
 
+        {/* Sits above the steps: someone arriving cold from an ad needs to see
+            what the hour looks like before they'll read how it's structured. */}
+        <SessionVideo />
+
         <ol className="teach-steps" data-reveal-group>
           {STEPS.map((s) => (
             <li className="teach-step" key={s.n}>
@@ -63,7 +68,7 @@ const Teach: React.FC = () => {
         </section>
 
         <p className="teach-foot">
-          Questions first? <a href="mailto:rahulbonala06@gmail.com">Email me</a> — I reply within a day.
+          Questions first? <a href={`mailto:${BOOKING.email}`}>Email me</a> — I reply within a day.
         </p>
       </div>
     </div>

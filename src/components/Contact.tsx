@@ -4,20 +4,41 @@ import { RB_EVENTS } from '../lib/robomark';
 import './Contact.css';
 
 // ────────────────────────────────────────────────────────────
-// HOW TO SET UP EMAILJS (free tier — 200 emails/month):
-// 1. Go to https://www.emailjs.com/ and create a free account
-// 2. Add a new "Email Service" (Gmail recommended) → copy SERVICE_ID
-// 3. Create a new "Email Template" with variables:
-//    {{from_name}}, {{from_email}}, {{message}}, {{to_name}}
-//    → copy TEMPLATE_ID
-// 4. Go to Account → API Keys → copy PUBLIC_KEY
-// 5. Replace the three placeholder values below:
+// EMAILJS SETUP (free tier — 200 emails/month)
+//
+// These three values come from environment variables, NOT from hardcoded
+// strings — that's what keeps a rotated key out of git history. All three are
+// public-by-design (EmailJS public keys are meant to be in client code), so
+// the VITE_ prefix is correct here. Never use VITE_ for a real secret: Vite
+// inlines any VITE_* value straight into the published bundle.
+//
+// Set them in Vercel → Settings → Environment Variables, and locally in a
+// .env.local file (git-ignored). See .env.example.
+//   1. https://www.emailjs.com/ → create a free account
+//   2. Add an "Email Service" (Gmail)              → VITE_EMAILJS_SERVICE_ID
+//   3. Add an "Email Template" using the variables
+//      {{name}}, {{email}}, {{message}}            → VITE_EMAILJS_TEMPLATE_ID
+//   4. Account → API Keys                          → VITE_EMAILJS_PUBLIC_KEY
+//
+// UNTIL THEY'RE SET, the form does not pretend to work: it hands the visitor
+// off to their mail client with the message pre-filled, so a real enquiry is
+// never silently dropped. Previously these were 'YOUR_SERVICE_ID' placeholders
+// and every single submission failed with an error.
 // ────────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? '';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? '';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? '';
+
+const emailjsReady = Boolean(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY);
 
 const EMAIL = 'rahulbonala06@gmail.com';
+
+/** Fallback when EmailJS isn't configured: open the visitor's mail client. */
+function mailtoHandoff(data: { name: string; email: string; message: string }) {
+  const subject = encodeURIComponent(`Portfolio enquiry — ${data.name || 'no name given'}`);
+  const body = encodeURIComponent(`${data.message}\n\n— ${data.name}\n${data.email}`);
+  window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
+}
 
 const Contact: React.FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -45,6 +66,12 @@ const Contact: React.FC = () => {
     // Honeypot filled → bot. Pretend success.
     if (formData._gotcha) {
       setStatus('success');
+      return;
+    }
+
+    // Not configured — hand off to the mail client rather than failing.
+    if (!emailjsReady) {
+      mailtoHandoff(formData);
       return;
     }
 

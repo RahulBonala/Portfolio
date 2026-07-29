@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const FACTS = [
   { k: 'Now', v: 'Product Designer — AI specialist at Ginthi.ai' },
   { k: 'Built', v: 'BestAnswers.AI — multi-agent answer engine' },
+  { k: 'Shipped', v: 'Stepforge — a résumé becomes a portfolio site' },
   { k: 'Teaching', v: 'AI Tools for Builders — live sessions' },
   { k: 'Based', v: 'Bangalore, India — working globally' },
 ];

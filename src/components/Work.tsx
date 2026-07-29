@@ -57,9 +57,64 @@ const CourseVisual = () => (
   </svg>
 );
 
+/**
+ * SVG for Stepforge — a résumé goes in, one portable HTML file comes out,
+ * with the deterministic parse doing the work and AI strictly optional.
+ * Colors come from the same cv-* classes so both themes render correctly.
+ */
+const StepforgeVisual = () => (
+  <svg className="work-svg course-visual" viewBox="0 0 560 400" role="img" aria-label="Diagram of the Stepforge pipeline: a résumé is extracted and parsed in the browser, reviewed by you, and rendered into one portable HTML file">
+    <defs>
+      <marker id="sf-arrow" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+        <path className="cv-arrowhead" d="M 0 0 L 10 5 L 0 10 z" />
+      </marker>
+    </defs>
+
+    {/* Input */}
+    <rect className="cv-pill cv-pill--accent" x="170" y="26" width="220" height="44" rx="22" />
+    <text className="cv-text cv-text--accent" x="280" y="53" textAnchor="middle">your résumé</text>
+
+    <g className="cv-flow"><line x1="280" y1="74" x2="280" y2="104" markerEnd="url(#sf-arrow)" /></g>
+
+    {/* The deterministic core — happens in the visitor's own browser */}
+    <rect className="cv-pill" x="120" y="112" width="320" height="44" rx="22" />
+    <text className="cv-text" x="280" y="139" textAnchor="middle">extract + parse · in your browser</text>
+
+    <g className="cv-flow"><line x1="280" y1="160" x2="280" y2="190" markerEnd="url(#sf-arrow)" /></g>
+
+    {/* Optional AI, deliberately drawn as a side branch */}
+    <rect className="cv-pill" x="120" y="198" width="320" height="44" rx="22" />
+    <text className="cv-text" x="280" y="225" textAnchor="middle">you review every field</text>
+
+    <g className="cv-flow"><line x1="280" y1="246" x2="280" y2="276" markerEnd="url(#sf-arrow)" /></g>
+
+    {/* Output */}
+    <circle className="cv-ring" cx="280" cy="322" r="52" />
+    <circle className="cv-core" cx="280" cy="322" r="40" />
+    <text className="cv-hour" x="280" y="318" textAnchor="middle">1 file</text>
+    <text className="cv-hour-sub" x="280" y="340" textAnchor="middle">portable html</text>
+  </svg>
+);
+
 const PROJECTS = [
   {
     index: '01',
+    meta: 'AI Agents · Experiment',
+    title: 'BYOC — SDLC Agents',
+    tagline: 'What if the agency was software?',
+    story:
+      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick — auth, payments, dashboards — watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
+    points: [
+      'AI agents mapped to SDLC phases — plan, design, build, test, ship',
+      'Interactive 3D-style configurator and a metro-map pipeline tracker',
+      'Honesty about cost as the core product idea — no black-box quotes',
+    ],
+    stack: ['React', 'TypeScript', 'AI agents', 'Node'],
+    links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
+    visual: <img src={byocImg} alt="Build Your Own Company configurator" loading="lazy" decoding="async" width="600" height="400" />,
+  },
+  {
+    index: '02',
     meta: 'AI Product · Live',
     title: 'BestAnswers.AI',
     tagline: 'Four AIs argue. You get the strongest answer.',
@@ -78,23 +133,23 @@ const PROJECTS = [
     visual: <img src={bestAnswerImg} alt="BestAnswers.AI interface" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
-    index: '02',
-    meta: 'AI Agents · Experiment',
-    title: 'BYOC — SDLC Agents',
-    tagline: 'What if the agency was software?',
+    index: '03',
+    meta: 'SaaS · Live',
+    title: 'Stepforge',
+    tagline: 'Upload a résumé. Get a portfolio website.',
     story:
-      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick — auth, payments, dashboards — watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
+      'Drop in a CV — PDF, Word, Pages, or a photo of a printed page — and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 33 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
     points: [
-      'AI agents mapped to SDLC phases — plan, design, build, test, ship',
-      'Interactive 3D-style configurator and a metro-map pipeline tracker',
-      'Honesty about cost as the core product idea — no black-box quotes',
+      'Extraction and parsing run in your own browser — the résumé isn’t uploaded unless you choose a cloud feature',
+      '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',
+      'Ships with its own safety nets: accessibility, responsive, print and old-mobile-engine gates in CI',
     ],
-    stack: ['React', 'TypeScript', 'AI agents', 'Node'],
-    links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
-    visual: <img src={byocImg} alt="Build Your Own Company configurator" loading="lazy" decoding="async" width="600" height="400" />,
+    stack: ['React', 'TypeScript', 'Supabase', 'Vercel Functions', 'Gemini'],
+    links: [{ label: 'Visit live site', href: 'https://stepforge.co' }],
+    visual: <StepforgeVisual />,
   },
   {
-    index: '03',
+    index: '04',
     meta: 'Teaching · Live Sessions',
     title: 'AI Tools for Builders',
     tagline: 'Not a video library. A working session.',
@@ -153,7 +208,7 @@ const Work: React.FC = () => {
           <em>002</em> Selected work
         </div>
         <h2 className="sec-title" data-reveal="up">
-          Three things<br />
+          Four things<br />
           <span className="accent-word">worth your time.</span>
         </h2>
       </div>
