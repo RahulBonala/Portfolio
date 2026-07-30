@@ -34,6 +34,25 @@
   text-align: left;
 }
 
+/* The page has already drawn the card (see .teach-review), so the form drops
+   its own panel chrome rather than nesting a second bordered box inside it.
+   The success message keeps its border, since there it reads as confirmation
+   rather than as a panel. */
+.review-form.is-in-card {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.review-done.is-in-card {
+  max-width: none;
+  margin: 0;
+  justify-content: flex-start;
+}
+
 .review-form-title {
   font-family: var(--font-display);
   font-size: 22px;

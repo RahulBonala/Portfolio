@@ -9,14 +9,12 @@ import './Teach.css';
  *
  * Sent to someone a few days after their session, when the payment token that
  * gated the post-payment form has long expired. It is therefore an open form,
- * and safe to be one for a specific reason: every review lands as `pending`
- * and nothing is displayed until it is approved, so the page cannot be used
- * to publish anything. The endpoint behind it also carries a honeypot and
- * per-IP rate limiting.
+ * and what it submits publishes immediately, so the endpoint behind it strips
+ * URLs from the body and carries a honeypot plus per-IP rate limiting.
  *
  * Deliberately noindex (see scripts/prerender.js): it is a link to hand out,
  * not a page to be found. Indexing it would invite exactly the drive-by
- * submissions the moderation queue exists to absorb.
+ * submissions those defences exist to absorb.
  */
 const Review: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);

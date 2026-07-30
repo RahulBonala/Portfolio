@@ -2,26 +2,33 @@ import { useState } from 'react';
 import './ReviewForm.css';
 
 /**
- * Review form, used in two places:
+ * Review form, used in three places:
  *
- *   /teach — right after payment, with the token that unlocks the
- *                   Playbook, so the review is tied to that payment.
- *   /review       — the shareable link Rahul sends after a session, where
- *                   there is no token because the ask happens days later.
+ *   /teach, in the card below the booking card — open, no token, for someone
+ *           who has already had a session and come back to say so.
+ *   /teach, right after payment — collapsed, carrying the token that unlocks
+ *           the Playbook, so the review is tied to that payment.
+ *   /review — the shareable link Rahul sends after a session, where there is
+ *           no token because the ask happens days later.
  *
  * Submissions are published immediately.
  */
 type Props = {
   /** Present only on the post-payment page. */
   token?: string;
-  /** `inline` collapses behind a button; `standalone` is always open. */
-  variant?: 'inline' | 'standalone';
+  /**
+   * `inline` collapses behind a button; `standalone` is always open in its own
+   * panel; `panel` is always open and fills a card the page already draws, so
+   * the heading and note come from that card instead of from here.
+   */
+  variant?: 'inline' | 'standalone' | 'panel';
 };
 
 const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
   const [form, setForm] = useState({ name: '', role: '', rating: 5, body: '', _gotcha: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error' | 'rate_limited'>('idle');
-  const [open, setOpen] = useState(variant === 'standalone');
+  const [open, setOpen] = useState(variant !== 'inline');
+  const inCard = variant === 'panel';
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +50,7 @@ const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
 
   if (status === 'done') {
     return (
-      <div className="review-done" role="status">
+      <div className={inCard ? 'review-done is-in-card' : 'review-done'} role="status">
         <span aria-hidden="true">✓</span>
         <p>Thank you — your review is live on the site.</p>
       </div>
@@ -59,12 +66,16 @@ const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
   }
 
   return (
-    <form className="review-form" onSubmit={submit}>
-      <h3 className="review-form-title">How was it?</h3>
-      <p className="review-form-note">
-        Your review will be published immediately on the site.
-        Say what actually happened, including the parts that didn&apos;t work.
-      </p>
+    <form className={inCard ? 'review-form is-in-card' : 'review-form'} onSubmit={submit}>
+      {!inCard && (
+        <>
+          <h3 className="review-form-title">How was it?</h3>
+          <p className="review-form-note">
+            Your review will be published immediately on the site.
+            Say what actually happened, including the parts that didn&apos;t work.
+          </p>
+        </>
+      )}
 
       <div className="review-row">
         <label className="review-field">

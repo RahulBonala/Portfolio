@@ -158,10 +158,6 @@ const Teach: React.FC = () => {
         {/* Renders nothing until an approved review exists. */}
         <Testimonials />
 
-        <div data-reveal="up" style={{ marginBottom: 'clamp(48px, 8vh, 88px)' }}>
-          <ReviewForm variant="inline" />
-        </div>
-
         <section className="teach-book" data-reveal="up" aria-labelledby="teach-book-h">
           <div className="teach-book-copy">
             <h2 id="teach-book-h" className="teach-book-title">Book a session</h2>
@@ -175,6 +171,20 @@ const Teach: React.FC = () => {
             </p>
           </div>
           <BookingSteps stage="payment" />
+        </section>
+
+        {/* Directly under the booking card and built to the same width, so the
+            two read as a pair: one card to book, one to report back. */}
+        <section className="teach-review" data-reveal="up" aria-labelledby="teach-review-h">
+          <div className="teach-review-copy">
+            <h2 id="teach-review-h" className="teach-book-title">Had your session? Leave a review</h2>
+            <p className="teach-book-note">
+              If we already spent an hour together taking your idea live, tell the next
+              person how it went. It takes a minute, and it appears on this page as soon
+              as you send it.
+            </p>
+          </div>
+          <ReviewForm variant="panel" />
         </section>
 
         <p className="teach-foot">

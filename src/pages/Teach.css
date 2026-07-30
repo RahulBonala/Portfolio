@@ -229,6 +229,34 @@
   border-bottom: 1px solid currentColor;
 }
 
+/* ── Review card ──────────────────────────────────────────────
+   Sits immediately below the booking card and deliberately repeats its
+   chrome, padding and full container width, so the two read as a pair
+   rather than as a card followed by an afterthought. */
+.teach-review {
+  display: grid;
+  gap: clamp(24px, 3vw, 44px);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  padding: clamp(28px, 4vw, 44px);
+  margin-bottom: 28px;
+}
+
+/* Copy beside the fields once the card is wide enough for both to keep a
+   readable measure. Below that — phones and portrait tablets — it stacks,
+   which is also the DOM order. */
+@media (min-width: 900px) {
+  .teach-review {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    align-items: start;
+  }
+}
+
+.teach-review-copy {
+  max-width: 46ch;
+}
+
 .teach-foot {
   font-size: 0.95rem;
   color: var(--ink-muted);
