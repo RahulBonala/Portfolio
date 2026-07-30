@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import BookingSteps from '../components/BookingSteps';
 import SessionVideo from '../components/SessionVideo';
 import SessionValue from '../components/SessionValue';
 import Testimonials from '../components/Testimonials';
+import BookingConfirmed from '../components/BookingConfirmed';
 import { BOOKING } from '../lib/booking';
+import { checkBookingAccess, peekBookingAccess, type BookingAccess } from '../lib/payment';
+import { RB_EVENTS } from '../lib/robomark';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
@@ -24,16 +27,87 @@ const STEPS = [
 
 const Teach: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
+  
+  // Start with 'pitch' on server/first render so hydration matches prerendered HTML.
+  const [view, setView] = useState<'pitch' | 'checking' | 'unlocked'>('pitch');
+  const [access, setAccess] = useState<BookingAccess>({ state: 'checking' });
+  const [retrying, setRetrying] = useState(false);
+  
   useReveals(ref);
 
-  useEffect(() => {
-    document.title = 'Zero to Live: turn your idea into a website in an hour · Rahul Bonala';
+  useLayoutEffect(() => {
+    // Before first paint, flip to checking if the URL carries payment params
+    if (peekBookingAccess(window.location.search)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- The prerendered HTML contains the pitch. We must hydrate as 'pitch' and then flip to 'checking' to avoid a hydration mismatch.
+      setView('checking');
+    }
   }, []);
+
+  useEffect(() => {
+    if (view === 'pitch') {
+      document.title = 'Zero to Live: turn your idea into a website in an hour · Rahul Bonala';
+      return;
+    }
+
+    let cancelled = false;
+    checkBookingAccess(window.location.search).then((result) => {
+      if (cancelled) return;
+      setAccess(result);
+      if (result.state === 'granted') {
+        setView('unlocked');
+        document.title = 'Payment received. Pick your slot · Rahul Bonala';
+        window.dispatchEvent(new Event(RB_EVENTS.celebrate));
+      } else if (result.state === 'denied') {
+        setView('pitch');
+      }
+    });
+    return () => { cancelled = true; };
+  }, [view]);
+
+  const retryVerification = async () => {
+    setRetrying(true);
+    const result = await checkBookingAccess(window.location.search);
+    setAccess(result);
+    setRetrying(false);
+  };
+
+  // Render the unlocked view if we're done checking and the payment is valid
+  if (view === 'unlocked' && access.state === 'granted') {
+    return (
+      <div className="teach" ref={ref}>
+        <div className="container">
+          <BookingConfirmed access={access} retrying={retrying} onRetry={retryVerification} />
+        </div>
+      </div>
+    );
+  }
+
+  // Render the checking state if we're waiting for the verification endpoint
+  if (view === 'checking') {
+    return (
+      <div className="teach" ref={ref}>
+        <div className="container">
+          <p className="teach-eyebrow" role="status" style={{ marginTop: 'calc(var(--header-height) + 40px)' }}>
+            Confirming your payment…
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="teach" ref={ref}>
       <div className="container">
         <Link to="/" className="page-back">← Back to portfolio</Link>
+
+        {access.state === 'denied' && (
+          <div className="teach-denied-note" role="alert" style={{ marginBottom: '40px', padding: '24px', background: 'var(--bg-panel)', borderRadius: 'var(--radius-lg)', border: '1px solid var(--hairline-strong)' }}>
+            <strong style={{ display: 'block', marginBottom: '8px', color: 'var(--ink)' }}>Nothing to confirm yet.</strong>
+            <span style={{ color: 'var(--ink-secondary)', lineHeight: 1.6 }}>
+              This is where the scheduling link appears once a session is paid for, but we couldn&apos;t match this visit to a payment. If you haven&apos;t booked yet, start below.
+            </span>
+          </div>
+        )}
 
         {/* Hero: copy left, the portrait video in the space beside it. A tall
             9:16 clip below the headline left a big empty column and pushed the

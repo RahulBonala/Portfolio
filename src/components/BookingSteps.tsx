@@ -21,11 +21,63 @@ type BookingStepsProps =
     };
 
 type CalendlyApi = {
-  initInlineWidget: (options: { url: string; parentElement: HTMLElement }) => void;
+  initInlineWidget: (options: { url: string; parentElement: HTMLElement; inlineStyles?: boolean }) => void;
 };
 
 const EMPTY_PROGRESS: Progress = { scheduled: false, downloaded: false };
 const CALENDLY_SCRIPT = 'https://assets.calendly.com/assets/external/widget.js';
+
+let calendlyPromise: Promise<CalendlyApi> | null = null;
+
+function loadCalendly(): Promise<CalendlyApi> {
+  if (calendlyPromise) return calendlyPromise;
+
+  const getApi = () => (window as Window & { Calendly?: CalendlyApi }).Calendly;
+  if (getApi()) {
+    calendlyPromise = Promise.resolve(getApi()!);
+    return calendlyPromise;
+  }
+
+  calendlyPromise = new Promise((resolve, reject) => {
+    let script = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT}"]`);
+    
+    const onLoad = () => {
+      const api = getApi();
+      if (api) resolve(api);
+      else {
+        calendlyPromise = null;
+        reject(new Error('Calendly API not found'));
+      }
+    };
+    
+    const onError = () => {
+      calendlyPromise = null;
+      reject(new Error('Failed to load Calendly script'));
+    };
+
+    if (script) {
+      // If script is already in DOM, it might have loaded or failed.
+      if (script.getAttribute('data-loaded') === 'true') {
+        onLoad();
+      } else {
+        script.addEventListener('load', onLoad);
+        script.addEventListener('error', onError);
+      }
+    } else {
+      script = document.createElement('script');
+      script.src = CALENDLY_SCRIPT;
+      script.async = true;
+      script.addEventListener('load', () => {
+        script!.setAttribute('data-loaded', 'true');
+        onLoad();
+      });
+      script.addEventListener('error', onError);
+      document.body.appendChild(script);
+    }
+  });
+
+  return calendlyPromise;
+}
 
 function readProgress(key: string): Progress {
   if (typeof window === 'undefined') return EMPTY_PROGRESS;
@@ -63,6 +115,7 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
       : 'rb-booking-progress:current';
   const [progress, setProgress] = useState<Progress>(() => readProgress(progressKey));
   const [calendarState, setCalendarState] = useState<'loading' | 'ready' | 'error'>('loading');
+  const [calendarRetryCount, setCalendarRetryCount] = useState(0);
 
   const schedulingUrl =
     props.stage === 'paid' && isSafeCalendlyUrl(props.schedulingUrl)
@@ -114,46 +167,45 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
 
     const parentElement = calendarRef.current;
     let disposed = false;
-    const getApi = () =>
-      (window as Window & { Calendly?: CalendlyApi }).Calendly;
 
-    const render = () => {
-      if (disposed) return;
-      const api = getApi();
-      if (!api) {
-        setCalendarState('error');
-        return;
+    const tryRender = async () => {
+      try {
+        setCalendarState('loading');
+        const api = await loadCalendly();
+        if (disposed) return;
+
+        parentElement.replaceChildren();
+        api.initInlineWidget({ url: embedUrl, parentElement, inlineStyles: true });
+
+        const iframe = parentElement.querySelector('iframe');
+        if (iframe) {
+          let isLoaded = false;
+          const timeout = setTimeout(() => {
+            if (!disposed && !isLoaded) {
+              setCalendarState('error');
+            }
+          }, 10000);
+
+          iframe.addEventListener('load', () => {
+            isLoaded = true;
+            clearTimeout(timeout);
+            if (!disposed) setCalendarState('ready');
+          });
+        } else {
+          setCalendarState('ready');
+        }
+      } catch {
+        if (!disposed) setCalendarState('error');
       }
-      parentElement.replaceChildren();
-      api.initInlineWidget({ url: embedUrl, parentElement });
-      setCalendarState('ready');
     };
 
-    let script = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT}"]`);
-    const onLoad = () => render();
-    const onError = () => !disposed && setCalendarState('error');
-
-    setCalendarState('loading');
-    if (getApi()) {
-      render();
-    } else {
-      if (!script) {
-        script = document.createElement('script');
-        script.src = CALENDLY_SCRIPT;
-        script.async = true;
-        document.body.appendChild(script);
-      }
-      script.addEventListener('load', onLoad);
-      script.addEventListener('error', onError);
-    }
+    tryRender();
 
     return () => {
       disposed = true;
-      script?.removeEventListener('load', onLoad);
-      script?.removeEventListener('error', onError);
       parentElement.replaceChildren();
     };
-  }, [embedUrl, props.stage]);
+  }, [embedUrl, props.stage, calendarRetryCount]);
 
   const markDownloaded = () => {
     setProgress((current) => {
@@ -259,12 +311,19 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
               {calendarState === 'error' && (
                 <p className="booking-calendar-status" role="alert">
                   The scheduler could not load here.{' '}
-                  <a href={schedulingUrl} target="_blank" rel="noopener noreferrer">Open Calendly in a new tab</a>.
+                  <button type="button" className="booking-calendar-retry" onClick={() => setCalendarRetryCount(c => c + 1)}>Retry</button> or{' '}
+                  <a href={schedulingUrl} target="_blank" rel="noopener noreferrer">open Calendly in a new tab</a>.
+                </p>
+              )}
+              {calendarState === 'ready' && (
+                <p className="booking-calendar-status" role="status">
+                  <a href={schedulingUrl} target="_blank" rel="noopener noreferrer">Open Calendly in a new tab</a>
                 </p>
               )}
               <div
                 ref={calendarRef}
-                className="calendly-inline-widget"
+                className="booking-calendar-embed"
+                data-auto-load="false"
                 aria-label="Calendly scheduling widget"
               />
             </>

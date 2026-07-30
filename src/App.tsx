@@ -12,7 +12,6 @@ import BookCta from './components/BookCta';
 import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import Teach from './pages/Teach';
-import Booked from './pages/Booked';
 import Review from './pages/Review';
 import './App.css';
 
@@ -36,6 +35,11 @@ function ScrollManager() {
   }, [pathname, hash]);
 
   return null;
+}
+
+function RedirectToTeach() {
+  const { search } = useLocation();
+  return <Navigate to={`/teach${search}`} replace />;
 }
 
 function App() {
@@ -108,7 +112,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
           <Route path="/teach" element={<Teach />} />
-          <Route path="/teach/booked" element={<Booked />} />
+          <Route path="/teach/booked" element={<RedirectToTeach />} />
           <Route path="/review" element={<Review />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

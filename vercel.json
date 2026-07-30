@@ -2,6 +2,9 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/teach/booked", "destination": "/teach", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/((?!api/|work/|teach|review|assets/|chunks/|.*\\..*).*)", "destination": "/index.html" }
   ],
@@ -29,13 +32,6 @@
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000; includeSubDomains; preload"
         }
-      ]
-    },
-    {
-      "source": "/teach/booked",
-      "headers": [
-        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
-        { "key": "Cache-Control", "value": "no-store" }
       ]
     },
     {
