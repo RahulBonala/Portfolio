@@ -30,9 +30,13 @@ export function mintToken(paymentId: string, secret: string, now = Date.now()): 
   return `${b64url(payload)}.${sign(payload, secret)}`;
 }
 
+// The absent-side keys are declared explicitly: Vercel type-checks each function
+// with its own generated tsconfig, and without strictNullChecks TypeScript will
+// not narrow a union on a boolean discriminant. Spelling both keys on both
+// variants keeps `check.reason` / `check.paymentId` legal either way.
 export type TokenCheck =
-  | { ok: true; paymentId: string }
-  | { ok: false; reason: 'malformed' | 'bad_signature' | 'expired' };
+  | { ok: true; paymentId: string; reason?: undefined }
+  | { ok: false; paymentId?: undefined; reason: 'malformed' | 'bad_signature' | 'expired' };
 
 export function verifyToken(token: string, secret: string, now = Date.now()): TokenCheck {
   if (typeof token !== 'string' || token.length > 512) return { ok: false, reason: 'malformed' };
