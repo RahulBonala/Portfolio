@@ -228,3 +228,34 @@ Revisit only if /teach becomes a standalone landing page off its own domain.
 - The 4:5 poster still needs a **1200×630 crop** for `og:image` — a 4:5 image
   crops badly in link previews.
 - "Speak It. Make It." is not currently in the portfolio's project list.
+
+
+---
+
+## Reviews and the shareable link
+
+Two ways a review reaches the database, both landing in the same moderation
+queue:
+
+| Path | Where | Attribution |
+|---|---|---|
+| `buyer` | `/teach/booked`, using the token minted after payment | Tied to the payment id |
+| `invite` | `rahulbonala.me/review`, the link to share afterwards | None — no token exists days later |
+
+**`https://rahulbonala.me/review` is the link to send people.** It is
+deliberately `noindex`: a link to hand out, not a page to be found.
+
+The invite path is an open write endpoint, which is safe here for one specific
+reason: **every review is created `pending` and nothing is ever displayed until
+it is approved**, so the page cannot be used to publish anything. On top of
+that it carries a honeypot, length and shape checks, and per-IP rate limiting
+(3 per day, keyed on a salted hash of the IP — rate limiting never needs to
+know who someone is, and a plaintext IP list is a liability with no upside).
+
+A *forged* token is still refused outright. An *expired* one degrades to the
+invite path, because reviewing a week later is the normal case, not an attack.
+
+### Approving a review
+
+Supabase dashboard → Table editor → `reviews` → set `status` to `approved`.
+It appears on `/teach` on the next page load; no redeploy needed.

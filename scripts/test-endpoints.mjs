@@ -36,21 +36,34 @@ const withDb = (on) => {
 };
 
 const tests = {
-  // ── reviews: the write path must require proof of payment ──────────────
-  'a review with no token is refused': async () => {
+  // ── the shareable /review link: open, but only into a moderation queue ──
+  'a review with no token is accepted as an invite': async () => {
     process.env.RAZORPAY_KEY_SECRET = SECRET;
     withDb(true);
-    const r = await call(reviews, { body: { name: 'Spam', rating: 5, body: 'buy my thing now' } });
-    assert.equal(r.code, 403);
-    assert.equal(r.body.error, 'not_a_buyer');
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 5, body: 'genuinely useful hour, thanks' },
+    });
+    // Reaches the insert (which fails against the fake DB URL) rather than
+    // being refused up front — the point is it is no longer a 403.
+    assert.notEqual(r.code, 403);
   },
 
-  'a review with a forged token is refused': async () => {
+  'an invite review is still held for approval': async () => {
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 4, body: 'genuinely useful hour, thanks' },
+    });
+    // Either it saved (pending) or the fake DB rejected it — never published.
+    assert.ok(r.body.pending === true || r.body.ok === false);
+  },
+
+  'a review with a forged token is still refused': async () => {
     withDb(true);
     const r = await call(reviews, {
       body: { name: 'Spam', rating: 5, body: 'buy my thing now', token: `${Buffer.from(`${PAY}.${Date.now() + 9e6}`).toString('base64url')}.${'a'.repeat(64)}` },
     });
     assert.equal(r.code, 403);
+    assert.equal(r.body.error, 'invalid_token');
   },
 
   'a review with a token from another secret is refused': async () => {
@@ -59,6 +72,24 @@ const tests = {
       body: { name: 'X', rating: 5, body: 'a genuine looking review', token: mintToken(PAY, 'other_secret') },
     });
     assert.equal(r.code, 403);
+  },
+
+  'an expired token degrades to an invite rather than failing': async () => {
+    withDb(true);
+    const stale = mintToken(PAY, SECRET, Date.now() - 10 * 60 * 60 * 1000);
+    const r = await call(reviews, {
+      body: { name: 'Late reviewer', rating: 5, body: 'writing this a week later', token: stale },
+    });
+    assert.notEqual(r.code, 403);
+  },
+
+  'the review honeypot is silently accepted and stores nothing': async () => {
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Bot', rating: 5, body: 'spam spam spam spam', _gotcha: 'filled' },
+    });
+    assert.equal(r.code, 200);
+    assert.equal(r.body.pending, true);
   },
 
   'a valid token with a bad rating is rejected': async () => {

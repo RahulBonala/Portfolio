@@ -44,6 +44,15 @@ const ROUTES = [
       'Turn your idea into a live website in about 60 minutes. A one-on-one session using free AI tools, with zero coding. You leave with the 15-page AI Builder’s Playbook and every prompt, able to do it again yourself.',
   },
   {
+    path: '/review',
+    out: 'review/index.html',
+    title: 'Leave a review · Zero to Live',
+    description: 'Tell me how your Zero to Live session went.',
+    // A link to hand out, not a page to be found. Indexing it would invite
+    // drive-by submissions the moderation queue exists to absorb.
+    noindex: true,
+  },
+  {
     path: '/teach/booked',
     out: 'teach/booked/index.html',
     title: 'Payment received. Pick your slot · Rahul Bonala',

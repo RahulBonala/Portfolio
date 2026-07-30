@@ -15,7 +15,9 @@ const BookCta: React.FC = () => {
   const { pathname } = useLocation();
   const [shown, setShown] = useState(false);
 
-  const onBookingFlow = pathname === BOOKING.route || pathname.startsWith('/teach');
+  // Hidden on the booking flow and on /review — someone writing a review has
+  // already bought, so a 'book a session' button is noise at best.
+  const onBookingFlow = pathname.startsWith('/teach') || pathname === '/review';
 
   // Gentle entrance shortly after load (skipped visually under reduced motion
   // via CSS, but we still mount it so it's always reachable).

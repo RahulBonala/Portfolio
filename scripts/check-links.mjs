@@ -40,7 +40,7 @@ const jsFiles = [...files].filter((f) => f.endsWith('.js'));
 // ── 1. Internal links and assets resolve to something real ────────────────
 // Routes are served by the SPA rewrite, so they don't need a matching file;
 // anything with a file extension does.
-const KNOWN_ROUTES = new Set(['/', '/teach', '/teach/booked', '/work/bestanswers', '/work/smiths-detection']);
+const KNOWN_ROUTES = new Set(['/', '/teach', '/teach/booked', '/review', '/work/bestanswers', '/work/smiths-detection']);
 
 for (const page of htmlFiles) {
   const html = readFileSync(join(dist, page), 'utf8');

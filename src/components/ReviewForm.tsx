@@ -2,23 +2,28 @@ import { useState } from 'react';
 import './ReviewForm.css';
 
 /**
- * Review form, shown only on the post-payment page.
+ * Review form, used in two places:
  *
- * It takes the same token that unlocks the Playbook and sends it with the
- * review, so the server can tie the testimonial to a real payment. That is
- * the whole anti-spam design: there is no way to reach this form, or the
- * endpoint behind it, without having paid.
+ *   /teach/booked — right after payment, with the token that unlocks the
+ *                   Playbook, so the review is tied to that payment.
+ *   /review       — the shareable link Rahul sends after a session, where
+ *                   there is no token because the ask happens days later.
  *
- * Submissions are held for approval, and the copy says so plainly — telling
- * someone their words are live when they aren't is a small lie that costs
- * trust when they check.
+ * Submissions are held for approval either way, and the copy says so plainly.
+ * Telling someone their words are live when they aren't is a small lie that
+ * costs trust the moment they check.
  */
-type Props = { token: string };
+type Props = {
+  /** Present only on the post-payment page. */
+  token?: string;
+  /** `inline` collapses behind a button; `standalone` is always open. */
+  variant?: 'inline' | 'standalone';
+};
 
-const ReviewForm: React.FC<Props> = ({ token }) => {
-  const [form, setForm] = useState({ name: '', role: '', rating: 5, body: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error'>('idle');
-  const [open, setOpen] = useState(false);
+const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
+  const [form, setForm] = useState({ name: '', role: '', rating: 5, body: '', _gotcha: '' });
+  const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error' | 'rate_limited'>('idle');
+  const [open, setOpen] = useState(variant === 'standalone');
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,9 +32,12 @@ const ReviewForm: React.FC<Props> = ({ token }) => {
       const res = await fetch('/api/reviews', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...form, token }),
+        // `token` is omitted entirely when absent, which is what tells the
+        // server to treat this as an invite rather than a buyer review.
+        body: JSON.stringify(token ? { ...form, token } : form),
       });
-      setStatus(res.ok ? 'done' : 'error');
+      if (res.ok) setStatus('done');
+      else setStatus(res.status === 429 ? 'rate_limited' : 'error');
     } catch {
       setStatus('error');
     }
@@ -56,8 +64,9 @@ const ReviewForm: React.FC<Props> = ({ token }) => {
     <form className="review-form" onSubmit={submit}>
       <h3 className="review-form-title">How was it?</h3>
       <p className="review-form-note">
-        Only people who booked can leave one, so every review here is from someone
-        who actually sat through a session. I approve them before they appear.
+        Every review is read before it goes up, so nothing appears on the site
+        until I&apos;ve seen it. Say what actually happened, including the parts
+        that didn&apos;t work.
       </p>
 
       <div className="review-row">
@@ -108,6 +117,23 @@ const ReviewForm: React.FC<Props> = ({ token }) => {
           That didn’t save. Try once more, or email it to me and I’ll add it.
         </p>
       )}
+
+      {status === 'rate_limited' && (
+        <p className="review-error" role="alert">
+          That’s a few reviews from here already today. If that wasn’t you, email
+          it to me instead and I’ll add it myself.
+        </p>
+      )}
+
+      {/* Honeypot — hidden from humans, filled by bots */}
+      <div className="review-honeypot" aria-hidden="true">
+        <label htmlFor="review-gotcha">Leave this field empty</label>
+        <input
+          type="text" id="review-gotcha" tabIndex={-1} autoComplete="off"
+          value={form._gotcha}
+          onChange={(e) => setForm({ ...form, _gotcha: e.target.value })}
+        />
+      </div>
 
       <button type="submit" className="review-submit" disabled={status === 'sending'}>
         {status === 'sending' ? 'Sending…' : 'Send review'}
