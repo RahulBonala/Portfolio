@@ -19,9 +19,34 @@ const REFERENCE = '';
 const sign = (linkId, reference, status, paymentId, secret = SECRET) =>
   createHmac('sha256', secret).update(`${linkId}|${reference}|${status}|${paymentId}`).digest('hex');
 
-async function call(body, { method = 'POST', secret = SECRET } = {}) {
+const KEY_ID = 'rzp_test_keyid';
+
+/**
+ * Stands in for Razorpay's payments API, which is the only proof a Payment
+ * Button return has. `null` means "Razorpay does not know this payment".
+ */
+function stubPayment(payment) {
+  globalThis.fetch = async () =>
+    payment
+      ? { ok: true, status: 200, json: async () => payment }
+      : { ok: false, status: 404, json: async () => ({ error: 'not_found' }) };
+}
+
+const capturedPayment = {
+  id: 'pay_BUTTONtest123',
+  status: 'captured',
+  amount: 9900,
+  currency: 'INR',
+  email: 'buyer@example.com',
+  contact: '+919000000000',
+};
+
+async function call(body, { method = 'POST', secret = SECRET, keyId = KEY_ID } = {}) {
   if (secret === null) delete process.env.RAZORPAY_KEY_SECRET;
   else process.env.RAZORPAY_KEY_SECRET = secret;
+
+  if (keyId === null) delete process.env.RAZORPAY_KEY_ID;
+  else process.env.RAZORPAY_KEY_ID = keyId;
 
   let captured;
   const res = {
@@ -98,6 +123,66 @@ const tests = {
     const r = await call(validBody, { secret: null });
     assert.equal(r.body.verified, false);
     assert.equal(r.body.configured, false);
+  },
+
+  // ── Payment Button: only ?payment_id= comes back, so the proof is a
+  //    server-to-server lookup rather than a signature ──────────────────────
+  'a settled payment id alone verifies': async () => {
+    stubPayment(capturedPayment);
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.verified, true);
+    assert.equal(r.body.reason, 'verified');
+    assert.match(r.body.downloadToken, /^[A-Za-z0-9_-]+\.[a-f0-9]{64}$/);
+  },
+
+  'a payment id Razorpay does not know is refused': async () => {
+    stubPayment(null);
+    const r = await call({ razorpay_payment_id: 'pay_FORGEDid12345' });
+    assert.equal(r.body.verified, false);
+    assert.equal(r.body.reason, 'payment_not_found');
+    assert.equal(r.body.downloadToken, undefined);
+  },
+
+  'a payment that never settled is refused': async () => {
+    stubPayment({ ...capturedPayment, status: 'failed' });
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.verified, false);
+    assert.equal(r.body.reason, 'payment_not_settled');
+  },
+
+  'a cheaper payment cannot buy a session': async () => {
+    stubPayment({ ...capturedPayment, amount: 100 });
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.verified, false);
+    assert.equal(r.body.reason, 'amount_mismatch');
+  },
+
+  'a payment in another currency is refused': async () => {
+    stubPayment({ ...capturedPayment, currency: 'USD' });
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.verified, false);
+    assert.equal(r.body.reason, 'amount_mismatch');
+  },
+
+  'an authorised but uncaptured payment still gets the buyer in': async () => {
+    stubPayment({ ...capturedPayment, status: 'authorized' });
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.verified, true);
+  },
+
+  'without a key id the lookup reports unconfigured rather than denying': async () => {
+    stubPayment(capturedPayment);
+    const r = await call({ razorpay_payment_id: capturedPayment.id }, { keyId: null });
+    assert.equal(r.body.verified, false);
+    assert.equal(r.body.configured, false);
+  },
+
+  'a verified button return also hands out the scheduling url': async () => {
+    process.env.CALENDLY_URL = 'https://calendly.com/example/60min';
+    stubPayment(capturedPayment);
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.schedulingUrl, 'https://calendly.com/example/60min');
+    delete process.env.CALENDLY_URL;
   },
 
   'the scheduling url is withheld unless the payment verified': async () => {

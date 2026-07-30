@@ -31,7 +31,42 @@ const search = new URLSearchParams({
 }).toString();
 
 const tests = {
+  'the payment button return is accepted from ?payment_id alone': async () => {
+    values.clear();
+    scrubCount = 0;
+    let sent;
+    globalThis.fetch = async (_url, init) => {
+      sent = JSON.parse(init.body);
+      return {
+        ok: true,
+        json: async () => ({ verified: true, configured: true, downloadToken: token }),
+      };
+    };
+
+    const result = await checkBookingAccess(`?payment_id=${paymentId}`);
+    assert.deepEqual(sent, { razorpay_payment_id: paymentId });
+    assert.equal(result.state, 'granted');
+    assert.equal(result.verified, true);
+    assert.equal(result.paymentId, paymentId);
+    assert.equal(result.downloadToken, token);
+    assert.equal(scrubCount, 1);
+  },
+
+  'a payment id that is not a Razorpay id is not sent anywhere': async () => {
+    values.clear();
+    let calls = 0;
+    globalThis.fetch = async () => {
+      calls += 1;
+      throw new Error('fetch should not run');
+    };
+
+    const result = await checkBookingAccess('?payment_id=../../etc/passwd');
+    assert.equal(calls, 0);
+    assert.equal(result.state, 'denied');
+  },
+
   'fresh payment params override stale cached access': async () => {
+    scrubCount = 0;
     values.set('rb-booking-verified', JSON.stringify({ verified: false }));
     let calls = 0;
     globalThis.fetch = async () => {

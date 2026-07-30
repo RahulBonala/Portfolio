@@ -2,20 +2,29 @@
  * Client half of the booking gate.
  *
  * The scheduling link on /teach/booked is the product — handing it to anyone
- * who types the URL means free sessions. Razorpay redirects a real buyer back
- * with signed params, so the flow is:
+ * who types the URL means free sessions. Razorpay sends a real buyer back here
+ * after checkout, so the flow is:
  *
- *   1. Read the redirect params from the URL.
- *   2. POST them to /api/verify-booking, which checks the HMAC signature with
- *      the key secret. That check cannot happen here: shipping the secret to
- *      the browser would publish it.
+ *   1. Read the payment details Razorpay put on the URL.
+ *   2. POST them to /api/verify-booking, which proves the payment server-side.
+ *      That check cannot happen here: it needs the key secret, and shipping the
+ *      secret to the browser would publish it.
  *   3. Cache the verdict for this tab, then scrub the params out of the URL so
  *      a copy-pasted link (or a browser-history screenshot) can't be reused.
  *
- * If the server reports it has no secret configured, we fall back to requiring
- * well-formed params. That is a speed bump, not a security control — anyone
- * who has paid once can replay their own link. Set RAZORPAY_KEY_SECRET in
- * Vercel to close it properly.
+ * TWO REDIRECT SHAPES ARRIVE HERE, and they are not interchangeable:
+ *
+ *   Payment Button — `?payment_id=pay_xxx` and nothing else. This is what the
+ *     live button sends: its widget builds the URL as literally
+ *     `callbackUrl + "?payment_id=" + paymentId`. There is no signature to
+ *     check, so the server has to look the payment up at Razorpay instead.
+ *   Payment Link — the five signed `razorpay_*` params. Kept working so a link
+ *     issued by hand (a refund redo, a manual invoice) still lets someone in.
+ *
+ * If the server reports it cannot verify (no credentials configured), we fall
+ * back to requiring well-formed params. That is a speed bump, not a security
+ * control — anyone who has paid once can replay their own link. Set
+ * RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Vercel to close it properly.
  */
 
 export type BookingAccess =
@@ -49,9 +58,11 @@ type RedirectParams = {
   razorpay_signature: string;
 };
 
+/** The body sent to /api/verify-booking, plus the payment it is about. */
+type VerifyPayload = { paymentId: string; body: Record<string, string> };
+
 /** Pulls the Razorpay redirect params off the URL, or null if they're absent//malformed. */
-function readRedirectParams(search: string): RedirectParams | null {
-  const q = new URLSearchParams(search);
+function readRedirectParams(q: URLSearchParams): RedirectParams | null {
   const params: RedirectParams = {
     razorpay_payment_id: q.get('razorpay_payment_id') ?? '',
     razorpay_payment_link_id: q.get('razorpay_payment_link_id') ?? '',
@@ -67,6 +78,27 @@ function readRedirectParams(search: string): RedirectParams | null {
     params.razorpay_payment_link_status === 'paid';
 
   return wellFormed ? params : null;
+}
+
+/**
+ * Works out what this visit is claiming, from either redirect shape.
+ *
+ * The signed Payment Link params win when present because they carry more
+ * evidence; a bare payment id is the Payment Button case and is proved by the
+ * server calling Razorpay back.
+ */
+function readVerifyPayload(search: string): VerifyPayload | null {
+  const q = new URLSearchParams(search);
+
+  const link = readRedirectParams(q);
+  if (link) return { paymentId: link.razorpay_payment_id, body: { ...link } };
+
+  // `payment_id` is what the Payment Button widget appends. The prefixed name
+  // is accepted too so a hand-written link behaves the same way.
+  const id = q.get('payment_id') ?? q.get('razorpay_payment_id') ?? '';
+  if (PAYMENT_ID.test(id)) return { paymentId: id, body: { razorpay_payment_id: id } };
+
+  return null;
 }
 
 /**
@@ -121,11 +153,11 @@ function scrubUrl() {
 }
 
 export async function checkBookingAccess(search: string): Promise<BookingAccess> {
-  const params = readRedirectParams(search);
+  const payload = readVerifyPayload(search);
   // A fresh Razorpay return must win over any cached result from an earlier
   // attempt in this tab, otherwise a stale fail-open result can hide the new
   // payment's secure download token.
-  if (!params) {
+  if (!payload) {
     const remembered = recall();
     return remembered ?? { state: 'denied' };
   }
@@ -134,7 +166,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
     const res = await fetch('/api/verify-booking', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
+      body: JSON.stringify(payload.body),
     });
 
     // No endpoint deployed (static-only preview, or the function is missing):
@@ -143,7 +175,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
       return {
         state: 'granted',
         verified: false,
-        paymentId: params.razorpay_payment_id,
+        paymentId: payload.paymentId,
         verificationIssue: 'server',
       };
     }
@@ -167,14 +199,14 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
           : undefined;
       remember({
         verified: true,
-        paymentId: params.razorpay_payment_id,
+        paymentId: payload.paymentId,
         schedulingUrl: safe,
         downloadToken: token,
       });
       return {
         state: 'granted',
         verified: true,
-        paymentId: params.razorpay_payment_id,
+        paymentId: payload.paymentId,
         schedulingUrl: safe,
         downloadToken: token,
       };
@@ -184,7 +216,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
       return {
         state: 'granted',
         verified: false,
-        paymentId: params.razorpay_payment_id,
+        paymentId: payload.paymentId,
         verificationIssue: 'unconfigured',
       };
     }
@@ -199,7 +231,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
     return {
       state: 'granted',
       verified: false,
-      paymentId: params.razorpay_payment_id,
+      paymentId: payload.paymentId,
       verificationIssue: 'network',
     };
   }

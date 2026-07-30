@@ -7,8 +7,9 @@
  * Razorpay's own API, called server-to-server with the key credentials.
  *
  * Needs RAZORPAY_KEY_ID alongside the secret already used for signature
- * verification. Without it this returns null and the booking is stored with
- * just the payment id, which is still enough to gate the download.
+ * verification. Without it this returns null — and because a Payment Button
+ * redirect has no signature to fall back on, that also means such a visit
+ * cannot be proven at all. See api/verify-booking.ts.
  */
 
 export type PaymentDetails = {
@@ -17,6 +18,13 @@ export type PaymentDetails = {
   name: string | null;
   amountMinor: number | null;
   currency: string | null;
+  /**
+   * Razorpay's own view of the payment: 'captured' once the money is settled,
+   * 'authorised' while it is held pending capture, and 'created' / 'failed' /
+   * 'refunded' otherwise. A Payment Button redirect carries no signature, so
+   * this field is the evidence the booking gate stands on.
+   */
+  status: string | null;
 };
 
 const PAYMENT_ID = /^pay_[A-Za-z0-9]{6,40}$/;
@@ -53,6 +61,7 @@ export async function fetchPaymentDetails(paymentId: string): Promise<PaymentDet
       name: str(notes.name) ?? str(notes.Name),
       amountMinor: Number.isInteger(p.amount) ? (p.amount as number) : null,
       currency: str(p.currency, 8),
+      status: str(p.status, 24),
     };
   } catch (err) {
     // Never let a details lookup break the booking flow — the payment is
