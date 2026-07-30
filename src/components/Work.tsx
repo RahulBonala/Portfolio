@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import bestAnswerImg from '../assets/bestanswer-logo.webp';
 import byocImg from '../assets/byoc-logo.webp';
+import stepforgeImg from '../assets/stepforge-logo.svg';
 import './Work.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,11 +18,11 @@ const ARCHIVE = [
 
 /**
  * SVG diagram for the live sessions — a clean top-down flow:
- * (your project + my AI workflow) -> one hour together -> a written next step.
+ * (your idea + free AI tools) -> one hour together -> a live website.
  * All colors are CSS classes (Work.css) so both themes render correctly.
  */
 const CourseVisual = () => (
-  <svg className="work-svg course-visual" viewBox="0 0 560 400" role="img" aria-label="Diagram of a live working session: your project plus my AI workflow go into one hour together, and you leave with a written next step">
+  <svg className="work-svg course-visual" viewBox="0 0 560 400" role="img" aria-label="Diagram of a live working session: your idea plus free AI tools go into one hour together, and you leave with a live website">
     <defs>
       <marker id="cv-arrow" viewBox="0 0 10 10" refX="7.5" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
         <path className="cv-arrowhead" d="M 0 0 L 10 5 L 0 10 z" />
@@ -31,9 +32,9 @@ const CourseVisual = () => (
     {/* Inputs */}
     <g>
       <rect className="cv-pill cv-pill--accent" x="70" y="36" width="190" height="44" rx="22" />
-      <text className="cv-text cv-text--accent" x="165" y="63" textAnchor="middle">your project</text>
+      <text className="cv-text cv-text--accent" x="165" y="63" textAnchor="middle">your idea</text>
       <rect className="cv-pill" x="300" y="36" width="190" height="44" rx="22" />
-      <text className="cv-text" x="395" y="63" textAnchor="middle">my ai workflow</text>
+      <text className="cv-text" x="395" y="63" textAnchor="middle">free ai tools</text>
     </g>
 
     {/* Connectors into the hour */}
@@ -53,13 +54,29 @@ const CourseVisual = () => (
       <line x1="280" y1="266" x2="280" y2="300" markerEnd="url(#cv-arrow)" />
     </g>
     <rect className="cv-pill cv-pill--accent" x="120" y="312" width="320" height="44" rx="22" />
-    <text className="cv-text cv-text--accent" x="280" y="339" textAnchor="middle">a written next step</text>
+    <text className="cv-text cv-text--accent" x="280" y="339" textAnchor="middle">a live website</text>
   </svg>
 );
 
 const PROJECTS = [
   {
     index: '01',
+    meta: 'AI Agents · Experiment',
+    title: 'BYOC — SDLC Agents',
+    tagline: 'What if the agency was software?',
+    story:
+      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick — auth, payments, dashboards — watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
+    points: [
+      'AI agents mapped to SDLC phases — plan, design, build, test, ship',
+      'Interactive 3D-style configurator and a metro-map pipeline tracker',
+      'Honesty about cost as the core product idea — no black-box quotes',
+    ],
+    stack: ['React', 'TypeScript', 'AI agents', 'Node'],
+    links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
+    visual: <img src={byocImg} alt="Build Your Own Company configurator" loading="lazy" decoding="async" width="600" height="400" />,
+  },
+  {
+    index: '02',
     meta: 'AI Product · Live',
     title: 'BestAnswers.AI',
     tagline: 'Four AIs argue. You get the strongest answer.',
@@ -78,34 +95,34 @@ const PROJECTS = [
     visual: <img src={bestAnswerImg} alt="BestAnswers.AI interface" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
-    index: '02',
-    meta: 'AI Agents · Experiment',
-    title: 'BYOC — SDLC Agents',
-    tagline: 'What if the agency was software?',
+    index: '03',
+    meta: 'SaaS · Live',
+    title: 'Stepforge',
+    tagline: 'Upload a résumé. Get a portfolio website.',
     story:
-      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick — auth, payments, dashboards — watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
+      'Drop in a CV — PDF, Word, Pages, or a photo of a printed page — and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 33 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
     points: [
-      'AI agents mapped to SDLC phases — plan, design, build, test, ship',
-      'Interactive 3D-style configurator and a metro-map pipeline tracker',
-      'Honesty about cost as the core product idea — no black-box quotes',
+      'Extraction and parsing run in your own browser — the résumé isn’t uploaded unless you choose a cloud feature',
+      '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',
+      'Ships with its own safety nets: accessibility, responsive, print and old-mobile-engine gates in CI',
     ],
-    stack: ['React', 'TypeScript', 'AI agents', 'Node'],
-    links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
-    visual: <img src={byocImg} alt="Build Your Own Company configurator" loading="lazy" decoding="async" width="600" height="400" />,
+    stack: ['React', 'TypeScript', 'Supabase', 'Vercel Functions', 'Gemini'],
+    links: [{ label: 'Visit live site', href: 'https://stepforge.co' }],
+    visual: <img src={stepforgeImg} alt="Stepforge logo" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
-    index: '03',
+    index: '04',
     meta: 'Teaching · Live Sessions',
     title: 'AI Tools for Builders',
     tagline: 'Not a video library. A working session.',
     story:
-      'Once or twice a week I block an hour to build with someone — designer, developer, or founder — on their project, using the AI workflow I use daily. It isn’t a course you watch; it’s an hour where we ship something together. Afterwards you get a short written note: what we figured out, what to do next, and links to everything I referenced.',
+      'Once or twice a week I block an hour to sit with one person — usually a student or someone early in their career — and take their idea all the way to a live website using free AI tools. Define, design, develop, deploy, in one sitting. They leave with the Playbook, every prompt we used, and the thing most tutorials never teach: how to fix it themselves when it breaks.',
     points: [
-      'You bring a real project; we move it forward together for an hour',
-      'My actual workflow — Figma, AI tools, and code where it matters',
-      'Full refund if it didn’t help. The pitch is the work, not the price.',
+      'You bring an idea; we take it all the way to a live URL in the hour',
+      'The whole path in one go — define, design, develop, deploy — with free AI tools',
+      'You leave with the Playbook and the prompts, so the next one you build alone',
     ],
-    stack: ['1:1 · live', 'Real project', 'Written follow-up'],
+    stack: ['1:1 · live', 'Free AI tools', 'Idea → live URL'],
     links: [{ label: 'How the sessions work', href: '/teach' }],
     visual: <CourseVisual />,
   },
@@ -153,7 +170,7 @@ const Work: React.FC = () => {
           <em>002</em> Selected work
         </div>
         <h2 className="sec-title" data-reveal="up">
-          Three things<br />
+          Four things<br />
           <span className="accent-word">worth your time.</span>
         </h2>
       </div>

@@ -1,0 +1,104 @@
+/* Intro video for the 1:1 session — see SessionVideo.tsx.
+   Tokens only, so it tracks both themes without a dark/light branch. */
+
+.session-video {
+  margin: clamp(40px, 7vh, 72px) 0;
+}
+
+.session-video-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.4vw, 34px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.session-video-caption {
+  max-width: 56ch;
+  color: var(--ink-secondary);
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+/* Fixed 16:9 box so the poster/iframe swap causes no layout shift (CLS 0). */
+.session-video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-panel);
+}
+
+.session-video-player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  object-fit: cover;
+}
+
+/* Click-to-load facade: a poster plus a play button, no third-party iframe
+   until the visitor actually asks for one. */
+.session-video-facade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: var(--bg-panel);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Scrim keeps the play button legible over a bright thumbnail. */
+.session-video-facade::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.42));
+}
+
+.session-video-play {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  padding-left: 4px; /* optically centres the triangle */
+  border-radius: 50%;
+  color: var(--accent-ink);
+  background: var(--accent);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.session-video-facade:hover .session-video-play,
+.session-video-facade:focus-visible .session-video-play {
+  transform: scale(1.07);
+  box-shadow: 0 0 0 10px var(--accent-faint);
+}
+
+.session-video-facade:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-video-play {
+    transition: none;
+  }
+
+  .session-video-facade:hover .session-video-play,
+  .session-video-facade:focus-visible .session-video-play {
+    transform: none;
+  }
+}

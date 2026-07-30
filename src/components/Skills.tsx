@@ -86,8 +86,15 @@ const GROUPS: Group[] = [
         external: true,
       },
       {
+        skill: 'Deterministic-first pipelines',
+        claim: 'Heuristic parsing does the work; AI is opt-in and cannot invent a fact.',
+        proof: 'Stepforge — live',
+        href: 'https://stepforge.co',
+        external: true,
+      },
+      {
         skill: 'Teaching the workflow',
-        claim: 'Live 1:1 sessions building real projects with the AI workflow I use daily.',
+        claim: 'Live 1:1 sessions taking someone’s idea to a deployed site with free AI tools.',
         proof: 'AI Tools for Builders',
         href: '/teach',
       },

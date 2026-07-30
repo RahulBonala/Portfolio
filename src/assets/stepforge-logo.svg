@@ -1,0 +1,21 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stepforge">
+  <defs>
+    <linearGradient id="psTile" x1="16" y1="12" x2="112" y2="116" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff8a4d"></stop>
+      <stop offset="0.55" stop-color="#ff6b1a"></stop>
+      <stop offset="1" stop-color="#c2410c"></stop>
+    </linearGradient>
+  </defs>
+  <rect x="12" y="12" width="104" height="104" rx="26" fill="url(#psTile)"></rect>
+  <rect x="12" y="12" width="104" height="104" rx="26" fill="#000" opacity="0.04"></rect>
+  
+  <g>
+    <rect x="40" y="42" width="44" height="56" rx="7" fill="#1b0d02" opacity="0.18" transform="rotate(-11 62 70)"></rect>
+    <rect x="43" y="40" width="44" height="56" rx="7" fill="#fbf7f0" opacity="0.55" transform="rotate(-5 65 68)"></rect>
+    <path d="M46 34 h30 l14 14 v42 a7 7 0 0 1 -7 7 H46 a7 7 0 0 1 -7 -7 V41 a7 7 0 0 1 7 -7 z" fill="#fbf7f0"></path>
+    <path d="M76 34 v10 a4 4 0 0 0 4 4 h10 z" fill="#e9ddca"></path>
+    <rect x="48" y="58" width="30" height="5" rx="2.5" fill="#c2410c"></rect>
+    <rect x="48" y="70" width="34" height="4" rx="2" fill="#ff6b1a" opacity="0.55"></rect>
+    <rect x="48" y="80" width="22" height="4" rx="2" fill="#ff6b1a" opacity="0.55"></rect>
+  </g>
+</svg>
