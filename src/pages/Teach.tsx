@@ -4,6 +4,7 @@ import BookingSteps from '../components/BookingSteps';
 import SessionVideo from '../components/SessionVideo';
 import SessionValue from '../components/SessionValue';
 import Testimonials from '../components/Testimonials';
+import ReviewForm from '../components/ReviewForm';
 import BookingConfirmed from '../components/BookingConfirmed';
 import { BOOKING } from '../lib/booking';
 import { checkBookingAccess, peekBookingAccess, type BookingAccess } from '../lib/payment';
@@ -156,6 +157,10 @@ const Teach: React.FC = () => {
 
         {/* Renders nothing until an approved review exists. */}
         <Testimonials />
+
+        <div data-reveal="up" style={{ marginBottom: 'clamp(48px, 8vh, 88px)' }}>
+          <ReviewForm variant="inline" />
+        </div>
 
         <section className="teach-book" data-reveal="up" aria-labelledby="teach-book-h">
           <div className="teach-book-copy">
