@@ -253,8 +253,18 @@
   border-right: 1px solid var(--hairline);
 }
 
+/* Keyed to column position, not :last-child. The old rule broke the moment a
+   fifth fact appeared: it wrapped to a new row and kept a dangling divider,
+   which is exactly the misalignment in the screenshot. */
+.hero-fact:nth-child(4n),
 .hero-fact:last-child {
   border-right: none;
+}
+
+/* Any row after the first gets a top rule, so a 5th+ item still reads as a
+   deliberate grid rather than an orphan. */
+.hero-fact:nth-child(n + 5) {
+  border-top: 1px solid var(--hairline);
 }
 
 .hero-fact + .hero-fact {

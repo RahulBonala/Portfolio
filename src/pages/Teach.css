@@ -21,6 +21,92 @@
   padding: calc(var(--header-height) + clamp(32px, 5vh, 64px)) 0 clamp(56px, 9vh, 104px);
 }
 
+/* ── Hero: copy left, portrait video right ─────────────────────
+   The video is 9:16, so stacked under the headline it left a wide empty
+   column and pushed the whole page down. Beside the copy it fills that
+   space and lifts everything below it into view sooner.
+   DOM order is copy-then-video, which is also the stacked mobile order, so
+   nothing is reordered away from reading or tab order. */
+.teach-head {
+  margin-bottom: clamp(40px, 6vh, 72px);
+}
+
+@media (min-width: 900px) {
+  .teach-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: clamp(40px, 6vw, 88px);
+    align-items: start;
+  }
+}
+
+.teach-head-copy {
+  min-width: 0;
+}
+
+.teach-head-video {
+  width: min(300px, 100%);
+  margin-inline: auto;
+}
+
+@media (min-width: 900px) {
+  .teach-head-video {
+    width: clamp(240px, 26vw, 300px);
+    margin-inline: 0;
+    /* Optically aligns the top of the player with the headline rather than
+       the eyebrow above it. */
+    margin-top: 6px;
+  }
+}
+
+.teach-head-video-cap {
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+@media (min-width: 900px) {
+  .teach-head-video-cap {
+    text-align: left;
+  }
+}
+
+/* The brief overview: what the hour is spent on, in four lines. */
+.teach-phases {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.teach-phases li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.teach-phase-n {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.teach-phase-name {
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 4.5em;
+}
+
+.teach-phase-what {
+  color: var(--ink-muted);
+}
+
 .teach-eyebrow {
   font-family: var(--font-mono);
   font-size: 0.74rem;
@@ -46,7 +132,7 @@
   font-size: clamp(1rem, 1.4vw, 1.18rem);
   line-height: 1.8;
   color: var(--ink-secondary);
-  margin-bottom: clamp(32px, 5vh, 56px);
+  margin-bottom: clamp(24px, 3.5vh, 36px);
 }
 
 .teach-steps {

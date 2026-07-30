@@ -8,6 +8,14 @@ import { BOOKING } from '../lib/booking';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
+/** The brief overview beside the video: what the hour is actually spent on. */
+const PHASES = [
+  { name: 'Define', what: 'pressure-test the idea' },
+  { name: 'Design', what: 'plan it, then see it' },
+  { name: 'Develop', what: 'AI writes the code' },
+  { name: 'Deploy', what: 'live on the internet' },
+];
+
 const STEPS = [
   { n: '01', t: 'You bring an idea', d: 'Any idea, however rough. Don’t have one? I’ll help you find a simple one in the first five minutes, so we can get moving.' },
   { n: '02', t: 'We take it to a live URL', d: 'Screen-shared, 1:1. Define, design, develop, deploy: the whole path, with free AI tools, using your idea as the example.' },
@@ -27,19 +35,36 @@ const Teach: React.FC = () => {
       <div className="container">
         <Link to="/" className="page-back">← Back to portfolio</Link>
 
+        {/* Hero: copy left, the portrait video in the space beside it. A tall
+            9:16 clip below the headline left a big empty column and pushed the
+            rest of the page down; putting it here fills that space and lifts
+            everything below it into view sooner. */}
         <header className="teach-head">
-          <p className="teach-eyebrow">AI Builders by Rahul · Zero to Live</p>
-          <h1 className="teach-title" data-reveal="up">Turn your idea into a live website. In one hour.</h1>
-          <p className="teach-lede" data-reveal="up">
-            A live, one-on-one session where I show you the complete path, from a rough
-            idea in your head to a real website on the internet. Using free AI tools.
-            Without writing a single line of code yourself.
-          </p>
-        </header>
+          <div className="teach-head-copy">
+            <p className="teach-eyebrow">AI Builders by Rahul · Zero to Live</p>
+            <h1 className="teach-title" data-reveal="up">Turn your idea into a live website. In one hour.</h1>
+            <p className="teach-lede" data-reveal="up">
+              A live, one-on-one session where I show you the complete path, from a rough
+              idea in your head to a real website on the internet. Using free AI tools.
+              Without writing a single line of code yourself.
+            </p>
 
-        {/* Sits above the steps: someone arriving cold from an ad needs to see
-            what the hour looks like before they'll read how it's structured. */}
-        <SessionVideo />
+            <ol className="teach-phases" data-reveal="up" aria-label="The four phases of a session">
+              {PHASES.map((p, i) => (
+                <li key={p.name}>
+                  <span className="teach-phase-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="teach-phase-name">{p.name}</span>
+                  <span className="teach-phase-what">{p.what}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div className="teach-head-video" data-reveal="up">
+            <SessionVideo variant="bare" />
+            <p className="teach-head-video-cap">A minute on how the hour actually runs.</p>
+          </div>
+        </header>
 
         <ol className="teach-steps" data-reveal-group>
           {STEPS.map((s) => (

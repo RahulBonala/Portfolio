@@ -5,6 +5,15 @@ import './SessionVideo.css';
 /** The four phases, straight from the Playbook — the video walks through these. */
 const PHASES = ['Define', 'Design', 'Develop', 'Deploy'] as const;
 
+type Props = {
+  /**
+   * 'section' — standalone block with its own heading and caption.
+   * 'bare'    — just the player, for when the surrounding page already
+   *             supplies the heading (the /teach hero does).
+   */
+  variant?: 'section' | 'bare';
+};
+
 /**
  * The 1:1 session's intro video — the single most important asset for paid
  * traffic, because someone arriving from an ad has no idea what an hour with
@@ -18,7 +27,7 @@ const PHASES = ['Define', 'Design', 'Develop', 'Deploy'] as const;
  * (and no YouTube cookie) on page load, and it keeps the video off the
  * critical path — a facade weighs a few KB where the embed weighs ~800.
  */
-const SessionVideo: React.FC = () => {
+const SessionVideo: React.FC<Props> = ({ variant = 'section' }) => {
   const [playing, setPlaying] = useState(false);
 
   if (!hasSessionVideo) return null;
@@ -40,16 +49,59 @@ const SessionVideo: React.FC = () => {
   // even when none was configured.
   const facadePoster = poster || (youTubeId ? `https://i.ytimg.com/vi/${youTubeId}/maxresdefault.jpg` : '');
 
+  const frame = (
+    <div
+      className={`session-video-frame ${portrait ? 'is-portrait' : ''}`}
+      style={{ aspectRatio: aspect }}
+    >
+      {file ? (
+        <video
+          className="session-video-player"
+          controls
+          preload="metadata"
+          poster={poster || undefined}
+          playsInline
+        >
+          <source src={file} type="video/mp4" />
+          Your browser can’t play this video.{' '}
+          <a href={file} download>Download it instead</a>.
+        </video>
+      ) : playing ? (
+        <iframe
+          className="session-video-player"
+          src={embedSrc}
+          title={title}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      ) : (
+        <button
+          type="button"
+          className="session-video-facade"
+          onClick={() => setPlaying(true)}
+          aria-label={`Play video: ${title}`}
+          style={facadePoster ? { backgroundImage: `url(${facadePoster})` } : undefined}
+        >
+          <span className="session-video-play" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </button>
+      )}
+    </div>
+  );
+
+  // In the /teach hero the page already carries the H1 and the lede, so the
+  // player is rendered on its own rather than repeating a heading beside one.
+  if (variant === 'bare') return frame;
+
   return (
     <section
       className={`session-video ${portrait ? 'is-portrait-layout' : ''}`}
       data-reveal="up"
       aria-labelledby="session-video-h"
     >
-      {/* Copy first in the DOM, so reading and tab order stay natural. On wide
-          screens CSS puts it beside the tall video; on a phone it simply
-          stacks above it, which is also where a heading belongs — a bare
-          video with no framing above it reads as an advert. */}
       <div className="session-video-copy">
         <h2 id="session-video-h" className="session-video-title">{title}</h2>
         {caption && <p className="session-video-caption">{caption}</p>}
@@ -63,46 +115,7 @@ const SessionVideo: React.FC = () => {
         </ol>
       </div>
 
-      <div
-        className={`session-video-frame ${portrait ? 'is-portrait' : ''}`}
-        style={{ aspectRatio: aspect }}
-      >
-        {file ? (
-          <video
-            className="session-video-player"
-            controls
-            preload="metadata"
-            poster={poster || undefined}
-            playsInline
-          >
-            <source src={file} type="video/mp4" />
-            Your browser can’t play this video.{' '}
-            <a href={file} download>Download it instead</a>.
-          </video>
-        ) : playing ? (
-          <iframe
-            className="session-video-player"
-            src={embedSrc}
-            title={title}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <button
-            type="button"
-            className="session-video-facade"
-            onClick={() => setPlaying(true)}
-            aria-label={`Play video: ${title}`}
-            style={facadePoster ? { backgroundImage: `url(${facadePoster})` } : undefined}
-          >
-            <span className="session-video-play" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-          </button>
-        )}
-      </div>
+      {frame}
     </section>
   );
 };
