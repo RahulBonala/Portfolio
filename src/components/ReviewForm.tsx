@@ -9,9 +9,7 @@ import './ReviewForm.css';
  *   /review       — the shareable link Rahul sends after a session, where
  *                   there is no token because the ask happens days later.
  *
- * Submissions are held for approval either way, and the copy says so plainly.
- * Telling someone their words are live when they aren't is a small lie that
- * costs trust the moment they check.
+ * Submissions are published immediately.
  */
 type Props = {
   /** Present only on the post-payment page. */
@@ -47,7 +45,7 @@ const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
     return (
       <div className="review-done" role="status">
         <span aria-hidden="true">✓</span>
-        <p>Thank you — that means a lot. I read every one before it goes up.</p>
+        <p>Thank you — your review is live on the site.</p>
       </div>
     );
   }
@@ -64,9 +62,8 @@ const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
     <form className="review-form" onSubmit={submit}>
       <h3 className="review-form-title">How was it?</h3>
       <p className="review-form-note">
-        Every review is read before it goes up, so nothing appears on the site
-        until I&apos;ve seen it. Say what actually happened, including the parts
-        that didn&apos;t work.
+        Your review will be published immediately on the site.
+        Say what actually happened, including the parts that didn&apos;t work.
       </p>
 
       <div className="review-row">

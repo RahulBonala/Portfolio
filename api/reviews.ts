@@ -17,11 +17,9 @@ import { dbConfigured, insert, select } from './_lib/db.js';
  *              their one-hour token expired and their browser tab closed.
  *
  * The invite path is an open write endpoint, so it carries the defences one
- * needs: a honeypot, length and shape checks, and per-IP rate limiting. The
- * real protection is moderation — every review lands as `pending` and nothing
- * is displayed until Rahul approves it, so the worst an abuser achieves is a
- * junk row in a table only he reads. A page that renders unmoderated user
- * text is a page handed to someone else to write.
+ * needs: a honeypot, length and shape checks, URL stripping, and per-IP rate limiting.
+ * A review is published immediately ('approved'), so link spam is the primary
+ * threat model. A review that needs a link can be emailed.
  *
  * The GET response is deliberately narrow: display name, role, rating, body,
  * date. Emails, phone numbers, payment ids and IP hashes never leave the
@@ -58,6 +56,11 @@ function clean(value: unknown, max: number): string {
   if (typeof value !== 'string') return '';
   // eslint-disable-next-line no-control-regex -- stripping control characters is the point
   return value.replace(/[\x00-\x1f\x7f]/g, ' ').trim().slice(0, max);
+}
+
+function stripUrls(text: string): string {
+  // Catch http://, https://, and www. prefixes
+  return text.replace(/(?:https?:\/\/|www\.)\S+/gi, '[link removed]').trim();
 }
 
 /**
@@ -132,7 +135,7 @@ export default async function handler(req: Req, res: Res) {
   if (!body) return res.status(400).json({ ok: false, error: 'bad_request' });
 
   // Honeypot. Report success so a bot gets no signal to adapt to, store nothing.
-  if (clean(body._gotcha, 50)) return res.status(200).json({ ok: true, pending: true });
+  if (clean(body._gotcha, 50)) return res.status(200).json({ ok: true, pending: false });
 
   // A token is optional now. When present and valid it upgrades the review to
   // 'buyer' and ties it to the payment; when absent we fall back to the open
@@ -156,7 +159,7 @@ export default async function handler(req: Req, res: Res) {
 
   const displayName = clean(body.name, LIMITS.name);
   const role = clean(body.role, LIMITS.role);
-  const text = clean(body.body, LIMITS.body);
+  const text = stripUrls(clean(body.body, LIMITS.body));
   const rating = Number(body.rating);
 
   if (!displayName || text.length < 10 || !Number.isInteger(rating) || rating < 1 || rating > 5) {
@@ -177,7 +180,7 @@ export default async function handler(req: Req, res: Res) {
         role: role || null,
         rating,
         body: text,
-        status: 'pending',
+        status: 'approved',
         source,
         submitter_hash: hash,
       },
@@ -185,7 +188,7 @@ export default async function handler(req: Req, res: Res) {
       // have a null payment id and are excluded by the partial unique index.
       paymentId ? { onConflict: 'razorpay_payment_id' } : {}
     );
-    return res.status(200).json({ ok: true, pending: true });
+    return res.status(200).json({ ok: true, pending: false });
   } catch {
     return res.status(500).json({ ok: false, error: 'save_failed' });
   }

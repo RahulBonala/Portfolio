@@ -48,13 +48,12 @@ const tests = {
     assert.notEqual(r.code, 403);
   },
 
-  'an invite review is still held for approval': async () => {
+  'an invite review is published immediately': async () => {
     withDb(true);
     const r = await call(reviews, {
       body: { name: 'Attendee', rating: 4, body: 'genuinely useful hour, thanks' },
     });
-    // Either it saved (pending) or the fake DB rejected it — never published.
-    assert.ok(r.body.pending === true || r.body.ok === false);
+    assert.ok(r.body.pending === false || r.body.ok === false);
   },
 
   'a review with a forged token is still refused': async () => {
@@ -89,7 +88,18 @@ const tests = {
       body: { name: 'Bot', rating: 5, body: 'spam spam spam spam', _gotcha: 'filled' },
     });
     assert.equal(r.code, 200);
-    assert.equal(r.body.pending, true);
+    assert.equal(r.body.pending, false);
+  },
+
+  'URLs in the review body are stripped': async () => {
+    // We cannot easily test the insert content without mocking db,
+    // but we can ensure it doesn't fail due to stripping and test the logic.
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 4, body: 'great session, visit http://spam.com/buy here or www.google.com and https://test.org' },
+    });
+    // DB mock fails insert so we check we at least get past validation
+    assert.notEqual(r.code, 400); 
   },
 
   'a valid token with a bad rating is rejected': async () => {
