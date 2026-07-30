@@ -453,6 +453,12 @@
   color: var(--ink-muted);
 }
 
+.booking-step.is-complete .booking-step-action:disabled {
+  border-color: color-mix(in srgb, var(--color-success) 50%, transparent);
+  color: var(--color-success);
+  cursor: default;
+}
+
 .booking-verification-note {
   display: flex;
   align-items: center;
@@ -504,13 +510,17 @@
   line-height: 1.65;
 }
 
-.calendly-inline-widget {
+.booking-calendar-embed {
   min-width: 280px;
   height: 760px;
   overflow: hidden;
   border: 1px solid var(--hairline-strong);
   border-radius: var(--radius-md);
   background: #fff;
+}
+
+.booking-calendar-embed .calendly-spinner {
+  display: none !important;
 }
 
 .booking-calendar-status,
@@ -524,6 +534,14 @@
 .booking-calendar-fallback a {
   color: var(--ink);
   border-bottom: 1px solid var(--accent);
+}
+
+.booking-calendar-retry {
+  color: var(--ink);
+  font-size: inherit;
+  font-weight: 500;
+  border-bottom: 1px solid var(--accent);
+  padding: 0;
 }
 
 .booking-calendar-fallback {
@@ -553,7 +571,7 @@
     flex-direction: column;
   }
 
-  .calendly-inline-widget {
+  .booking-calendar-embed {
     height: 700px;
   }
 }

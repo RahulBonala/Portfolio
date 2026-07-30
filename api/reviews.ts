@@ -10,7 +10,7 @@ import { dbConfigured, insert, select } from './_lib/db.js';
  *
  * Two ways in, because they solve different problems:
  *
- *   'buyer'  — from /teach/booked, carrying the token minted after a verified
+ *   'buyer'  — from /teach, carrying the token minted after a verified
  *              payment. Attributed to that payment id automatically.
  *   'invite' — from the shareable /review link Rahul sends after a session.
  *              No token, because the person is asked days later, long after

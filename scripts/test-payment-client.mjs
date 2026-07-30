@@ -14,7 +14,7 @@ globalThis.sessionStorage = {
 
 let scrubCount = 0;
 globalThis.window = {
-  location: { pathname: '/teach/booked' },
+  location: { pathname: '/teach' },
   history: { replaceState: () => { scrubCount += 1; } },
 };
 
@@ -49,6 +49,7 @@ const tests = {
     assert.equal(result.verified, true);
     assert.equal(result.paymentId, paymentId);
     assert.equal(result.downloadToken, token);
+    assert.equal(result.scheduled, false);
     assert.equal(scrubCount, 1);
   },
 
@@ -88,6 +89,7 @@ const tests = {
     assert.equal(result.verified, true);
     assert.equal(result.paymentId, paymentId);
     assert.equal(result.downloadToken, token);
+    assert.equal(result.scheduled, false);
     assert.equal(scrubCount, 1);
   },
 
@@ -110,6 +112,7 @@ const tests = {
       paymentId,
       schedulingUrl: 'https://calendly.com/example/60min',
       downloadToken: token,
+      scheduled: true,
     }));
     let calls = 0;
     globalThis.fetch = async () => {
@@ -122,6 +125,7 @@ const tests = {
     assert.equal(result.state, 'granted');
     assert.equal(result.paymentId, paymentId);
     assert.equal(result.downloadToken, token);
+    assert.equal(result.scheduled, true);
   },
 };
 

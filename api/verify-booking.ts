@@ -1,10 +1,10 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { mintToken } from './_lib/token.js';
-import { dbConfigured, insert } from './_lib/db.js';
+import { dbConfigured, insert, select } from './_lib/db.js';
 import { fetchPaymentDetails, type PaymentDetails } from './_lib/razorpay.js';
 
 /**
- * Proves, server-side, that a visitor of /teach/booked actually paid.
+ * Proves, server-side, that a visitor of /teach actually paid.
  *
  * WHY THIS EXISTS
  * ---------------
@@ -100,6 +100,19 @@ async function recordBooking(paymentId: string, linkId: string, known?: PaymentD
   }
 }
 
+async function checkScheduled(paymentId: string): Promise<boolean> {
+  if (!dbConfigured()) return false;
+  try {
+    const rows = await select<{ scheduled_at: string | null }>(
+      'bookings',
+      `?razorpay_payment_id=eq.${encodeURIComponent(paymentId)}&select=scheduled_at`
+    );
+    return rows.length > 0 && !!rows[0].scheduled_at;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Proves a Payment Button return by asking Razorpay about the payment.
  *
@@ -129,11 +142,13 @@ async function lookupAndGrant(res: Res, paymentId: string, secret: string) {
   }
 
   await recordBooking(paymentId, '', details);
+  const scheduled = await checkScheduled(paymentId);
 
   return res.status(200).json({
     verified: true,
     configured: true,
     reason: 'verified',
+    scheduled,
     ...(process.env.CALENDLY_URL ? { schedulingUrl: process.env.CALENDLY_URL } : {}),
     downloadToken: mintToken(paymentId, secret),
   });
@@ -191,11 +206,13 @@ export default async function handler(req: Req, res: Res) {
   // Only a genuine payment gets recorded, so the bookings table can be trusted
   // as the list of people who actually paid.
   if (ok) await recordBooking(paymentId, linkId);
+  const scheduled = ok ? await checkScheduled(paymentId) : false;
 
   return res.status(200).json({
     verified: ok,
     configured: true,
     reason: ok ? 'verified' : 'signature_mismatch',
+    ...(ok && scheduled ? { scheduled: true } : {}),
     // Handed out ONLY on a verified payment. Set CALENDLY_URL in Vercel and
     // the scheduling link stops being a constant in the public JS bundle —
     // which is the difference between "hard to find" and "not there at all".

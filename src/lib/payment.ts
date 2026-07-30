@@ -1,7 +1,7 @@
 /**
  * Client half of the booking gate.
  *
- * The scheduling link on /teach/booked is the product — handing it to anyone
+ * The scheduling link on /teach is the product — handing it to anyone
  * who types the URL means free sessions. Razorpay sends a real buyer back here
  * after checkout, so the flow is:
  *
@@ -41,6 +41,7 @@ export type BookingAccess =
       schedulingUrl?: string;
       downloadToken?: string;
       verificationIssue?: 'server' | 'network' | 'unconfigured';
+      scheduled?: boolean;
     }
   | { state: 'denied' };
 
@@ -114,6 +115,7 @@ type Remembered = {
   paymentId?: string;
   schedulingUrl?: string;
   downloadToken?: string;
+  scheduled?: boolean;
 };
 
 function remember(value: Remembered) {
@@ -136,6 +138,7 @@ function recall(): BookingAccess | null {
       paymentId: typeof v.paymentId === 'string' ? v.paymentId : undefined,
       schedulingUrl: typeof v.schedulingUrl === 'string' ? v.schedulingUrl : undefined,
       downloadToken: typeof v.downloadToken === 'string' ? v.downloadToken : undefined,
+      scheduled: typeof v.scheduled === 'boolean' ? v.scheduled : undefined,
     };
   } catch {
     /* unavailable, or a stale value from an older format */
@@ -150,6 +153,16 @@ function scrubUrl() {
   } catch {
     /* non-fatal */
   }
+}
+
+/** 
+ * Synchronously checks if the current URL carries payment params or if a
+ * verified payment is already remembered in this tab. Allows the page to 
+ * instantly render the right layout shell before the async check finishes.
+ */
+export function peekBookingAccess(search: string): boolean {
+  if (typeof window === 'undefined') return false;
+  return readVerifyPayload(search) !== null || recall() !== null;
 }
 
 export async function checkBookingAccess(search: string): Promise<BookingAccess> {
@@ -185,6 +198,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
       configured?: boolean;
       schedulingUrl?: string;
       downloadToken?: string;
+      scheduled?: boolean;
     };
 
     if (data.verified) {
@@ -197,11 +211,14 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
         typeof data.downloadToken === 'string' && /^[A-Za-z0-9_-]+\.[a-f0-9]{64}$/.test(data.downloadToken)
           ? data.downloadToken
           : undefined;
+      const scheduled = data.scheduled === true;
+      
       remember({
         verified: true,
         paymentId: payload.paymentId,
         schedulingUrl: safe,
         downloadToken: token,
+        scheduled,
       });
       return {
         state: 'granted',
@@ -209,6 +226,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
         paymentId: payload.paymentId,
         schedulingUrl: safe,
         downloadToken: token,
+        scheduled,
       };
     }
 

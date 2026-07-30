@@ -16,6 +16,7 @@ type BookingStepsProps =
       schedulingUrl?: string;
       downloadToken?: string;
       verificationIssue?: 'server' | 'network' | 'unconfigured';
+      scheduled?: boolean;
       retrying?: boolean;
       onRetry?: () => void;
     };
@@ -82,16 +83,25 @@ function loadCalendly(): Promise<CalendlyApi> {
 function readProgress(key: string): Progress {
   if (typeof window === 'undefined') return EMPTY_PROGRESS;
   try {
-    const value = JSON.parse(sessionStorage.getItem(key) ?? '{}') as Partial<Progress>;
-    return { scheduled: value.scheduled === true, downloaded: value.downloaded === true };
+    const fromLocal = localStorage.getItem(key);
+    if (fromLocal) {
+      const value = JSON.parse(fromLocal) as Partial<Progress>;
+      return { scheduled: value.scheduled === true, downloaded: value.downloaded === true };
+    }
+    const fromSession = sessionStorage.getItem(key);
+    if (fromSession) {
+      const value = JSON.parse(fromSession) as Partial<Progress>;
+      return { scheduled: value.scheduled === true, downloaded: value.downloaded === true };
+    }
   } catch {
-    return EMPTY_PROGRESS;
+    /* empty */
   }
+  return EMPTY_PROGRESS;
 }
 
 function writeProgress(key: string, value: Progress) {
   try {
-    sessionStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, JSON.stringify(value));
   } catch {
     // Progress is a convenience only; payment access never depends on it.
   }
@@ -117,6 +127,10 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
   const [calendarState, setCalendarState] = useState<'loading' | 'ready' | 'error'>('loading');
   const [calendarRetryCount, setCalendarRetryCount] = useState(0);
 
+  const paid = props.stage === 'paid';
+  const downloadToken = paid ? props.downloadToken : undefined;
+  const scheduledProp = paid ? props.scheduled : false;
+
   const schedulingUrl =
     props.stage === 'paid' && isSafeCalendlyUrl(props.schedulingUrl)
       ? props.schedulingUrl
@@ -132,11 +146,18 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
   }, [schedulingUrl]);
 
   useEffect(() => {
-    setProgress(readProgress(progressKey));
-  }, [progressKey]);
+    const localProg = readProgress(progressKey);
+    if (paid && scheduledProp && !localProg.scheduled) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Synchronizing server-verified schedule state into local state
+      setProgress({ ...localProg, scheduled: true });
+      writeProgress(progressKey, { ...localProg, scheduled: true });
+    } else {
+      setProgress(localProg);
+    }
+  }, [progressKey, paid, scheduledProp]);
 
   useEffect(() => {
-    if (props.stage !== 'paid') return;
+    if (!paid) return;
 
     const onMessage = (event: MessageEvent) => {
       if (
@@ -153,15 +174,29 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
         writeProgress(progressKey, next);
         return next;
       });
+
+      const payload = (event.data as Record<string, unknown>).payload as { event?: { uri?: string }; invitee?: { uri?: string } } | undefined;
+      if (downloadToken && payload) {
+        fetch('/api/booking-scheduled', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            t: downloadToken,
+            eventUri: payload.event?.uri,
+            inviteeUri: payload.invitee?.uri,
+          }),
+        }).catch(() => {});
+      }
     };
 
     window.addEventListener('message', onMessage);
     return () => window.removeEventListener('message', onMessage);
-  }, [progressKey, props.stage]);
+  }, [progressKey, paid, downloadToken]);
 
   useEffect(() => {
-    if (props.stage !== 'paid' || !embedUrl || !calendarRef.current) {
-      if (props.stage === 'paid') setCalendarState('error');
+    if (!paid || !embedUrl || !calendarRef.current || progress.scheduled) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Handling missing calendar ref or embed URL
+      if (paid && !progress.scheduled) setCalendarState('error');
       return;
     }
 
@@ -205,7 +240,7 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
       disposed = true;
       parentElement.replaceChildren();
     };
-  }, [embedUrl, props.stage, calendarRetryCount]);
+  }, [embedUrl, props.stage, calendarRetryCount, progress.scheduled]);
 
   const markDownloaded = () => {
     setProgress((current) => {
@@ -219,9 +254,6 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
     calendarSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  const paid = props.stage === 'paid';
-  const downloadToken = paid ? props.downloadToken : undefined;
-
   return (
     <section className="booking-flow" aria-label="Booking progress">
       <ol className="booking-steps">
@@ -232,7 +264,13 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
             <h3>{paid ? 'Payment received' : `Pay ${BOOKING.price}`}</h3>
             <p>{paid ? 'Your session access is unlocked.' : 'Secure checkout powered by Razorpay.'}</p>
           </div>
-          {!paid && <PaymentButton />}
+          {paid ? (
+            <button type="button" className="booking-step-action" disabled>
+              Paid ✓
+            </button>
+          ) : (
+            <PaymentButton />
+          )}
         </li>
 
         <li className={`booking-step ${!paid ? 'is-locked' : progress.scheduled ? 'is-complete' : 'is-current'}`}>
@@ -245,10 +283,10 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
           <button
             type="button"
             className="booking-step-action"
-            disabled={!paid || !schedulingUrl}
-            onClick={focusCalendar}
+            disabled={!paid || !schedulingUrl || progress.scheduled}
+            onClick={progress.scheduled ? undefined : focusCalendar}
           >
-            {progress.scheduled ? 'View scheduler' : 'Choose a time'}
+            {progress.scheduled ? 'Scheduled ✓' : 'Choose a time'}
           </button>
         </li>
 
@@ -303,6 +341,13 @@ const BookingSteps: React.FC<BookingStepsProps> = (props) => {
               <strong>Scheduling is temporarily unavailable.</strong>
               <span>
                 Email <a href={`mailto:${BOOKING.email}`}>{BOOKING.email}</a> and your slot will be arranged directly.
+              </span>
+            </div>
+          ) : progress.scheduled ? (
+            <div className="booking-calendar-fallback" role="status" style={{ borderColor: 'color-mix(in srgb, var(--color-success) 45%, transparent)', background: 'color-mix(in srgb, var(--color-success) 7%, transparent)' }}>
+              <strong style={{ color: 'var(--color-success)' }}>You are booked.</strong>
+              <span style={{ color: 'var(--ink)' }}>
+                The calendar invite is in your inbox. To reschedule, use the link in that email instead of returning to this page.
               </span>
             </div>
           ) : (

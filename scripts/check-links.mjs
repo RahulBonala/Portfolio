@@ -40,7 +40,7 @@ const jsFiles = [...files].filter((f) => f.endsWith('.js'));
 // ── 1. Internal links and assets resolve to something real ────────────────
 // Routes are served by the SPA rewrite, so they don't need a matching file;
 // anything with a file extension does.
-const KNOWN_ROUTES = new Set(['/', '/teach', '/teach/booked', '/review', '/work/bestanswers', '/work/smiths-detection']);
+const KNOWN_ROUTES = new Set(['/', '/teach', '/review', '/work/bestanswers', '/work/smiths-detection']);
 
 for (const page of htmlFiles) {
   const html = readFileSync(join(dist, page), 'utf8');
@@ -86,8 +86,8 @@ for (const page of htmlFiles) {
   }
 }
 
-// ── 4. The post-payment page must not ship the scheduling link ────────────
-const bookedPage = '/teach/booked/index.html';
+// ── 4. The pitch page must not ship the scheduling link ────────────
+const bookedPage = '/teach/index.html';
 if (files.has(bookedPage)) {
   const html = readFileSync(join(dist, bookedPage), 'utf8');
   if (/calendly\.com/.test(html)) {
@@ -112,10 +112,15 @@ for (const p of PROMISED) {
 for (const f of files) {
   if (/playbook/i.test(f)) fail(`paid asset published at a public URL: ${f}`);
 }
-if (!existsSync(resolve(root, 'api/_assets/playbook.pdf'))) {
+const playbookPath = resolve(root, 'api/_assets/playbook.pdf');
+if (!existsSync(playbookPath)) {
   fail('api/_assets/playbook.pdf is missing — /api/playbook would 500 for buyers');
 } else {
-  notes.push(`api/_assets/playbook.pdf (private) — ${(statSync(resolve(root, 'api/_assets/playbook.pdf')).size / 1024).toFixed(0)} KB`);
+  notes.push(`api/_assets/playbook.pdf (private) — ${(statSync(playbookPath).size / 1024).toFixed(0)} KB`);
+  const pdfBytes = readFileSync(playbookPath, 'latin1');
+  if (pdfBytes.includes('/Title (\\(anonymous\\))') || pdfBytes.includes('/Author (\\(anonymous\\))')) {
+    fail('api/_assets/playbook.pdf contains ReportLab placeholder metadata: run `node scripts/set-pdf-metadata.mjs`');
+  }
 }
 
 // ── 6. Media referenced by the page exists ────────────────────────────────

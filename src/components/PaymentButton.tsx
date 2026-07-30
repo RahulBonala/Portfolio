@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { BOOKING } from '../lib/booking';
 
-// The amount (₹99) and the post-payment redirect (→ /teach/booked) are set on
+// The amount (₹99) and the post-payment redirect (→ /teach) are set on
 // this button in the Razorpay dashboard, not in code. See src/lib/booking.ts.
 //
 // The checkout opens in an iframe on the APEX domain

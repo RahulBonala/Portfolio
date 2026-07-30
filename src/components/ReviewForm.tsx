@@ -4,7 +4,7 @@ import './ReviewForm.css';
 /**
  * Review form, used in two places:
  *
- *   /teach/booked — right after payment, with the token that unlocks the
+ *   /teach — right after payment, with the token that unlocks the
  *                   Playbook, so the review is tied to that payment.
  *   /review       — the shareable link Rahul sends after a session, where
  *                   there is no token because the ask happens days later.

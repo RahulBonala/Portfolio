@@ -5,7 +5,7 @@
 //      created for the same amount as `price`. If you change the price, create
 //      a new button in the dashboard and update BOTH values together.
 //   2. The post-payment redirect. The button's "success/redirect URL" must be
-//      https://rahulbonala.me/teach/booked — that page verifies the payment
+//      https://rahulbonala.me/teach — that page verifies the payment
 //      before it hands out the scheduling link (see src/lib/payment.ts).
 export const BOOKING = {
   price: '₹99',
@@ -17,7 +17,7 @@ export const BOOKING = {
   amountMinor: 9900,
   currency: 'INR',
   route: '/teach',
-  bookedRoute: '/teach/booked',
+  bookedRoute: '/teach',
   razorpayButtonId: 'pl_SZtl3NKr9FohLH',
   // Production can override this with the server-only CALENDLY_URL. Keep the
   // fallback pointed at the active event so a missing env var never strands a

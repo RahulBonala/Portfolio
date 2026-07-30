@@ -51,14 +51,7 @@ const ROUTES = [
     // A link to hand out, not a page to be found. Indexing it would invite
     // drive-by submissions the moderation queue exists to absorb.
     noindex: true,
-  },
-  {
-    path: '/teach/booked',
-    out: 'teach/booked/index.html',
-    title: 'Payment received. Pick your slot · Rahul Bonala',
-    description: 'Choose a time for your 1:1 session.',
-    noindex: true,
-  },
+  }
 ];
 
 // Entry filename is content-hashed — find it
