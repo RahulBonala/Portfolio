@@ -33,7 +33,7 @@ const Booked: React.FC = () => {
 
   useEffect(() => {
     if (access.state === 'granted') {
-      document.title = 'Payment received — pick your slot · Rahul Bonala';
+      document.title = 'Payment received. Pick your slot · Rahul Bonala';
       // A booking landed — the header robot cheers
       window.dispatchEvent(new Event(RB_EVENTS.celebrate));
     } else if (access.state === 'denied') {
@@ -60,11 +60,11 @@ const Booked: React.FC = () => {
           <p className="teach-lede" data-reveal="up">
             This is where the scheduling link appears once a session is paid for, and
             we couldn&apos;t match this visit to a payment. If you haven&apos;t booked
-            yet, start here — it takes a minute.
+            yet, start here. It takes a minute.
           </p>
 
           <Link className="booked-calendly" to={BOOKING.route} data-reveal="up">
-            Book a session — {BOOKING.price}
+            Book a session for {BOOKING.price}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
             </svg>
@@ -87,7 +87,7 @@ const Booked: React.FC = () => {
         <p className="teach-eyebrow">Payment received</p>
         <h1 className="teach-title" data-reveal="up">Now pick your slot.</h1>
         <p className="teach-lede" data-reveal="up">
-          Thanks — you’re all set on the payment side. Grab a time that works for you
+          Thanks, you’re all set on the payment side. Grab a time that works for you
           and we’ll meet 1:1 for the hour. You’ll get a calendar invite straight after.
         </p>
 

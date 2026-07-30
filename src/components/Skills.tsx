@@ -50,14 +50,14 @@ const GROUPS: Group[] = [
       {
         skill: 'React + TypeScript',
         claim: 'Production single-page apps and this prerendered, hydrated portfolio.',
-        proof: 'BestAnswers.AI — live',
+        proof: 'BestAnswers.AI (live)',
         href: 'https://bestanswersai.com/',
         external: true,
       },
       {
         skill: 'Interaction & motion',
         claim: 'GSAP scroll choreography and an SVG debate graph, no heavy 3D runtime.',
-        proof: 'You’re looking at it — top of page',
+        proof: 'You’re looking at it, top of page',
         href: '#home',
       },
       {
@@ -74,21 +74,21 @@ const GROUPS: Group[] = [
       {
         skill: 'Multi-agent systems',
         claim: 'Four LLM personas debating in parallel, merged by a meta-judge.',
-        proof: 'BestAnswers.AI — live',
+        proof: 'BestAnswers.AI (live)',
         href: 'https://bestanswersai.com/',
         external: true,
       },
       {
         skill: 'Agentic workflows',
         claim: 'AI agents mapped to SDLC phases in an interactive build configurator.',
-        proof: 'Build Your Own Company — live',
+        proof: 'Build Your Own Company (live)',
         href: 'https://build-your-own-company.vercel.app/',
         external: true,
       },
       {
         skill: 'Deterministic-first pipelines',
         claim: 'Heuristic parsing does the work; AI is opt-in and cannot invent a fact.',
-        proof: 'Stepforge — live',
+        proof: 'Stepforge (live)',
         href: 'https://stepforge.co',
         external: true,
       },
@@ -114,7 +114,7 @@ const Skills: React.FC = () => {
           <span className="accent-word">with proof.</span>
         </h2>
         <p className="skills-sub" data-reveal="up">
-          No percentages, no progress bars — every line links to the shipped thing that backs it.
+          No percentages, no progress bars. Every line links to the shipped thing that backs it.
         </p>
 
         {GROUPS.map(({ domain, rows }) => (

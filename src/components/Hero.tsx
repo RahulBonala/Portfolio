@@ -6,11 +6,11 @@ import './Hero.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const FACTS = [
-  { k: 'Now', v: 'Product Designer — AI specialist at Ginthi.ai' },
-  { k: 'Built', v: 'BestAnswers.AI — multi-agent answer engine' },
-  { k: 'Shipped', v: 'Stepforge — a résumé becomes a portfolio site' },
-  { k: 'Teaching', v: 'AI Tools for Builders — live sessions' },
-  { k: 'Based', v: 'Bangalore, India — working globally' },
+  { k: 'Now', v: 'Product Designer, AI specialist at Ginthi.ai' },
+  { k: 'Built', v: 'BestAnswers.AI, a multi-agent answer engine' },
+  { k: 'Shipped', v: 'Stepforge, where a résumé becomes a portfolio site' },
+  { k: 'Teaching', v: 'AI Tools for Builders, live 1:1 sessions' },
+  { k: 'Based', v: 'Bangalore, India. Working globally.' },
 ];
 
 /**
@@ -167,7 +167,7 @@ const Hero: React.FC = () => {
         </h1>
 
         <p className="hero-sub">
-          I design AI-native products and write the code that ships them —
+          I design AI-native products and write the code that ships them,
           because handoff is where most good ideas quietly die. Right now
           that&apos;s at Ginthi.ai, and on my own products like BestAnswers.AI.
         </p>

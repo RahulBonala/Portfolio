@@ -25,28 +25,28 @@ const ROUTES = [
   {
     path: '/work/bestanswers',
     out: 'work/bestanswers/index.html',
-    title: 'BestAnswers.AI — Case study · Rahul Bonala',
+    title: 'BestAnswers.AI case study · Rahul Bonala',
     description:
       'How I built a multi-agent answer engine: four AI personas debate in parallel and a meta-judge merges the strongest reasoning, with the disagreements left visible.',
   },
   {
     path: '/work/smiths-detection',
     out: 'work/smiths-detection/index.html',
-    title: 'Smiths Detection service consoles — Case study · Rahul Bonala',
+    title: 'Smiths Detection service consoles: a case study · Rahul Bonala',
     description:
-      'Designing and building service consoles used daily by maintenance engineers across Europe, APAC and North America — 95% CSAT, 80% faster workflows, 70% fewer support tickets.',
+      'Designing and building service consoles used daily by maintenance engineers across Europe, APAC and North America. 95% CSAT, 80% faster workflows, 70% fewer support tickets.',
   },
   {
     path: '/teach',
     out: 'teach/index.html',
-    title: 'AI Tools for Builders — a 1:1 working session · Rahul Bonala',
+    title: 'AI Tools for Builders: a 1:1 working session · Rahul Bonala',
     description:
-      'Turn your idea into a live website in one hour — one-on-one, using free AI tools, with no coding. You leave with the Playbook and the prompts, able to do it again yourself.',
+      'Turn your idea into a live website in one hour, one-on-one, using free AI tools and no coding. You leave with the Playbook and the prompts, able to do it again yourself.',
   },
   {
     path: '/teach/booked',
     out: 'teach/booked/index.html',
-    title: 'Payment received — pick your slot · Rahul Bonala',
+    title: 'Payment received. Pick your slot · Rahul Bonala',
     description: 'Choose a time for your 1:1 session.',
     noindex: true,
   },
@@ -88,7 +88,7 @@ function applyMeta(html, route) {
 
   const swap = (pattern, replacement, what) => {
     if (!pattern.test(out)) {
-      throw new Error(`prerender: could not set ${what} for ${route.path} — index.html changed?`);
+      throw new Error(`prerender: could not set ${what} for ${route.path}; did index.html change?`);
     }
     out = out.replace(pattern, replacement);
   };

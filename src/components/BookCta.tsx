@@ -30,7 +30,7 @@ const BookCta: React.FC = () => {
   return (
     <div className={`book-cta ${shown ? 'is-shown' : ''}`}>
       <span className="book-cta-tag" aria-hidden="true">{BOOKING.slotsLabel}</span>
-      <Link to={BOOKING.route} className="book-cta-btn" aria-label={`Book a 1:1 session — ${BOOKING.slotsLabel}`}>
+      <Link to={BOOKING.route} className="book-cta-btn" aria-label={`Book a 1:1 session. ${BOOKING.slotsLabel}`}>
         <span className="book-cta-dot" aria-hidden="true" />
         <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />

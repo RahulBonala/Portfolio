@@ -20,9 +20,9 @@ const SessionValue: React.FC = () => (
         What you actually get
       </h2>
       <p className="session-value-lede" data-reveal="up">
-        The call is {BOOKING.durationMinutes} minutes — a plan, not a hard stop. If you need
-        longer to understand something, we take longer. I’d rather you left clear than
-        left on time.
+        The call is {BOOKING.durationMinutes} minutes. That’s a plan, not a hard stop. If you
+        need longer to understand something, we take longer. I’d rather you left clear
+        than left on time.
       </p>
     </div>
 

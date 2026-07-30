@@ -35,8 +35,8 @@ const EMAIL = 'rahulbonala06@gmail.com';
 
 /** Fallback when EmailJS isn't configured: open the visitor's mail client. */
 function mailtoHandoff(data: { name: string; email: string; message: string }) {
-  const subject = encodeURIComponent(`Portfolio enquiry — ${data.name || 'no name given'}`);
-  const body = encodeURIComponent(`${data.message}\n\n— ${data.name}\n${data.email}`);
+  const subject = encodeURIComponent(`Portfolio enquiry from ${data.name || 'the website'}`);
+  const body = encodeURIComponent(`${data.message}\n\n${data.name}\n${data.email}`);
   window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`;
 }
 
@@ -103,7 +103,7 @@ const Contact: React.FC = () => {
         </h2>
 
         <p className="contact-sub" data-reveal="up">
-          A role, a freelance project, an AI idea, or a question about the course —
+          A role, a freelance project, an AI idea, or a question about the course.
           I read every email and reply within a day.
         </p>
 
@@ -124,7 +124,7 @@ const Contact: React.FC = () => {
               <div className="form-success-state" role="status">
                 <span className="form-success-mark" aria-hidden="true">✓</span>
                 <h3>Message sent.</h3>
-                <p>Thanks for reaching out — you&apos;ll hear from me within 24 hours.</p>
+                <p>Thanks for reaching out. You&apos;ll hear from me within 24 hours.</p>
               </div>
             ) : (
               <form ref={formRef} onSubmit={handleSubmit} noValidate>
@@ -158,7 +158,7 @@ const Contact: React.FC = () => {
 
                 {status === 'error' && (
                   <p className="form-error-msg" role="alert">
-                    Something went wrong — email me directly at {EMAIL}.
+                    Something went wrong. Email me directly at {EMAIL}.
                   </p>
                 )}
 

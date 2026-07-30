@@ -10,10 +10,10 @@ import './Work.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const ARCHIVE = [
-  { name: 'Dosth App', kind: 'UX case study — repairs, fares, food donation', live: 'https://dosth-app.vercel.app/', proto: 'http://figma.com/make/kVFaUs3rBUt6CtzwlCzHCb/Dosth-App-Prototype?node-id=0-1&p=f&fullscreen=1' },
-  { name: 'Bar App', kind: 'Fintech — digital gold from ₹10', live: 'https://bar-app-iota.vercel.app/', proto: 'https://www.figma.com/make/X9Zdh1fZaQWWpaV9n8AyX6/Bar-App?node-id=0-1&p=f&fullscreen=1' },
-  { name: 'iUpgrade', kind: 'DaaS — Apple devices on subscription', live: 'https://i-upgrade.vercel.app/', proto: undefined },
-  { name: 'Waggle App', kind: 'Marketplace — trusted dog walkers', live: 'https://waggle-app-pied.vercel.app/', proto: 'https://www.figma.com/make/4FaGz8I3cnyPdCtSFmGpOm/Waggle-Mobile-App-Design?node-id=0-1&p=f&fullscreen=1' },
+  { name: 'Dosth App', kind: 'UX case study: repairs, fares, food donation', live: 'https://dosth-app.vercel.app/', proto: 'http://figma.com/make/kVFaUs3rBUt6CtzwlCzHCb/Dosth-App-Prototype?node-id=0-1&p=f&fullscreen=1' },
+  { name: 'Bar App', kind: 'Fintech: digital gold from ₹10', live: 'https://bar-app-iota.vercel.app/', proto: 'https://www.figma.com/make/X9Zdh1fZaQWWpaV9n8AyX6/Bar-App?node-id=0-1&p=f&fullscreen=1' },
+  { name: 'iUpgrade', kind: 'DaaS: Apple devices on subscription', live: 'https://i-upgrade.vercel.app/', proto: undefined },
+  { name: 'Waggle App', kind: 'Marketplace: trusted dog walkers', live: 'https://waggle-app-pied.vercel.app/', proto: 'https://www.figma.com/make/4FaGz8I3cnyPdCtSFmGpOm/Waggle-Mobile-App-Design?node-id=0-1&p=f&fullscreen=1' },
 ];
 
 /**
@@ -62,14 +62,14 @@ const PROJECTS = [
   {
     index: '01',
     meta: 'AI Agents · Experiment',
-    title: 'BYOC — SDLC Agents',
+    title: 'BYOC: SDLC Agents',
     tagline: 'What if the agency was software?',
     story:
-      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick — auth, payments, dashboards — watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
+      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick (auth, payments, dashboards) and watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
     points: [
-      'AI agents mapped to SDLC phases — plan, design, build, test, ship',
+      'AI agents mapped to SDLC phases: plan, design, build, test, ship',
       'Interactive 3D-style configurator and a metro-map pipeline tracker',
-      'Honesty about cost as the core product idea — no black-box quotes',
+      'Honesty about cost as the core product idea, with no black-box quotes',
     ],
     stack: ['React', 'TypeScript', 'AI agents', 'Node'],
     links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
@@ -81,9 +81,9 @@ const PROJECTS = [
     title: 'BestAnswers.AI',
     tagline: 'Four AIs argue. You get the strongest answer.',
     story:
-      'Ask one model and you get one confident voice — right or wrong. BestAnswers.AI convenes four AI personas (Researcher, Engineer, Friend, Academic), lets them debate in parallel, and a meta-judge merges the strongest reasoning into a single answer with the disagreements left visible. Trust through transparent disagreement, not single-source confidence.',
+      'Ask one model and you get one confident voice, right or wrong. BestAnswers.AI convenes four AI personas (Researcher, Engineer, Friend, Academic), lets them debate in parallel, and a meta-judge merges the strongest reasoning into a single answer with the disagreements left visible. Trust through transparent disagreement, not single-source confidence.',
     points: [
-      'Multi-agent debate architecture — parallel calls across Gemini, Llama, and Mistral',
+      'Multi-agent debate architecture: parallel calls across Gemini, Llama, and Mistral',
       'Meta-judge consensus layer with a transparent verdict on why an answer won',
       'Built solo, end to end: product strategy, UI, and architecture',
     ],
@@ -100,9 +100,9 @@ const PROJECTS = [
     title: 'Stepforge',
     tagline: 'Upload a résumé. Get a portfolio website.',
     story:
-      'Drop in a CV — PDF, Word, Pages, or a photo of a printed page — and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 33 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
+      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 33 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
     points: [
-      'Extraction and parsing run in your own browser — the résumé isn’t uploaded unless you choose a cloud feature',
+      'Extraction and parsing run in your own browser, so the résumé isn’t uploaded unless you choose a cloud feature',
       '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',
       'Ships with its own safety nets: accessibility, responsive, print and old-mobile-engine gates in CI',
     ],
@@ -116,10 +116,10 @@ const PROJECTS = [
     title: 'AI Tools for Builders',
     tagline: 'Not a video library. A working session.',
     story:
-      'Once or twice a week I block an hour to sit with one person — usually a student or someone early in their career — and take their idea all the way to a live website using free AI tools. Define, design, develop, deploy, in one sitting. They leave with the Playbook, every prompt we used, and the thing most tutorials never teach: how to fix it themselves when it breaks.',
+      'Once or twice a week I block an hour to sit with one person, usually a student or someone early in their career, and take their idea all the way to a live website using free AI tools. Define, design, develop, deploy, in one sitting. They leave with the Playbook, every prompt we used, and the thing most tutorials never teach: how to fix it themselves when it breaks.',
     points: [
       'You bring an idea; we take it all the way to a live URL in the hour',
-      'The whole path in one go — define, design, develop, deploy — with free AI tools',
+      'The whole path in one go: define, design, develop, deploy, all with free AI tools',
       'You leave with the Playbook and the prompts, so the next one you build alone',
     ],
     stack: ['1:1 · live', 'Free AI tools', 'Idea → live URL'],
@@ -243,9 +243,9 @@ const Work: React.FC = () => {
               <span className="work-archive-name">{a.name}</span>
               <span className="work-archive-kind">{a.kind}</span>
               <span className="work-archive-links">
-                <a href={a.live} target="_blank" rel="noopener noreferrer" aria-label={`${a.name} — live site (opens in new tab)`}>Live ↗</a>
+                <a href={a.live} target="_blank" rel="noopener noreferrer" aria-label={`${a.name} live site (opens in new tab)`}>Live ↗</a>
                 {a.proto && (
-                  <a href={a.proto} target="_blank" rel="noopener noreferrer" aria-label={`${a.name} — Figma prototype (opens in new tab)`}>Prototype ↗</a>
+                  <a href={a.proto} target="_blank" rel="noopener noreferrer" aria-label={`${a.name} Figma prototype (opens in new tab)`}>Prototype ↗</a>
                 )}
               </span>
             </li>

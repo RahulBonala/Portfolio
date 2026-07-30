@@ -9,28 +9,28 @@ const NUMBERS = [
     value: '95%',
     label: 'CSAT across three regions',
     href: '/work/smiths-detection#outcomes',
-    context: 'See how this was measured — Smiths Detection case study',
+    context: 'See how this was measured in the Smiths Detection case study',
   },
   {
     value: '80%',
     label: 'faster maintenance workflows',
     href: '/work/smiths-detection#outcomes',
-    context: 'See how this was measured — Smiths Detection case study',
+    context: 'See how this was measured in the Smiths Detection case study',
   },
   {
     value: '70%',
     label: 'fewer support tickets',
     href: '/work/smiths-detection#outcomes',
-    context: 'See how this was measured — Smiths Detection case study',
+    context: 'See how this was measured in the Smiths Detection case study',
   },
 ];
 
 const TIMELINE = [
   {
     period: 'Now',
-    role: 'Product Designer — AI specialist (UI/UX)',
+    role: 'Product Designer, AI specialist (UI/UX)',
     org: 'Ginthi.ai',
-    note: 'I own design and front-end build for Ginthi’s web platform — taking features from concept through interface to shipped React, and building the AI tooling that lets a small team move quickly. Designing and developing the same surface means there’s no handoff to lose intent in.',
+    note: 'I own design and front-end build for Ginthi’s web platform, taking features from concept through interface to shipped React, and building the AI tooling that lets a small team move quickly. Designing and developing the same surface means there’s no handoff to lose intent in.',
   },
   {
     period: '2023 – 2026',
@@ -65,7 +65,7 @@ const About: React.FC = () => {
             <p>
               I started as a designer at Smiths Detection, drawing the service consoles
               that maintenance engineers across Europe, APAC, and North America use every
-              day. Then I noticed where quality leaks out — the distance between a design
+              day. Then I noticed where quality leaks out: the distance between a design
               and the shipped thing. So I learned to close it myself: first the React in
               front, then the Java and Python behind it.
             </p>
@@ -78,8 +78,8 @@ const About: React.FC = () => {
             </p>
             <p>
               And because the fastest way to sharpen a workflow is to teach it, I run{' '}
-              <Link to="/teach" className="about-inline-link">AI Tools for Builders</Link>{' '}
-              — live sessions where designers and developers learn to ship with AI the
+              <Link to="/teach" className="about-inline-link">AI Tools for Builders</Link>,
+              live sessions where designers and developers learn to ship with AI the
               way I do daily.
             </p>
           </div>
@@ -87,7 +87,7 @@ const About: React.FC = () => {
           <figure className="about-photo" data-reveal="scale">
             <img
               src={profileImg}
-              alt="Sri Sai Rahul Bonala — portrait"
+              alt="Sri Sai Rahul Bonala, portrait"
               loading="lazy"
               decoding="async"
               width="374"

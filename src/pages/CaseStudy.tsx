@@ -29,37 +29,37 @@ const STUDIES: Record<string, Study> = {
       'A multi-agent answer engine: four AI personas debate a question in parallel, and a meta-judge merges the strongest reasoning into one answer with the disagreements left visible.',
     meta: { role: 'Product, design & engineering (solo)', timeframe: 'Personal product · ongoing', stack: 'React · TypeScript · Vite · Tailwind · multi-LLM' },
     problem:
-      'Ask a single model and you get one confident voice — and no way to tell a careful answer from a fluent-sounding wrong one. People cope by pasting the same prompt into ChatGPT, Claude, and Gemini and eyeballing the differences. That’s slow, and it hides the most useful signal of all: where capable models actually disagree. I wanted a tool where disagreement is the product, not a thing to paper over — so you can trust an answer because you can see what was contested and why one line of reasoning won.',
+      'Ask a single model and you get one confident voice, and no way to tell a careful answer from a fluent-sounding wrong one. People cope by pasting the same prompt into ChatGPT, Claude, and Gemini and eyeballing the differences. That’s slow, and it hides the most useful signal of all: where capable models actually disagree. I wanted a tool where disagreement is the product, not a thing to paper over, so you can trust an answer because you can see what was contested and why one line of reasoning won.',
     constraints: [
-      'Solo build — every decision had to be cheap enough for one person to ship and maintain.',
+      'Solo build, so every decision had to be cheap enough for one person to ship and maintain.',
       'Multiple model providers (Gemini, Llama, Mistral) with different latencies and failure modes.',
-      'Responses stream at different speeds — the UI can’t assume they arrive together.',
+      'Responses stream at different speeds, so the UI can’t assume they arrive together.',
       'A non-technical visitor has to grasp “four AIs argued, here’s the verdict” in seconds.',
     ],
     coreDecision: {
       decision: 'Make the disagreement visible instead of hiding it behind one merged answer.',
       body:
-        'The whole bet is that trust comes from transparency. So the verdict is never shown alone — it sits on top of the four persona positions, with the meta-judge’s reasoning for why one won. The hard part was making that legible rather than overwhelming, which is where the rejected directions came in.',
+        'The whole bet is that trust comes from transparency. So the verdict is never shown alone. It sits on top of the four persona positions, with the meta-judge’s reasoning for why one won. The hard part was making that legible rather than overwhelming, which is where the rejected directions came in.',
       rejected: [
-        { name: 'Single merged answer, sources hidden', why: 'Tested cleanest, but it’s just another confident black box — it throws away the one thing that makes this different.' },
+        { name: 'Single merged answer, sources hidden', why: 'Tested cleanest, but it’s just another confident black box, and it throws away the one thing that makes this different.' },
         { name: 'Four columns streaming simultaneously', why: 'Built it; it read as chaos. Four live text streams racing each other is unreadable and stressful, not transparent.' },
         { name: 'Chat-style transcript of the “debate”', why: 'Cute, but it buried the verdict and tripled reading time. Theatre over usefulness.' },
       ],
     },
     loop: [
-      'I couldn’t spec the verdict view in a static frame — the feel of it depended entirely on how real model responses behaved at runtime. So I designed it in code: built the debate view, wired up four live calls, and watched what actually happened.',
-      'What happened was the simultaneous-streaming chaos above. Seeing it run told me the sequencing was the real design problem, not the layout. I reworked the order — personas resolve, then the judge speaks — in the same file I’d just been styling. Design decision and implementation were one act, and the running thing corrected the next decision. The verdict graph in this portfolio’s hero is that same idea, miniaturised.',
+      'I couldn’t spec the verdict view in a static frame, because the feel of it depended entirely on how real model responses behaved at runtime. So I designed it in code: built the debate view, wired up four live calls, and watched what actually happened.',
+      'What happened was the simultaneous-streaming chaos above. Seeing it run told me the sequencing was the real design problem, not the layout. I reworked the order (personas resolve, then the judge speaks) in the same file I’d just been styling. Design decision and implementation were one act, and the running thing corrected the next decision. The verdict graph in this portfolio’s hero is that same idea, miniaturised.',
     ],
     outcomes: {
       intro: 'BestAnswers.AI is live and built end-to-end by me.',
       items: [
-        { metric: 'Live', label: 'shipped and publicly usable', method: 'Try it directly at bestanswersai.com — no signup to ask a question.' },
+        { metric: 'Live', label: 'shipped and publicly usable', method: 'Try it directly at bestanswersai.com, with no signup needed to ask a question.' },
         { metric: '4', label: 'models debating per query', method: 'Parallel calls across Gemini, Llama, and Mistral, merged by a meta-judge.' },
         { metric: '1', label: 'transparent verdict', method: 'Every answer ships with the reasoning for why one position won, not just the conclusion.' },
       ],
     },
     redesign: [
-      'Add a “why these four?” affordance — the persona choice is currently implicit; it should be inspectable.',
+      'Add a “why these four?” affordance, because the persona choice is currently implicit; it should be inspectable.',
       'Persist a verdict as a shareable link, so the transparency travels with the answer.',
       'Let the user weight the personas for their context (e.g. favour the Engineer for a technical question) and show how that changes the verdict.',
     ],
@@ -68,9 +68,9 @@ const STUDIES: Record<string, Study> = {
   'smiths-detection': {
     slug: 'smiths-detection',
     eyebrow: 'Enterprise UX · 2023–2026',
-    title: 'Smiths Detection — service consoles',
+    title: 'Smiths Detection service consoles',
     summary:
-      'Design and front-end build of service consoles used daily by maintenance engineers across Europe, APAC, and North America — plus the automation behind the reports those teams relied on.',
+      'Design and front-end build of service consoles used daily by maintenance engineers across Europe, APAC, and North America, plus the automation behind the reports those teams relied on.',
     meta: { role: 'UI/UX Designer & Developer', timeframe: '2023 – 2026', stack: 'React · Java · Python' },
     problem:
       'Maintenance engineers servicing detection hardware worked across tools built for the machines, not the people. Diagnosing an issue meant cross-referencing several screens and a lot of tribal knowledge, which made onboarding slow and mistakes easy. Leadership wanted consoles a newer engineer could pick up quickly and that behaved consistently across very different regional teams. The brief was effectively: same job, far less friction, and measurable enough that support load and satisfaction would move.',
@@ -83,15 +83,15 @@ const STUDIES: Record<string, Study> = {
     coreDecision: {
       decision: 'Organise the console around the engineer’s task, not the machine’s data model.',
       body:
-        'The legacy tools mirrored how the hardware reported itself — screens per subsystem, data dumped as-is. I reorganised the interface around what an engineer is actually trying to do in the moment (diagnose, service, verify), pulling the relevant data from across subsystems into one task view. That meant a newer engineer could follow the task instead of having to already know which screen held which number.',
+        'The legacy tools mirrored how the hardware reported itself: screens per subsystem, data dumped as-is. I reorganised the interface around what an engineer is actually trying to do in the moment (diagnose, service, verify), pulling the relevant data from across subsystems into one task view. That meant a newer engineer could follow the task instead of having to already know which screen held which number.',
       rejected: [
         { name: 'Faithful one-to-one digitisation of the legacy screens', why: 'Safest to build and easiest to sign off, but it would have preserved exactly the fragmentation that made the tools slow to learn.' },
-        { name: 'A single dense “expert” dashboard', why: 'Fast for veterans, but it punished the newer engineers onboarding was meant to help — the opposite of the goal.' },
+        { name: 'A single dense “expert” dashboard', why: 'Fast for veterans, but it punished the newer engineers onboarding was meant to help. The opposite of the goal.' },
       ],
     },
     loop: [
-      'Because I both designed and wrote the React, I could test interaction ideas against real service data instead of mockup data — and several times the real data is what changed the design, surfacing edge cases and states that never showed up in a static frame.',
-      'On the systems side, I automated a recurring reporting task in Python that the team had been doing by hand, cutting a roughly six-hour job to about fifteen minutes — which freed the team from a standing chore and removed a regular source of copy-paste error.',
+      'Because I both designed and wrote the React, I could test interaction ideas against real service data instead of mockup data, and several times the real data is what changed the design, surfacing edge cases and states that never showed up in a static frame.',
+      'On the systems side, I automated a recurring reporting task in Python that the team had been doing by hand, cutting a roughly six-hour job to about fifteen minutes, which freed the team from a standing chore and removed a regular source of copy-paste error.',
     ],
     outcomes: {
       intro: 'Measured outcomes from the shipped work, across the three regional teams:',
@@ -103,7 +103,7 @@ const STUDIES: Record<string, Study> = {
     },
     redesign: [
       'Push regional differences deeper into the design system as configuration, rather than handling them case by case.',
-      'Invest earlier in offline/degraded-connection states — a field reality that deserved first-class design from day one.',
+      'Invest earlier in offline/degraded-connection states, a field reality that deserved first-class design from day one.',
     ],
   },
 };
@@ -116,7 +116,7 @@ const CaseStudy: React.FC = () => {
   const study = slug ? STUDIES[slug] : undefined;
 
   useEffect(() => {
-    if (study) document.title = `${study.title} — Case study · Rahul Bonala`;
+    if (study) document.title = `${study.title} case study · Rahul Bonala`;
   }, [study]);
 
   if (!study) return <Navigate to="/" replace />;

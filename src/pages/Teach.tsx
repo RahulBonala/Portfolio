@@ -8,9 +8,9 @@ import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
 const STEPS = [
-  { n: '01', t: 'You bring an idea', d: 'Any idea — however rough. Don’t have one? I’ll help you find a simple one in the first five minutes, so we can get moving.' },
-  { n: '02', t: 'We take it to a live URL', d: 'Screen-shared, 1:1. Define, design, develop, deploy — the whole path, with free AI tools, using your idea as the example.' },
-  { n: '03', t: 'You leave able to do it again', d: 'The Playbook, every prompt we used, and the community — so the next one you build, you build without me.' },
+  { n: '01', t: 'You bring an idea', d: 'Any idea, however rough. Don’t have one? I’ll help you find a simple one in the first five minutes, so we can get moving.' },
+  { n: '02', t: 'We take it to a live URL', d: 'Screen-shared, 1:1. Define, design, develop, deploy: the whole path, with free AI tools, using your idea as the example.' },
+  { n: '03', t: 'You leave able to do it again', d: 'The Playbook, every prompt we used, and the community, so the next one you build, you build without me.' },
 ];
 
 const Teach: React.FC = () => {
@@ -18,7 +18,7 @@ const Teach: React.FC = () => {
   useReveals(ref);
 
   useEffect(() => {
-    document.title = 'AI Tools for Builders — Live sessions · Rahul Bonala';
+    document.title = 'AI Tools for Builders: live sessions · Rahul Bonala';
   }, []);
 
   return (
@@ -30,7 +30,7 @@ const Teach: React.FC = () => {
           <p className="teach-eyebrow">AI Tools for Builders</p>
           <h1 className="teach-title" data-reveal="up">Turn your idea into a live website. In one hour.</h1>
           <p className="teach-lede" data-reveal="up">
-            A live, one-on-one session where I show you the complete path — from a rough
+            A live, one-on-one session where I show you the complete path, from a rough
             idea in your head to a real website on the internet. Using free AI tools.
             Without writing a single line of code yourself.
           </p>
@@ -63,7 +63,7 @@ const Teach: React.FC = () => {
             </div>
             <p className="teach-book-note">
               Pay below and you’ll be taken straight to the scheduler to pick your time.
-              Full refund if it didn’t help — the pitch is the work, not the price.
+              Full refund if it didn’t help. The pitch is the work, not the price.
             </p>
           </div>
           <div className="teach-book-action">
@@ -72,7 +72,7 @@ const Teach: React.FC = () => {
         </section>
 
         <p className="teach-foot">
-          Questions first? <a href={`mailto:${BOOKING.email}`}>Email me</a> — I reply within a day.
+          Questions first? <a href={`mailto:${BOOKING.email}`}>Email me</a>. I reply within a day.
         </p>
       </div>
     </div>

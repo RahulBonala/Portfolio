@@ -20,13 +20,13 @@ const Approach: React.FC = () => {
         <div className="approach-body" data-reveal="up">
           <p>
             Most teams split the work: a designer hands a mockup to an engineer, and
-            the gap between them is where intent leaks out — the spacing drifts, the
+            the gap between them is where intent leaks out. The spacing drifts, the
             empty state never gets built, the animation that made the idea legible
             gets dropped for time. I close that gap by doing both ends myself.
           </p>
           <p>
-            BestAnswers.AI is the clearest example. The core idea — four AI personas
-            arguing, then a judge merging the strongest reasoning — only works if you
+            BestAnswers.AI is the clearest example. The core idea (four AI personas
+            arguing, then a judge merging the strongest reasoning) only works if you
             can <em>see</em> the disagreement. I couldn&apos;t spec that in a static
             frame, so I designed it in code: built the debate view, watched four real
             model responses land, found that simultaneous streaming read as chaos,
@@ -35,8 +35,8 @@ const Approach: React.FC = () => {
             page&apos;s hero is that same idea, miniaturised.
           </p>
           <p className="approach-note">
-            That loop — design a little, build a little, let the running thing correct
-            the next decision — is how everything here gets made.
+            Design a little, build a little, let the running thing correct the next
+            decision. That loop is how everything here gets made.
           </p>
         </div>
       </div>

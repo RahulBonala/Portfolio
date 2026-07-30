@@ -43,7 +43,7 @@ export const SESSION_STAGES = [
     note: 'So the hour starts at full speed instead of on introductions.',
     items: [
       'You tell me your idea when you book. Don’t have one? I’ll help you find a simple one in the first five minutes.',
-      'I look at whatever you already have — a sketch, a doc, a half-finished repo — before we meet.',
+      'I look at whatever you already have (a sketch, a doc, a half-finished project) before we meet.',
       'You get a one-line plan for the hour, so we both know what we’re doing before we start.',
     ],
   },
@@ -52,7 +52,7 @@ export const SESSION_STAGES = [
     label: 'The live hour',
     note: 'Screen-shared, 1:1, on Google Meet. A conversation, not a lecture.',
     items: [
-      'We walk the whole path — define, design, develop, deploy — using your idea as the example.',
+      'We walk the whole path: define, design, develop, deploy, using your idea as the example.',
       'You watch every click, every prompt, every fix. Interrupt whenever you want.',
       'When something breaks, you see exactly how I diagnose and fix it with AI. That’s the part you keep.',
     ],
@@ -60,11 +60,11 @@ export const SESSION_STAGES = [
   {
     when: 'After',
     label: 'What you keep',
-    note: 'The support doesn’t stop at 60 minutes — that’s the whole point.',
+    note: 'The support doesn’t stop at 60 minutes. That’s the whole point.',
     items: [
-      'The AI Builder’s Playbook — a 15-page PDF with every step written out, every tool linked, and 7 copy-paste prompts. Yours to keep.',
-      'Access to the AI Builders community on WhatsApp — ask questions, share what you build.',
-      'Me, afterwards. Stuck next week? Message me directly. No extra charge — I want you to finish what you start.',
+      'The AI Builder’s Playbook: a 15-page PDF with every step written out, every tool linked, and 7 copy-paste prompts. Yours to keep.',
+      'Access to the AI Builders community on WhatsApp, where you can ask questions and share what you build.',
+      'Me, afterwards. Stuck next week? Message me directly. No extra charge. I want you to finish what you start.',
     ],
   },
 ] as const;
@@ -97,7 +97,7 @@ export const SESSION_VIDEO = {
   poster: '',
   title: 'What a 1:1 session actually looks like',
   caption:
-    'A two-minute walkthrough of how the hour runs — what you bring, what we build, and what you leave with.',
+    'A two-minute walkthrough of how the hour runs: what you bring, what we build, and what you leave with.',
 } as const;
 
 export const hasSessionVideo = Boolean(SESSION_VIDEO.youTubeId || SESSION_VIDEO.file);
