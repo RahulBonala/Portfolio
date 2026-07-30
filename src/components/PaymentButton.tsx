@@ -6,27 +6,28 @@ import { BOOKING } from '../lib/booking';
 const RAZORPAY_BUTTON_ID = BOOKING.razorpayButtonId;
 
 const PaymentButton: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const form = formRef.current;
+    if (!form) return;
 
-    const form = document.createElement('form');
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/payment-button.js';
     script.setAttribute('data-payment_button_id', RAZORPAY_BUTTON_ID);
     script.async = true;
-
     form.appendChild(script);
-    container.appendChild(form);
 
     return () => {
-      container.innerHTML = '';
+      form.innerHTML = '';
     };
   }, []);
 
-  return <div ref={containerRef} className="razorpay-button-container" />;
+  return (
+    <div className="razorpay-button-container">
+      <form ref={formRef} />
+    </div>
+  );
 };
 
 export default PaymentButton;

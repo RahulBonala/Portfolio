@@ -267,11 +267,6 @@
   color: var(--ink-muted);
 }
 
-/* Razorpay injects its own button — keep its container tidy */
-.razorpay-button-container {
-  min-height: 46px;
-}
-
 /* ── Archive ────────────────────────────────────────────────── */
 .work-archive {
   margin-top: clamp(56px, 9vh, 110px);
