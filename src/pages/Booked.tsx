@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BOOKING, PLAYBOOK } from '../lib/booking';
 import { checkBookingAccess, type BookingAccess } from '../lib/payment';
 import { RB_EVENTS } from '../lib/robomark';
+import ReviewForm from '../components/ReviewForm';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
 
@@ -129,6 +130,9 @@ const Booked: React.FC = () => {
             </svg>
           </a>
         )}
+
+        {/* Same token as the download: only a real buyer can review. */}
+        {access.downloadToken && <ReviewForm token={access.downloadToken} />}
 
         <p className="teach-foot" data-reveal="up">
           Trouble with the scheduler, or need the Playbook again?{' '}

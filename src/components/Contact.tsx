@@ -1,35 +1,17 @@
 import { useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { RB_EVENTS } from '../lib/robomark';
 import './Contact.css';
 
-// ────────────────────────────────────────────────────────────
-// EMAILJS SETUP (free tier — 200 emails/month)
+// The form posts to /api/contact, which stores the message in Supabase.
 //
-// These three values come from environment variables, NOT from hardcoded
-// strings — that's what keeps a rotated key out of git history. All three are
-// public-by-design (EmailJS public keys are meant to be in client code), so
-// the VITE_ prefix is correct here. Never use VITE_ for a real secret: Vite
-// inlines any VITE_* value straight into the published bundle.
+// Two fallbacks, in order, so an enquiry is never silently lost:
+//   1. If the endpoint reports it has no database configured, or the request
+//      fails outright, we hand off to the visitor's mail client with the
+//      message pre-filled.
+//   2. The address is shown in full above the form and is one click to copy.
 //
-// Set them in Vercel → Settings → Environment Variables, and locally in a
-// .env.local file (git-ignored). See .env.example.
-//   1. https://www.emailjs.com/ → create a free account
-//   2. Add an "Email Service" (Gmail)              → VITE_EMAILJS_SERVICE_ID
-//   3. Add an "Email Template" using the variables
-//      {{name}}, {{email}}, {{message}}            → VITE_EMAILJS_TEMPLATE_ID
-//   4. Account → API Keys                          → VITE_EMAILJS_PUBLIC_KEY
-//
-// UNTIL THEY'RE SET, the form does not pretend to work: it hands the visitor
-// off to their mail client with the message pre-filled, so a real enquiry is
-// never silently dropped. Previously these were 'YOUR_SERVICE_ID' placeholders
-// and every single submission failed with an error.
-// ────────────────────────────────────────────────────────────
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID ?? '';
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? '';
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY ?? '';
-
-const emailjsReady = Boolean(EMAILJS_SERVICE_ID && EMAILJS_TEMPLATE_ID && EMAILJS_PUBLIC_KEY);
+// This replaces EmailJS, which had shipped with 'YOUR_SERVICE_ID' placeholders
+// and therefore failed on every single submission.
 
 const EMAIL = 'rahulbonala06@gmail.com';
 
@@ -69,24 +51,38 @@ const Contact: React.FC = () => {
       return;
     }
 
-    // Not configured — hand off to the mail client rather than failing.
-    if (!emailjsReady) {
-      mailtoHandoff(formData);
-      return;
-    }
-
     setStatus('sending');
     try {
-      await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, formRef.current!, EMAILJS_PUBLIC_KEY);
-      setStatus('success');
-      // Real conversion — the header robot cheers (never on the honeypot/error paths)
-      window.dispatchEvent(new Event(RB_EVENTS.celebrate));
-      setFormData({ name: '', email: '', message: '', _gotcha: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    } catch (err) {
-      console.error('EmailJS error:', err);
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+        // Real conversion — the header robot cheers (never on the honeypot path)
+        window.dispatchEvent(new Event(RB_EVENTS.celebrate));
+        setFormData({ name: '', email: '', message: '', _gotcha: '' });
+        setTimeout(() => setStatus('idle'), 5000);
+        return;
+      }
+
+      // 503 means the database isn't wired up yet. Anything else server-side is
+      // still our problem, not the visitor's — either way, hand off to mail so
+      // the message reaches Rahul.
+      if (res.status >= 500) {
+        mailtoHandoff(formData);
+        setStatus('idle');
+        return;
+      }
+
       setStatus('error');
       setTimeout(() => setStatus('idle'), 5000);
+    } catch {
+      // Offline or blocked. The mail client still works.
+      mailtoHandoff(formData);
+      setStatus('idle');
     }
   };
 

@@ -62,6 +62,11 @@ const SECRET_PATTERNS = [
   [/RAZORPAY_KEY_SECRET\s*[:=]\s*["'][^"']+["']/, 'hardcoded Razorpay secret'],
   [/sk_live_[A-Za-z0-9]+/, 'Stripe live secret'],
   [/-----BEGIN [A-Z ]*PRIVATE KEY-----/, 'private key'],
+  // A Supabase service_role JWT bypasses row-level security entirely. It must
+  // never reach the browser, so the build fails if one appears in the bundle.
+  [/"role"\s*:\s*"service_role"/, 'Supabase service_role key'],
+  [/\bservice_role\b/, 'service_role reference'],
+  [/\bSUPABASE_SERVICE_ROLE_KEY\s*[:=]\s*["'][^"']+["']/, 'hardcoded Supabase service key'],
 ];
 for (const f of [...jsFiles, ...htmlFiles]) {
   const body = readFileSync(join(dist, f), 'utf8');

@@ -1,5 +1,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { mintToken } from './_lib/token.js';
+import { dbConfigured, insert } from './_lib/db.js';
+import { fetchPaymentDetails } from './_lib/razorpay.js';
 
 /**
  * Verifies a Razorpay Payment Button redirect server-side.
@@ -42,7 +44,36 @@ function str(value: unknown, max = 200): string {
   return typeof value === 'string' && value.length <= max ? value : '';
 }
 
-export default function handler(req: Req, res: Res) {
+/**
+ * Records the buyer so Rahul has a list of who booked, and so a review can be
+ * tied back to a real payment. Deliberately fire-and-forget with its own
+ * try/catch: the payment is already verified by the time this runs, and a
+ * database hiccup must never stop someone reaching their session.
+ */
+async function recordBooking(paymentId: string, linkId: string) {
+  if (!dbConfigured()) return;
+  try {
+    const details = await fetchPaymentDetails(paymentId);
+    await insert(
+      'bookings',
+      {
+        razorpay_payment_id: paymentId,
+        razorpay_payment_link_id: linkId || null,
+        email: details?.email ?? null,
+        phone: details?.phone ?? null,
+        name: details?.name ?? null,
+        amount_minor: details?.amountMinor ?? null,
+        currency: details?.currency ?? 'INR',
+        status: 'paid',
+      },
+      { onConflict: 'razorpay_payment_id' }
+    );
+  } catch (err) {
+    console.error('recordBooking failed', err instanceof Error ? err.message : err);
+  }
+}
+
+export default async function handler(req: Req, res: Res) {
   res.setHeader('Cache-Control', 'no-store');
 
   if (req.method !== 'POST') {
@@ -83,6 +114,10 @@ export default function handler(req: Req, res: Res) {
   // Both sides are fixed-length hex here, so the lengths always match and
   // timingSafeEqual cannot throw.
   const ok = timingSafeEqual(Buffer.from(expected, 'hex'), Buffer.from(signature, 'hex'));
+
+  // Only a genuine payment gets recorded, so the bookings table can be trusted
+  // as the list of people who actually paid.
+  if (ok) await recordBooking(paymentId, linkId);
 
   return res.status(200).json({
     verified: ok,

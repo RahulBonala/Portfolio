@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PaymentButton from '../components/PaymentButton';
 import SessionVideo from '../components/SessionVideo';
 import SessionValue from '../components/SessionValue';
+import Testimonials from '../components/Testimonials';
 import { BOOKING } from '../lib/booking';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
@@ -53,6 +54,9 @@ const Teach: React.FC = () => {
         {/* The concrete deliverables, immediately before the price — so the
             value is fully stated at the moment the cost appears. */}
         <SessionValue />
+
+        {/* Renders nothing until an approved review exists. */}
+        <Testimonials />
 
         <section className="teach-book" data-reveal="up" aria-labelledby="teach-book-h">
           <div className="teach-book-copy">

@@ -1,0 +1,205 @@
+/* Review form — post-payment only. See ReviewForm.tsx. Tokens only. */
+
+.review-open,
+.review-submit {
+  font: inherit;
+  cursor: pointer;
+}
+
+.review-open {
+  margin-top: 28px;
+  padding: 12px 20px;
+  border: 1px dashed var(--hairline-strong);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink-secondary);
+  font-size: 14px;
+  transition: border-color var(--transition-fast), color var(--transition-fast);
+}
+
+.review-open:hover,
+.review-open:focus-visible {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.review-form {
+  width: 100%;
+  max-width: 560px;
+  margin: 28px auto 0;
+  padding: clamp(20px, 3vw, 28px);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  text-align: left;
+}
+
+.review-form-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0 0 6px;
+}
+
+.review-form-note {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-muted);
+  margin: 0 0 20px;
+}
+
+.review-row {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.review-field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.review-field > span {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+}
+
+.review-field em {
+  font-weight: 400;
+  color: var(--ink-faint);
+}
+
+.review-field input,
+.review-field textarea {
+  font: inherit;
+  font-size: 15px;
+  padding: 11px 13px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+.review-field input:focus-visible,
+.review-field textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ── Rating ───────────────────────────────────────────────── */
+
+.review-rating {
+  border: 0;
+  padding: 0;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.review-rating legend {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-secondary);
+  margin-bottom: 6px;
+}
+
+.review-rating label {
+  cursor: pointer;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--ink-faint);
+  transition: color var(--transition-fast);
+}
+
+.review-rating label.is-on {
+  color: var(--accent);
+}
+
+/* The radio stays in the accessibility tree and keeps keyboard operation —
+   it's only visually replaced by the star. */
+.review-rating input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.review-rating label:has(input:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.review-error {
+  font-size: 14px;
+  color: var(--color-error);
+  margin: 0 0 12px;
+}
+
+.review-submit {
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--accent);
+}
+
+.review-submit[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.review-done {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  max-width: 560px;
+  margin: 28px auto 0;
+  padding: 16px 20px;
+  border: 1px solid color-mix(in srgb, var(--color-success) 40%, transparent);
+  border-radius: var(--radius-md);
+  color: var(--ink-secondary);
+  font-size: 15px;
+}
+
+.review-done span[aria-hidden] {
+  color: var(--color-success);
+  font-size: 18px;
+}
+
+.review-done p {
+  margin: 0;
+}
+
+@media (max-width: 560px) {
+  .review-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .review-open,
+  .review-rating label {
+    transition: none;
+  }
+}
