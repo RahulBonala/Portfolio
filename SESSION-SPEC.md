@@ -214,9 +214,12 @@ Revisit only if /teach becomes a standalone landing page off its own domain.
 
 ### 4. Open items
 
-- ~~Playbook PDF~~ — **done.** Lives at `/downloads/ai-builders-playbook.pdf`
-  (15 pages, 156 KB) and is linked from /teach so a visitor can read it before
-  paying. `scripts/check-links.mjs` fails the build if it goes missing.
+- ~~Playbook PDF~~ — **done, and it is a paid deliverable.** The file lives in
+  `api/_assets/playbook.pdf`, deliberately NOT in `public/`, and is streamed by
+  `/api/playbook` only to a caller holding a short-lived token minted after a
+  verified payment. It appears on `/teach/booked` and nowhere else.
+  `scripts/check-links.mjs` fails the build if the PDF ever reappears under
+  `dist/`, which is the mistake that would quietly give the product away.
 - ~~Session video~~ — **done.** `/session-intro.mp4`, 464×832 (portrait 9:16),
   H.264 baseline, 5.1 MB, self-hosted with `preload="metadata"`.
 - **No poster frame yet.** Without one the browser paints the first frame once

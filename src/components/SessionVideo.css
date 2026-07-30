@@ -5,6 +5,54 @@
   margin: clamp(40px, 7vh, 72px) 0;
 }
 
+/* ── Layout ───────────────────────────────────────────────────
+   A phone-shot video is tall and narrow. Left on its own it leaves a big
+   empty column and pushes everything else off-screen, so from tablet up the
+   copy sits beside it and the two share the height. Below that they stack —
+   copy first, because a heading frames the video and a video with nothing
+   above it reads as an advert. DOM order already matches the stacked order,
+   so nothing here reorders content away from reading or tab order. */
+@media (min-width: 760px) {
+  .session-video.is-portrait-layout {
+    display: grid;
+    /* Cap the copy by measure rather than letting it eat the row: at 1fr the
+       text stretches to the container edge and leaves a dead gap in the
+       middle, so the two stop reading as a pair. */
+    grid-template-columns: minmax(0, 46ch) auto;
+    justify-content: start;
+    gap: clamp(36px, 6vw, 80px);
+    align-items: center;
+  }
+}
+
+.session-video-copy {
+  min-width: 0;
+}
+
+/* The four phases, as a compact ladder that balances the tall video. */
+.session-video-phases {
+  list-style: none;
+  margin: 22px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.session-video-phases li {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--ink-secondary);
+}
+
+.session-video-phase-n {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
 .session-video-title {
   font-family: var(--font-display);
   font-size: clamp(24px, 3.4vw, 34px);
@@ -34,10 +82,18 @@
 }
 
 /* A phone-shot vertical clip at full column width would be absurdly tall, so
-   cap it and centre it — it reads as a phone held up next to the copy. */
+   cap it — it reads as a phone held up next to the copy. Centred when it's
+   stacked on a narrow screen; sized to its own column once beside the text. */
 .session-video-frame.is-portrait {
-  max-width: 340px;
+  width: min(340px, 100%);
   margin-inline: auto;
+}
+
+@media (min-width: 760px) {
+  .session-video.is-portrait-layout .session-video-frame.is-portrait {
+    width: clamp(260px, 30vw, 340px);
+    margin-inline: 0;
+  }
 }
 
 /* `contain`, not `cover`: the frame already matches the video's ratio, and

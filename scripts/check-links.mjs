@@ -90,8 +90,8 @@ if (files.has(bookedPage)) {
   }
 }
 
-// ── 5. Promised downloads exist and are non-trivial ───────────────────────
-const PROMISED = ['/downloads/ai-builders-playbook.pdf', '/resume.pdf'];
+// ── 5. Free downloads exist and are non-trivial ───────────────────────────
+const PROMISED = ['/resume.pdf'];
 for (const p of PROMISED) {
   if (!files.has(p)) fail(`promised download missing: ${p}`);
   else {
@@ -99,6 +99,18 @@ for (const p of PROMISED) {
     if (bytes < 1024) fail(`${p} is suspiciously small (${bytes} bytes)`);
     else notes.push(`${p} — ${(bytes / 1024).toFixed(0)} KB`);
   }
+}
+
+// ── 5b. PAID assets must NOT be published ─────────────────────────────────
+// The Playbook is sold, not given away. If it ever lands in dist/ it is
+// served at a public URL and can never be un-shared, so this fails the build.
+for (const f of files) {
+  if (/playbook/i.test(f)) fail(`paid asset published at a public URL: ${f}`);
+}
+if (!existsSync(resolve(root, 'api/_assets/playbook.pdf'))) {
+  fail('api/_assets/playbook.pdf is missing — /api/playbook would 500 for buyers');
+} else {
+  notes.push(`api/_assets/playbook.pdf (private) — ${(statSync(resolve(root, 'api/_assets/playbook.pdf')).size / 1024).toFixed(0)} KB`);
 }
 
 // ── 6. Media referenced by the page exists ────────────────────────────────

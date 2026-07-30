@@ -25,7 +25,7 @@ export type BookingAccess =
    * CALENDLY_URL is set there. When it is, use it in preference to the bundled
    * constant — that's what lets the real link live outside the public bundle.
    */
-  | { state: 'granted'; verified: boolean; schedulingUrl?: string }
+  | { state: 'granted'; verified: boolean; schedulingUrl?: string; downloadToken?: string }
   | { state: 'denied' };
 
 const SESSION_KEY = 'rb-booking-verified';
@@ -62,10 +62,19 @@ function readRedirectParams(search: string): RedirectParams | null {
   return wellFormed ? params : null;
 }
 
-/** Remembers a granted verdict so a refresh doesn't bounce a paying customer. */
-function remember(verified: boolean) {
+/**
+ * Remembers a granted verdict so a refresh doesn't bounce a paying customer.
+ *
+ * The scheduling URL and download token are stored too, because the payment
+ * params get scrubbed from the URL immediately — without this, a refresh would
+ * strand a buyer who had already been let in. Storage is sessionStorage, so it
+ * dies with the tab, and the token expires server-side within the hour anyway.
+ */
+type Remembered = { verified: boolean; schedulingUrl?: string; downloadToken?: string };
+
+function remember(value: Remembered) {
   try {
-    sessionStorage.setItem(SESSION_KEY, verified ? 'verified' : 'unverified');
+    sessionStorage.setItem(SESSION_KEY, JSON.stringify(value));
   } catch {
     /* sessionStorage unavailable — they just can't refresh */
   }
@@ -74,10 +83,17 @@ function remember(verified: boolean) {
 function recall(): BookingAccess | null {
   try {
     const stored = sessionStorage.getItem(SESSION_KEY);
-    if (stored === 'verified') return { state: 'granted', verified: true };
-    if (stored === 'unverified') return { state: 'granted', verified: false };
+    if (!stored) return null;
+    const v = JSON.parse(stored) as Remembered;
+    if (typeof v?.verified !== 'boolean') return null;
+    return {
+      state: 'granted',
+      verified: v.verified,
+      schedulingUrl: typeof v.schedulingUrl === 'string' ? v.schedulingUrl : undefined,
+      downloadToken: typeof v.downloadToken === 'string' ? v.downloadToken : undefined,
+    };
   } catch {
-    /* sessionStorage unavailable */
+    /* unavailable, or a stale value from an older format */
   }
   return null;
 }
@@ -108,7 +124,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
     // No endpoint deployed (static-only preview, or the function is missing):
     // treat it exactly like "unconfigured" rather than denying a real buyer.
     if (!res.ok) {
-      remember(false);
+      remember({ verified: false });
       scrubUrl();
       return { state: 'granted', verified: false };
     }
@@ -117,20 +133,25 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
       verified?: boolean;
       configured?: boolean;
       schedulingUrl?: string;
+      downloadToken?: string;
     };
 
     if (data.verified) {
-      remember(true);
       scrubUrl();
       const url = typeof data.schedulingUrl === 'string' ? data.schedulingUrl : undefined;
       // Only trust an https URL from the response — never render an
       // attacker-influenceable scheme like javascript: into an href.
       const safe = url && /^https:\/\//.test(url) ? url : undefined;
-      return { state: 'granted', verified: true, schedulingUrl: safe };
+      const token =
+        typeof data.downloadToken === 'string' && /^[A-Za-z0-9_-]+\.[a-f0-9]{64}$/.test(data.downloadToken)
+          ? data.downloadToken
+          : undefined;
+      remember({ verified: true, schedulingUrl: safe, downloadToken: token });
+      return { state: 'granted', verified: true, schedulingUrl: safe, downloadToken: token };
     }
 
     if (data.configured === false) {
-      remember(false);
+      remember({ verified: false });
       scrubUrl();
       return { state: 'granted', verified: false };
     }
@@ -141,7 +162,7 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
   } catch {
     // Network failure. The params were well-formed, so let them through
     // unverified rather than punishing someone who has actually paid.
-    remember(false);
+    remember({ verified: false });
     scrubUrl();
     return { state: 'granted', verified: false };
   }

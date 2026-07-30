@@ -70,12 +70,17 @@ export const SESSION_STAGES = [
 ] as const;
 
 /**
- * The Playbook is a real file in /public, and the page links to it directly.
- * If you move or rename it, update this and re-run the build — the link check
- * in scripts/check-links.mjs will fail loudly if the file stops existing.
+ * The Playbook is a PAID deliverable, so it deliberately does NOT live in
+ * /public — anything there is served at a guessable URL and can never be
+ * un-shared. The file sits in api/_assets/ and is streamed by /api/playbook
+ * only to a caller holding a token minted after a verified payment.
+ *
+ * `scripts/check-links.mjs` fails the build if the PDF ever reappears under
+ * dist/, which is the mistake that would quietly give the product away.
  */
 export const PLAYBOOK = {
-  href: '/downloads/ai-builders-playbook.pdf',
+  /** Build the download URL from a token issued by /api/verify-booking. */
+  hrefFor: (token: string) => `/api/playbook?t=${encodeURIComponent(token)}`,
   filename: 'AI-Builders-Playbook.pdf',
   pages: 15,
 } as const;

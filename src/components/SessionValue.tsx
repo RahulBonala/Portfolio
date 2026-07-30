@@ -1,4 +1,4 @@
-import { BOOKING, SESSION_STAGES, SESSION_GUARANTEES, PLAYBOOK } from '../lib/booking';
+import { BOOKING, SESSION_STAGES, SESSION_GUARANTEES } from '../lib/booking';
 import './SessionValue.css';
 
 /**
@@ -58,25 +58,6 @@ const SessionValue: React.FC = () => (
         </li>
       ))}
     </ol>
-
-    {/* The Playbook is the one deliverable a visitor can check before paying.
-        Letting them read it up front is the strongest proof the session is
-        real, and it costs nothing to give away. */}
-    <a className="playbook-peek" href={PLAYBOOK.href} target="_blank" rel="noopener noreferrer" data-reveal="up">
-      <span className="playbook-peek-icon" aria-hidden="true">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-          <polyline points="14 2 14 8 20 8" />
-        </svg>
-      </span>
-      <span className="playbook-peek-text">
-        <strong>Read the Playbook before you book</strong>
-        <span>All {PLAYBOOK.pages} pages, free, no email required. If it’s useful on its own, the session will be too.</span>
-      </span>
-      <svg className="playbook-peek-arrow" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
-      </svg>
-    </a>
 
     <ul className="session-guarantees" data-reveal-group>
       {SESSION_GUARANTEES.map((g) => (

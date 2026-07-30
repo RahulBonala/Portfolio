@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BOOKING } from '../lib/booking';
+import { BOOKING, PLAYBOOK } from '../lib/booking';
 import { checkBookingAccess, type BookingAccess } from '../lib/payment';
 import { RB_EVENTS } from '../lib/robomark';
 import { useReveals } from '../hooks/useReveals';
@@ -104,9 +104,36 @@ const Booked: React.FC = () => {
           </svg>
         </a>
 
+        {/* The Playbook is part of what they just bought, so it appears here
+            and nowhere else. The link carries a short-lived token minted by
+            the server after it verified the payment — see api/playbook.ts. */}
+        {access.downloadToken && (
+          <a
+            className="playbook-download"
+            href={PLAYBOOK.hrefFor(access.downloadToken)}
+            data-reveal="up"
+          >
+            <span className="playbook-download-icon" aria-hidden="true">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+              </svg>
+            </span>
+            <span className="playbook-download-text">
+              <strong>Download the AI Builder’s Playbook</strong>
+              <span>All {PLAYBOOK.pages} pages, yours to keep. Grab it now — this link expires in an hour.</span>
+            </span>
+            <svg className="playbook-download-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+          </a>
+        )}
+
         <p className="teach-foot" data-reveal="up">
-          Trouble with the scheduler? <a href={`mailto:${BOOKING.email}`}>Email me</a>{' '}
-          and I’ll send you a time directly. Or head <Link to="/">back to the portfolio</Link>.
+          Trouble with the scheduler, or need the Playbook again?{' '}
+          <a href={`mailto:${BOOKING.email}`}>Email me</a> and I’ll sort it out.
+          Or head <Link to="/">back to the portfolio</Link>.
         </p>
       </div>
     </div>

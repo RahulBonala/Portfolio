@@ -5,6 +5,11 @@
   "rewrites": [
     { "source": "/((?!api/|work/|teach|assets/|chunks/|.*\\..*).*)", "destination": "/index.html" }
   ],
+  "functions": {
+    "api/playbook.ts": {
+      "includeFiles": "api/_assets/**"
+    }
+  },
   "headers": [
     {
       "source": "/(.*)",

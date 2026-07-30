@@ -1,4 +1,5 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { mintToken } from './_lib/token.js';
 
 /**
  * Verifies a Razorpay Payment Button redirect server-side.
@@ -91,6 +92,9 @@ export default function handler(req: Req, res: Res) {
     // the scheduling link stops being a constant in the public JS bundle —
     // which is the difference between "hard to find" and "not there at all".
     ...(ok && process.env.CALENDLY_URL ? { schedulingUrl: process.env.CALENDLY_URL } : {}),
+    // Short-lived permission to download the Playbook. Minted here because
+    // this is the only place a payment has actually been proven.
+    ...(ok ? { downloadToken: mintToken(paymentId, secret) } : {}),
   });
 }
 

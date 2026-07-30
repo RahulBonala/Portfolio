@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { SESSION_VIDEO, hasSessionVideo } from '../lib/booking';
 import './SessionVideo.css';
 
+/** The four phases, straight from the Playbook — the video walks through these. */
+const PHASES = ['Define', 'Design', 'Develop', 'Deploy'] as const;
+
 /**
  * The 1:1 session's intro video — the single most important asset for paid
  * traffic, because someone arriving from an ad has no idea what an hour with
@@ -38,9 +41,27 @@ const SessionVideo: React.FC = () => {
   const facadePoster = poster || (youTubeId ? `https://i.ytimg.com/vi/${youTubeId}/maxresdefault.jpg` : '');
 
   return (
-    <section className="session-video" data-reveal="up" aria-labelledby="session-video-h">
-      <h2 id="session-video-h" className="session-video-title">{title}</h2>
-      {caption && <p className="session-video-caption">{caption}</p>}
+    <section
+      className={`session-video ${portrait ? 'is-portrait-layout' : ''}`}
+      data-reveal="up"
+      aria-labelledby="session-video-h"
+    >
+      {/* Copy first in the DOM, so reading and tab order stay natural. On wide
+          screens CSS puts it beside the tall video; on a phone it simply
+          stacks above it, which is also where a heading belongs — a bare
+          video with no framing above it reads as an advert. */}
+      <div className="session-video-copy">
+        <h2 id="session-video-h" className="session-video-title">{title}</h2>
+        {caption && <p className="session-video-caption">{caption}</p>}
+        <ol className="session-video-phases" aria-label="The four phases of a session">
+          {PHASES.map((p, i) => (
+            <li key={p}>
+              <span className="session-video-phase-n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              {p}
+            </li>
+          ))}
+        </ol>
+      </div>
 
       <div
         className={`session-video-frame ${portrait ? 'is-portrait' : ''}`}
