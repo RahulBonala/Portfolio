@@ -188,7 +188,7 @@ Use the existing flow. Don't replace it with the localStorage unlock.
 ### 2. Route naming
 
 The spec says `/session` with callback `…/session?payment=success`. The repo
-uses `/teach` (the pitch) and `/teach/booked` (post-payment). Either is fine,
+uses `/teach` (the pitch, and the unlocked post-payment view). Either is fine,
 but **the Razorpay button's redirect URL must match whichever is chosen**, and
 `scripts/prerender.js` + `public/sitemap.xml` must be updated together. Adding
 `/session` as the public route and redirecting `/teach` → `/session` is the
@@ -217,7 +217,7 @@ Revisit only if /teach becomes a standalone landing page off its own domain.
 - ~~Playbook PDF~~ — **done, and it is a paid deliverable.** The file lives in
   `api/_assets/playbook.pdf`, deliberately NOT in `public/`, and is streamed by
   `/api/playbook` only to a caller holding a short-lived token minted after a
-  verified payment. It appears on `/teach/booked` and nowhere else.
+  verified payment. It appears on `/teach` (after payment) and nowhere else.
   `scripts/check-links.mjs` fails the build if the PDF ever reappears under
   `dist/`, which is the mistake that would quietly give the product away.
 - ~~Session video~~ — **done.** `/session-intro.mp4`, 464×832 (portrait 9:16),
@@ -234,28 +234,29 @@ Revisit only if /teach becomes a standalone landing page off its own domain.
 
 ## Reviews and the shareable link
 
-Two ways a review reaches the database, both landing in the same moderation
-queue:
+Two ways a review reaches the database, both published on submission:
 
 | Path | Where | Attribution |
 |---|---|---|
-| `buyer` | `/teach/booked`, using the token minted after payment | Tied to the payment id |
+| `buyer` | `/teach`, using the token minted after payment | Tied to the payment id |
 | `invite` | `rahulbonala.me/review`, the link to share afterwards | None — no token exists days later |
 
 **`https://rahulbonala.me/review` is the link to send people.** It is
 deliberately `noindex`: a link to hand out, not a page to be found.
 
-The invite path is an open write endpoint, which is safe here for one specific
-reason: **every review is created `pending` and nothing is ever displayed until
-it is approved**, so the page cannot be used to publish anything. On top of
-that it carries a honeypot, length and shape checks, and per-IP rate limiting
-(3 per day, keyed on a salted hash of the IP — rate limiting never needs to
-know who someone is, and a plaintext IP list is a liability with no upside).
+Submissions are published immediately (`status: 'approved'`), so link spam is
+the threat model rather than a moderation backlog. The invite path is an open
+write endpoint, and it carries the defences that implies: URLs are stripped
+from the body, alongside a honeypot, length and shape checks, and per-IP rate
+limiting (3 per day, keyed on a salted hash of the IP — rate limiting never
+needs to know who someone is, and a plaintext IP list is a liability with no
+upside). A review that genuinely needs a link can be emailed instead.
 
 A *forged* token is still refused outright. An *expired* one degrades to the
 invite path, because reviewing a week later is the normal case, not an attack.
 
-### Approving a review
+### Taking a review down
 
-Supabase dashboard → Table editor → `reviews` → set `status` to `approved`.
-It appears on `/teach` on the next page load; no redeploy needed.
+Supabase dashboard → Table editor → `reviews` → set `status` to anything other
+than `approved`. Only `approved` rows are read by `GET /api/reviews`, so it
+disappears from `/teach` on the next page load; no redeploy needed.

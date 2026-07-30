@@ -36,7 +36,7 @@ Settings → Environment Variables.
 | Variable | Required for | If unset |
 | --- | --- | --- |
 | `VITE_EMAILJS_SERVICE_ID` / `_TEMPLATE_ID` / `_PUBLIC_KEY` | Contact form | Form falls back to a `mailto:` handoff |
-| `RAZORPAY_KEY_SECRET` | **Verifying session payments** | `/teach/booked` falls back to a weak params-only check that a past buyer can replay |
+| `RAZORPAY_KEY_SECRET` | **Verifying session payments** | `/teach` falls back to a weak params-only check that a past buyer can replay |
 | `CALENDLY_URL` | Keeping the scheduling link out of the public JS bundle | The bundled `BOOKING.calendly` constant is used instead |
 
 Anything prefixed `VITE_` is compiled into the public bundle and visible to
@@ -45,7 +45,7 @@ every visitor — never use that prefix for a secret.
 ## The booking flow
 
 1. `/teach` — the pitch, the intro video, and the Razorpay payment button.
-2. Razorpay redirects a buyer to `/teach/booked` with signed payment params.
+2. Razorpay redirects a buyer back to `/teach` with signed payment params.
 3. `api/verify-booking.ts` checks the HMAC signature server-side; only then is
    the scheduling link rendered. The params are then scrubbed from the URL so a
    shared link can't be reused.

@@ -85,8 +85,8 @@ async function overRateLimit(hash: string): Promise<boolean> {
     );
     return rows.length >= INVITE_RATE_LIMIT;
   } catch {
-    // If the check itself fails, let the review through — it is moderated
-    // anyway, and silently dropping a genuine review is the worse outcome.
+    // If the check itself fails, let the review through: the other defences
+    // still apply, and silently dropping a genuine review is the worse outcome.
     return false;
   }
 }
