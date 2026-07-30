@@ -155,9 +155,6 @@ const Teach: React.FC = () => {
             value is fully stated at the moment the cost appears. */}
         <SessionValue />
 
-        {/* Renders nothing until an approved review exists. */}
-        <Testimonials />
-
         <section className="teach-book" data-reveal="up" aria-labelledby="teach-book-h">
           <div className="teach-book-copy">
             <h2 id="teach-book-h" className="teach-book-title">Book a session</h2>
@@ -186,6 +183,10 @@ const Teach: React.FC = () => {
           </div>
           <ReviewForm variant="panel" />
         </section>
+
+        {/* The reviews themselves, directly under the form that collects them.
+            Renders nothing until there is at least one. */}
+        <Testimonials />
 
         <p className="teach-foot">
           Questions first? <a href={`mailto:${BOOKING.email}`}>Email me</a>. I reply within a day.

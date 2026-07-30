@@ -23,11 +23,7 @@ const Home: React.FC = () => {
       <Work />
       <Skills />
       <Approach />
-      <section className="section">
-        <div className="container">
-          <Testimonials />
-        </div>
-      </section>
+      <Testimonials variant="page" />
       <Contact />
     </div>
   );
