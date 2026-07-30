@@ -4,10 +4,15 @@
   margin: clamp(48px, 8vh, 88px) 0;
 }
 
-/* Placed straight into a page rather than inside an existing section, so it
-   carries the section's own rhythm. Returning null then leaves no gap. */
+/* Placed straight into a page rather than inside an existing section, so that
+   returning null leaves no gap behind.
+
+   No margin of its own on purpose. The sections either side are already
+   padded — Approach below itself, Contact above itself — so any margin here
+   is added to that padding, not merged with it, and a heading plus one card
+   ended up marooned in roughly 200px of empty space top and bottom. */
 .testimonials-page {
-  margin-block: clamp(52px, 8vh, 104px);
+  margin-block: 0;
 }
 
 .testimonials-title {

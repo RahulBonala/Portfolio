@@ -21,6 +21,11 @@ import { dbConfigured, insert, select } from './_lib/db.js';
  * A review is published immediately ('approved'), so link spam is the primary
  * threat model. A review that needs a link can be emailed.
  *
+ * A review may also carry an optional email, given so Rahul can follow up
+ * about an offer or a later session. It is stored and nothing more: it is
+ * absent from the GET selection below, so it cannot be read back out through
+ * this endpoint even by mistake.
+ *
  * The GET response is deliberately narrow: display name, role, rating, body,
  * date. Emails, phone numbers, payment ids and IP hashes never leave the
  * database.
@@ -46,7 +51,10 @@ type ReviewRow = {
   created_at: string;
 };
 
-const LIMITS = { name: 60, role: 60, body: 600 };
+const LIMITS = { name: 60, role: 60, email: 320, body: 600 };
+
+/** Same plausibility check the contact form uses. */
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 /** Reviews allowed from one IP per day on the open path. */
 export const INVITE_RATE_LIMIT = 3;
@@ -159,11 +167,18 @@ export default async function handler(req: Req, res: Res) {
 
   const displayName = clean(body.name, LIMITS.name);
   const role = clean(body.role, LIMITS.role);
+  const email = clean(body.email, LIMITS.email);
   const text = stripUrls(clean(body.body, LIMITS.body));
   const rating = Number(body.rating);
 
   if (!displayName || text.length < 10 || !Number.isInteger(rating) || rating < 1 || rating > 5) {
     return res.status(400).json({ ok: false, error: 'invalid_review' });
+  }
+
+  // Leaving it out is fine. Getting it wrong is worth saying so, because a
+  // typo here means the follow-up it was given for never arrives.
+  if (email && !EMAIL.test(email)) {
+    return res.status(400).json({ ok: false, error: 'invalid_email' });
   }
 
   const hash = submitterHash(req, secret);
@@ -183,6 +198,11 @@ export default async function handler(req: Req, res: Res) {
         status: 'approved',
         source,
         submitter_hash: hash,
+        // Sent only when one was given. PostgREST rejects the whole insert for
+        // a column the table does not have, so omitting the key means a
+        // database that has not run the `email` migration yet still accepts
+        // every review that leaves the field blank, rather than none at all.
+        ...(email ? { email } : {}),
       },
       // Only the buyer path can conflict — one review per payment. Invite rows
       // have a null payment id and are excluded by the partial unique index.

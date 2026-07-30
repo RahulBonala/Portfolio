@@ -25,7 +25,7 @@ type Props = {
 };
 
 const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
-  const [form, setForm] = useState({ name: '', role: '', rating: 5, body: '', _gotcha: '' });
+  const [form, setForm] = useState({ name: '', role: '', email: '', rating: 5, body: '', _gotcha: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'done' | 'error' | 'rate_limited'>('idle');
   const [open, setOpen] = useState(variant !== 'inline');
   const inCard = variant === 'panel';
@@ -94,6 +94,25 @@ const ReviewForm: React.FC<Props> = ({ token, variant = 'inline' }) => {
             placeholder="Student, developer, founder…"
           />
         </label>
+      </div>
+
+      {/* Optional, and the hint says what it is for before it is asked for.
+          It sits outside the label so it is read as a description rather than
+          becoming part of the field's name. */}
+      <div className="review-email">
+        <label className="review-field">
+          <span>Email <em>(optional)</em></span>
+          <input
+            type="email" maxLength={320} value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
+            placeholder="you@example.com"
+            aria-describedby="review-email-hint"
+          />
+        </label>
+        <p className="review-field-hint" id="review-email-hint">
+          Only so I can tell you about an offer or a new session later. Never
+          published with your review, and never passed on.
+        </p>
       </div>
 
       <fieldset className="review-rating">

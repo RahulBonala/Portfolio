@@ -15,11 +15,16 @@ create table if not exists public.bookings (
 );
 
 -- reviews table
+--
+-- `email` is optional and given for follow-up only (an offer, a later
+-- session). It is never selected by /api/reviews, so it cannot be read back
+-- out through the public endpoint.
 create table if not exists public.reviews (
   id uuid primary key default gen_random_uuid(),
   razorpay_payment_id text,
   display_name text not null,
   role text,
+  email text,
   rating int not null check (rating between 1 and 5),
   body text not null,
   status text not null default 'approved',
@@ -27,6 +32,10 @@ create table if not exists public.reviews (
   submitter_hash text,
   created_at timestamptz default now()
 );
+
+-- For a database created before `email` existed: `create table if not exists`
+-- above is a no-op on an existing table, so the column has to be added here.
+alter table public.reviews add column if not exists email text;
 
 create unique index if not exists reviews_payment_uniq on public.reviews (razorpay_payment_id) where razorpay_payment_id is not null;
 

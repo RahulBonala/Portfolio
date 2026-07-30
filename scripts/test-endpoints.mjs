@@ -119,6 +119,40 @@ const tests = {
     assert.equal(r.code, 400);
   },
 
+  // ── the optional email, captured for follow-up only ─────────────────────
+  'a review without an email is still accepted': async () => {
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 5, body: 'no email given, still fine' },
+    });
+    assert.notEqual(r.code, 400);
+  },
+
+  'a review with a well-formed email gets past validation': async () => {
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 5, body: 'happy to hear about offers', email: 'someone@example.com' },
+    });
+    assert.notEqual(r.code, 400);
+  },
+
+  'a typo in the optional email is reported rather than silently dropped': async () => {
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 5, body: 'a genuine looking review', email: 'someone@example' },
+    });
+    assert.equal(r.code, 400);
+    assert.equal(r.body.error, 'invalid_email');
+  },
+
+  'a review email is never echoed back in the response': async () => {
+    withDb(true);
+    const r = await call(reviews, {
+      body: { name: 'Attendee', rating: 5, body: 'a genuine looking review', email: 'private@example.com' },
+    });
+    assert.ok(!JSON.stringify(r.body).includes('private@example.com'));
+  },
+
   'GET returns an empty list when there is no database': async () => {
     withDb(false);
     const r = await call(reviews, { method: 'GET' });
