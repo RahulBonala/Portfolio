@@ -1,5 +1,12 @@
 # "Zero to Live" — 1-on-1 session spec
 
+> **Decisions settled (2026-07-30).** Name: **Zero to Live**, under the brand
+> **AI Builders by Rahul** — both already appear in the Playbook PDF and the
+> social poster, so the site now matches the print. Price: **₹99**. Palette:
+> **the portfolio's existing dark theme** (see "Design system" below). The
+> WhatsApp community and direct-access promises are removed until those
+> channels exist.
+
 Reference document for the paid 1-on-1 session sold from this site. Written
 from Rahul's build specification v1.0. This is the source of truth for what
 the session **is**; `src/lib/booking.ts` is the source of truth for what the
@@ -88,8 +95,11 @@ all on free tiers sufficient for the whole session.
    each stage. Fill in the brackets, paste, done.
 4. **The skill of fixing things themselves** — the most valuable part: take any
    error, paste it into AI, get it fixed. Never stuck again.
-5. **Community access** — "AI Builders by Rahul" on WhatsApp.
-6. **Rahul, after the session** — direct message access, no extra charge.
+5. ~~Community access — "AI Builders by Rahul" on WhatsApp~~ — **removed from
+   the site** until the group exists.
+6. ~~Rahul, after the session — direct message access~~ — **removed from the
+   site** until a WhatsApp channel actually exists. Do not re-add a promise
+   before the thing behind it is real.
 
 ## 7. What they'll be able to do afterwards
 
@@ -145,7 +155,7 @@ tools crash, code errors, deployments fail — and shows how to handle each.
 - **60 minutes**, soft limit, 15–30 min buffer between bookings
 - **Google Meet**, one person per session
 - **English**, with Telugu on request
-- **₹49** — see the pricing note below
+- **₹99** — matches the Razorpay button
 
 ## 11. Voice
 
@@ -184,24 +194,34 @@ but **the Razorpay button's redirect URL must match whichever is chosen**, and
 `/session` as the public route and redirecting `/teach` → `/session` is the
 cleaner option if the "Zero to Live" name is the one being marketed.
 
-### 3. Design system
+### 3. Design system — resolved: keep the portfolio's dark theme
 
-The spec specifies a warm cream page (`--paper: #FBFAF7`, ink `#1C1917`) to
-match the Playbook PDF. The portfolio is dark editorial with `--accent:
-#ff6b1a` (dark) / `#c2410c` (light). Note that the spec's accent `#C2410C` is
-**already the portfolio's light-theme accent** — so the palettes are closer
-than they look.
+The spec asked for a warm cream page (`--paper: #FBFAF7`) to match the
+Playbook and poster. The decision was to **stay dark**, for three reasons:
 
-This is a real decision, not a detail: a cream page inside a dark portfolio
-either reads as a deliberate, branded landing page, or as a page from a
-different website. See `DESIGN-GUIDELINES.md` — its rule is that the
-guidelines win and the page gets fixed. Resolve before building.
+1. `DESIGN-GUIDELINES.md` is explicit that the guidelines win and the page
+   gets fixed — /teach is a page of this portfolio, not a separate microsite.
+2. The brand thread that actually carries across poster, Playbook and site is
+   the burnt orange, and that is already shared: the poster's `#C2410C` is
+   *identical* to the portfolio's light-theme accent.
+3. Forcing one route into a different theme fights the pre-paint theme script
+   in `index.html` and the user's stored preference. The most likely outcome
+   is a flash of the wrong theme on the single page that matters most.
+
+The light theme already exists behind the header toggle and is close to the
+poster (`--bg: #f7f8fb` vs `#FBFAF7`), so anyone who prefers it can switch.
+Revisit only if /teach becomes a standalone landing page off its own domain.
 
 ### 4. Open items
 
-- The 4:5 poster (`AI_Builders_Poster.png`) needs to be added for `og:image`;
-  a 4:5 image is a poor OG crop — a 1200×630 variant should be cut from it.
-- Playbook PDF must exist at `/downloads/ai-builders-playbook.pdf` before the
-  page promises it.
-- WhatsApp community + direct-message links are unset.
+- ~~Playbook PDF~~ — **done.** Lives at `/downloads/ai-builders-playbook.pdf`
+  (15 pages, 156 KB) and is linked from /teach so a visitor can read it before
+  paying. `scripts/check-links.mjs` fails the build if it goes missing.
+- ~~Session video~~ — **done.** `/session-intro.mp4`, 464×832 (portrait 9:16),
+  H.264 baseline, 5.1 MB, self-hosted with `preload="metadata"`.
+- **No poster frame yet.** Without one the browser paints the first frame once
+  metadata loads, which is fine but not chosen. Add a still to
+  `SESSION_VIDEO.poster` if the first frame is unflattering.
+- The 4:5 poster still needs a **1200×630 crop** for `og:image` — a 4:5 image
+  crops badly in link previews.
 - "Speak It. Make It." is not currently in the portfolio's project list.

@@ -20,7 +20,12 @@ const SessionVideo: React.FC = () => {
 
   if (!hasSessionVideo) return null;
 
-  const { youTubeId, file, poster, title, caption } = SESSION_VIDEO;
+  const { youTubeId, file, aspect, poster, title, caption } = SESSION_VIDEO;
+
+  // A phone-shot clip is taller than it is wide. Sizing the frame from the
+  // real aspect ratio is what stops the player cropping or letterboxing it,
+  // and `is-portrait` caps the width so it doesn't tower down the page.
+  const portrait = aspect === '9 / 16';
 
   // youtube-nocookie.com is the privacy-preserving host; the params trim the
   // end-screen clutter that would otherwise advertise unrelated channels.
@@ -37,7 +42,10 @@ const SessionVideo: React.FC = () => {
       <h2 id="session-video-h" className="session-video-title">{title}</h2>
       {caption && <p className="session-video-caption">{caption}</p>}
 
-      <div className="session-video-frame">
+      <div
+        className={`session-video-frame ${portrait ? 'is-portrait' : ''}`}
+        style={{ aspectRatio: aspect }}
+      >
         {file ? (
           <video
             className="session-video-player"

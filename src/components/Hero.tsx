@@ -9,7 +9,7 @@ const FACTS = [
   { k: 'Now', v: 'Product Designer, AI specialist at Ginthi.ai' },
   { k: 'Built', v: 'BestAnswers.AI, a multi-agent answer engine' },
   { k: 'Shipped', v: 'Stepforge, where a résumé becomes a portfolio site' },
-  { k: 'Teaching', v: 'AI Tools for Builders, live 1:1 sessions' },
+  { k: 'Teaching', v: 'Zero to Live, 1:1 sessions for new builders' },
   { k: 'Based', v: 'Bangalore, India. Working globally.' },
 ];
 

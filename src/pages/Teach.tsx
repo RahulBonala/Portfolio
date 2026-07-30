@@ -10,7 +10,7 @@ import './Teach.css';
 const STEPS = [
   { n: '01', t: 'You bring an idea', d: 'Any idea, however rough. Don’t have one? I’ll help you find a simple one in the first five minutes, so we can get moving.' },
   { n: '02', t: 'We take it to a live URL', d: 'Screen-shared, 1:1. Define, design, develop, deploy: the whole path, with free AI tools, using your idea as the example.' },
-  { n: '03', t: 'You leave able to do it again', d: 'The Playbook, every prompt we used, and the community, so the next one you build, you build without me.' },
+  { n: '03', t: 'You leave able to do it again', d: 'The Playbook and every prompt we used, so the next one you build, you build without me.' },
 ];
 
 const Teach: React.FC = () => {
@@ -18,7 +18,7 @@ const Teach: React.FC = () => {
   useReveals(ref);
 
   useEffect(() => {
-    document.title = 'AI Tools for Builders: live sessions · Rahul Bonala';
+    document.title = 'Zero to Live: turn your idea into a website in an hour · Rahul Bonala';
   }, []);
 
   return (
@@ -27,7 +27,7 @@ const Teach: React.FC = () => {
         <Link to="/" className="page-back">← Back to portfolio</Link>
 
         <header className="teach-head">
-          <p className="teach-eyebrow">AI Tools for Builders</p>
+          <p className="teach-eyebrow">AI Builders by Rahul · Zero to Live</p>
           <h1 className="teach-title" data-reveal="up">Turn your idea into a live website. In one hour.</h1>
           <p className="teach-lede" data-reveal="up">
             A live, one-on-one session where I show you the complete path, from a rough

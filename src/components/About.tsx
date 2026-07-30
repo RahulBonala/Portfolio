@@ -78,9 +78,9 @@ const About: React.FC = () => {
             </p>
             <p>
               And because the fastest way to sharpen a workflow is to teach it, I run{' '}
-              <Link to="/teach" className="about-inline-link">AI Tools for Builders</Link>,
-              live sessions where designers and developers learn to ship with AI the
-              way I do daily.
+              <Link to="/teach" className="about-inline-link">Zero to Live</Link>,
+              one-on-one sessions where someone with an idea and no code leaves
+              with a website they built themselves.
             </p>
           </div>
 

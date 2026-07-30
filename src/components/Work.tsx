@@ -113,8 +113,8 @@ const PROJECTS = [
   {
     index: '04',
     meta: 'Teaching · Live Sessions',
-    title: 'AI Tools for Builders',
-    tagline: 'Not a video library. A working session.',
+    title: 'Zero to Live',
+    tagline: 'Your idea, live on the internet, in an hour.',
     story:
       'Once or twice a week I block an hour to sit with one person, usually a student or someone early in their career, and take their idea all the way to a live website using free AI tools. Define, design, develop, deploy, in one sitting. They leave with the Playbook, every prompt we used, and the thing most tutorials never teach: how to fix it themselves when it breaks.',
     points: [
@@ -123,7 +123,7 @@ const PROJECTS = [
       'You leave with the Playbook and the prompts, so the next one you build alone',
     ],
     stack: ['1:1 · live', 'Free AI tools', 'Idea → live URL'],
-    links: [{ label: 'How the sessions work', href: '/teach' }],
+    links: [{ label: 'How a session works', href: '/teach' }],
     visual: <CourseVisual />,
   },
 ];

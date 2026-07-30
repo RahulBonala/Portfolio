@@ -62,12 +62,23 @@ export const SESSION_STAGES = [
     label: 'What you keep',
     note: 'The support doesn’t stop at 60 minutes. That’s the whole point.',
     items: [
-      'The AI Builder’s Playbook: a 15-page PDF with every step written out, every tool linked, and 7 copy-paste prompts. Yours to keep.',
-      'Access to the AI Builders community on WhatsApp, where you can ask questions and share what you build.',
-      'Me, afterwards. Stuck next week? Message me directly. No extra charge. I want you to finish what you start.',
+      'The AI Builder’s Playbook: a 15-page PDF with every step written out, every tool linked, and the prompts ready to copy. Yours to keep.',
+      'The exact prompts we used, so you can run the same four phases again on your own.',
+      'The skill of fixing things yourself: take any error, paste it into AI, get it working. That’s the part that lasts.',
     ],
   },
 ] as const;
+
+/**
+ * The Playbook is a real file in /public, and the page links to it directly.
+ * If you move or rename it, update this and re-run the build — the link check
+ * in scripts/check-links.mjs will fail loudly if the file stops existing.
+ */
+export const PLAYBOOK = {
+  href: '/downloads/ai-builders-playbook.pdf',
+  filename: 'AI-Builders-Playbook.pdf',
+  pages: 15,
+} as const;
 
 /** Promises that de-risk the purchase. Shown right next to the price. */
 export const SESSION_GUARANTEES = [
@@ -88,16 +99,24 @@ export const SESSION_GUARANTEES = [
  *   file      — a self-hosted MP4 in /public (e.g. '/session-intro.mp4').
  *               Use this if you'd rather not send visitors to YouTube.
  *
- * `poster` is the still frame shown before play. Strongly recommended for the
- * self-hosted path — without it the player shows a black rectangle.
+ * `aspect` must match the video's real shape, as a CSS aspect-ratio. The
+ * current clip is 464x832, i.e. shot on a phone, so it is '9 / 16'. Getting
+ * this wrong is not cosmetic: the player would letterbox or crop the frame.
+ * A portrait video is also capped in width (see SessionVideo.css) so it reads
+ * as a phone-sized player instead of a tower down the middle of the page.
+ *
+ * `poster` is the still frame shown before play. Optional: with no poster the
+ * browser paints the first frame once metadata loads, which is why `preload`
+ * is set to "metadata" rather than "none".
  */
 export const SESSION_VIDEO = {
   youTubeId: '',
-  file: '',
+  file: '/session-intro.mp4',
+  aspect: '9 / 16',
   poster: '',
-  title: 'What a 1:1 session actually looks like',
+  title: 'See how a session actually runs',
   caption:
-    'A two-minute walkthrough of how the hour runs: what you bring, what we build, and what you leave with.',
+    'A quick look at the four phases we walk through together: define, design, develop, deploy.',
 } as const;
 
 export const hasSessionVideo = Boolean(SESSION_VIDEO.youTubeId || SESSION_VIDEO.file);

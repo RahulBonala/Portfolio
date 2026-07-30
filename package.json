@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build && vite build --ssr src/entry-prerender.tsx --outDir dist-ssr && node scripts/prerender.js",
     "lint": "eslint .",
     "test": "node scripts/test-verify-booking.mjs",
+    "check:links": "node scripts/check-links.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -39,9 +39,9 @@ const ROUTES = [
   {
     path: '/teach',
     out: 'teach/index.html',
-    title: 'AI Tools for Builders: a 1:1 working session · Rahul Bonala',
+    title: 'Zero to Live: turn your idea into a website in an hour · Rahul Bonala',
     description:
-      'Turn your idea into a live website in one hour, one-on-one, using free AI tools and no coding. You leave with the Playbook and the prompts, able to do it again yourself.',
+      'Turn your idea into a live website in about 60 minutes. A one-on-one session using free AI tools, with zero coding. You leave with the 15-page AI Builder’s Playbook and every prompt, able to do it again yourself.',
   },
   {
     path: '/teach/booked',
