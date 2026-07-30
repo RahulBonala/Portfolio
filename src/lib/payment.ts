@@ -25,7 +25,14 @@ export type BookingAccess =
    * CALENDLY_URL is set there. When it is, use it in preference to the bundled
    * constant — that's what lets the real link live outside the public bundle.
    */
-  | { state: 'granted'; verified: boolean; schedulingUrl?: string; downloadToken?: string }
+  | {
+      state: 'granted';
+      verified: boolean;
+      paymentId?: string;
+      schedulingUrl?: string;
+      downloadToken?: string;
+      verificationIssue?: 'server' | 'network' | 'unconfigured';
+    }
   | { state: 'denied' };
 
 const SESSION_KEY = 'rb-booking-verified';
@@ -70,7 +77,12 @@ function readRedirectParams(search: string): RedirectParams | null {
  * strand a buyer who had already been let in. Storage is sessionStorage, so it
  * dies with the tab, and the token expires server-side within the hour anyway.
  */
-type Remembered = { verified: boolean; schedulingUrl?: string; downloadToken?: string };
+type Remembered = {
+  verified: boolean;
+  paymentId?: string;
+  schedulingUrl?: string;
+  downloadToken?: string;
+};
 
 function remember(value: Remembered) {
   try {
@@ -89,6 +101,7 @@ function recall(): BookingAccess | null {
     return {
       state: 'granted',
       verified: v.verified,
+      paymentId: typeof v.paymentId === 'string' ? v.paymentId : undefined,
       schedulingUrl: typeof v.schedulingUrl === 'string' ? v.schedulingUrl : undefined,
       downloadToken: typeof v.downloadToken === 'string' ? v.downloadToken : undefined,
     };
@@ -108,11 +121,14 @@ function scrubUrl() {
 }
 
 export async function checkBookingAccess(search: string): Promise<BookingAccess> {
-  const remembered = recall();
-  if (remembered) return remembered;
-
   const params = readRedirectParams(search);
-  if (!params) return { state: 'denied' };
+  // A fresh Razorpay return must win over any cached result from an earlier
+  // attempt in this tab, otherwise a stale fail-open result can hide the new
+  // payment's secure download token.
+  if (!params) {
+    const remembered = recall();
+    return remembered ?? { state: 'denied' };
+  }
 
   try {
     const res = await fetch('/api/verify-booking', {
@@ -122,11 +138,14 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
     });
 
     // No endpoint deployed (static-only preview, or the function is missing):
-    // treat it exactly like "unconfigured" rather than denying a real buyer.
+    // keep the signed params in the URL so the buyer can retry.
     if (!res.ok) {
-      remember({ verified: false });
-      scrubUrl();
-      return { state: 'granted', verified: false };
+      return {
+        state: 'granted',
+        verified: false,
+        paymentId: params.razorpay_payment_id,
+        verificationIssue: 'server',
+      };
     }
 
     const data = (await res.json()) as {
@@ -146,14 +165,28 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
         typeof data.downloadToken === 'string' && /^[A-Za-z0-9_-]+\.[a-f0-9]{64}$/.test(data.downloadToken)
           ? data.downloadToken
           : undefined;
-      remember({ verified: true, schedulingUrl: safe, downloadToken: token });
-      return { state: 'granted', verified: true, schedulingUrl: safe, downloadToken: token };
+      remember({
+        verified: true,
+        paymentId: params.razorpay_payment_id,
+        schedulingUrl: safe,
+        downloadToken: token,
+      });
+      return {
+        state: 'granted',
+        verified: true,
+        paymentId: params.razorpay_payment_id,
+        schedulingUrl: safe,
+        downloadToken: token,
+      };
     }
 
     if (data.configured === false) {
-      remember({ verified: false });
-      scrubUrl();
-      return { state: 'granted', verified: false };
+      return {
+        state: 'granted',
+        verified: false,
+        paymentId: params.razorpay_payment_id,
+        verificationIssue: 'unconfigured',
+      };
     }
 
     // Configured and the signature did not check out — this is a forged or
@@ -161,9 +194,13 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
     return { state: 'denied' };
   } catch {
     // Network failure. The params were well-formed, so let them through
-    // unverified rather than punishing someone who has actually paid.
-    remember({ verified: false });
-    scrubUrl();
-    return { state: 'granted', verified: false };
+    // unverified rather than punishing someone who has actually paid. Keep
+    // the params in place so the retry action can verify them later.
+    return {
+      state: 'granted',
+      verified: false,
+      paymentId: params.razorpay_payment_id,
+      verificationIssue: 'network',
+    };
   }
 }

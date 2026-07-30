@@ -48,6 +48,7 @@ const tests = {
     const r = await call(validBody);
     assert.equal(r.body.verified, true);
     assert.equal(r.body.configured, true);
+    assert.match(r.body.downloadToken, /^[A-Za-z0-9_-]+\.[a-f0-9]{64}$/);
   },
 
   'a forged signature is rejected': async () => {

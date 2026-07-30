@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build && vite build --ssr src/entry-prerender.tsx --outDir dist-ssr && node scripts/prerender.js",
     "lint": "eslint .",
-    "test": "node --import ./scripts/hooks/register.mjs scripts/test-verify-booking.mjs && node --import ./scripts/hooks/register.mjs scripts/test-token.mjs && node --import ./scripts/hooks/register.mjs scripts/test-endpoints.mjs",
+    "test": "node --import ./scripts/hooks/register.mjs scripts/test-verify-booking.mjs && node --import ./scripts/hooks/register.mjs scripts/test-payment-client.mjs && node --import ./scripts/hooks/register.mjs scripts/test-token.mjs && node --import ./scripts/hooks/register.mjs scripts/test-endpoints.mjs",
     "check:links": "node scripts/check-links.mjs",
     "preview": "vite preview"
   },

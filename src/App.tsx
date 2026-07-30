@@ -130,7 +130,7 @@ function App() {
             <span className="footer-dot" aria-hidden="true">·</span>
             <Link to="/teach">Live sessions</Link>
           </div>
-          <p className="footer-copy">&copy; 2023–{new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.</p>
+          <p className="footer-copy">&copy; 2024 Sri Sai Rahul Bonala. All rights reserved.</p>
         </div>
       </footer>
     </div>

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BOOKING, PLAYBOOK } from '../lib/booking';
+import { BOOKING } from '../lib/booking';
 import { checkBookingAccess, type BookingAccess } from '../lib/payment';
 import { RB_EVENTS } from '../lib/robomark';
+import BookingSteps from '../components/BookingSteps';
 import ReviewForm from '../components/ReviewForm';
 import { useReveals } from '../hooks/useReveals';
 import './Teach.css';
@@ -18,6 +19,7 @@ import './Teach.css';
 const Booked: React.FC = () => {
   const ref = useRef<HTMLDivElement>(null);
   const [access, setAccess] = useState<BookingAccess>({ state: 'checking' });
+  const [retrying, setRetrying] = useState(false);
   useReveals(ref);
 
   useEffect(() => {
@@ -41,6 +43,13 @@ const Booked: React.FC = () => {
       document.title = 'Book a session · Rahul Bonala';
     }
   }, [access.state]);
+
+  const retryVerification = async () => {
+    setRetrying(true);
+    const result = await checkBookingAccess(window.location.search);
+    setAccess(result);
+    setRetrying(false);
+  };
 
   if (access.state === 'checking') {
     return (
@@ -92,44 +101,16 @@ const Booked: React.FC = () => {
           and we’ll meet 1:1 for the hour. You’ll get a calendar invite straight after.
         </p>
 
-        <a
-          className="booked-calendly"
-          href={access.schedulingUrl ?? BOOKING.calendly}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-reveal="up"
-        >
-          Choose a time
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
-          </svg>
-        </a>
-
-        {/* The Playbook is part of what they just bought, so it appears here
-            and nowhere else. The link carries a short-lived token minted by
-            the server after it verified the payment — see api/playbook.ts. */}
-        {access.downloadToken && (
-          <a
-            className="playbook-download"
-            href={PLAYBOOK.hrefFor(access.downloadToken)}
-            data-reveal="up"
-          >
-            <span className="playbook-download-icon" aria-hidden="true">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-              </svg>
-            </span>
-            <span className="playbook-download-text">
-              <strong>Download the AI Builder’s Playbook</strong>
-              <span>All {PLAYBOOK.pages} pages, yours to keep. Grab it now — this link expires in an hour.</span>
-            </span>
-            <svg className="playbook-download-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
-            </svg>
-          </a>
-        )}
+        <BookingSteps
+          stage="paid"
+          verified={access.verified}
+          paymentId={access.paymentId}
+          schedulingUrl={access.schedulingUrl}
+          downloadToken={access.downloadToken}
+          verificationIssue={access.verificationIssue}
+          retrying={retrying}
+          onRetry={retryVerification}
+        />
 
         {/* Same token as the download: only a real buyer can review. */}
         {access.downloadToken && <ReviewForm token={access.downloadToken} />}

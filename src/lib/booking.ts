@@ -15,10 +15,10 @@ export const BOOKING = {
   route: '/teach',
   bookedRoute: '/teach/booked',
   razorpayButtonId: 'pl_SZtl3NKr9FohLH',
-  // Scheduling link, shown on /teach/booked only after payment verification.
-  // Points at the event itself, not the profile page — a buyer who has just
-  // paid should land on the calendar, not on a list of one thing to click.
-  calendly: 'https://calendly.com/rahulbonala06/30min',
+  // Production can override this with the server-only CALENDLY_URL. Keep the
+  // fallback pointed at the active event so a missing env var never strands a
+  // buyer who has already paid.
+  calendly: 'https://calendly.com/rahulbonala06/zero_to_live',
   slotsLabel: 'Limited slots each week',
   email: 'rahulbonala06@gmail.com',
   /** Live call length, in minutes. Must match the Calendly event's duration. */

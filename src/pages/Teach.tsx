@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import PaymentButton from '../components/PaymentButton';
+import BookingSteps from '../components/BookingSteps';
 import SessionVideo from '../components/SessionVideo';
 import SessionValue from '../components/SessionValue';
 import Testimonials from '../components/Testimonials';
@@ -95,9 +95,7 @@ const Teach: React.FC = () => {
               Full refund if it didn’t help. The pitch is the work, not the price.
             </p>
           </div>
-          <div className="teach-book-action">
-            <PaymentButton />
-          </div>
+          <BookingSteps stage="payment" />
         </section>
 
         <p className="teach-foot">
