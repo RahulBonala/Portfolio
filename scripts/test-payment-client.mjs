@@ -12,13 +12,21 @@ globalThis.sessionStorage = {
   clear: () => values.clear(),
 };
 
+const local = new Map();
+globalThis.localStorage = {
+  getItem: (key) => local.get(key) ?? null,
+  setItem: (key, value) => local.set(key, String(value)),
+  removeItem: (key) => local.delete(key),
+  clear: () => local.clear(),
+};
+
 let scrubCount = 0;
 globalThis.window = {
   location: { pathname: '/teach' },
   history: { replaceState: () => { scrubCount += 1; } },
 };
 
-const { checkBookingAccess } = await import('../src/lib/payment.ts');
+const { checkBookingAccess, captureUtmSource } = await import('../src/lib/payment.ts');
 
 const paymentId = 'pay_CLIENTtest123';
 const token = `${Buffer.from(`${paymentId}.${Date.now() + 60_000}`).toString('base64url')}.${'b'.repeat(64)}`;
@@ -126,6 +134,34 @@ const tests = {
     assert.equal(result.paymentId, paymentId);
     assert.equal(result.downloadToken, token);
     assert.equal(result.scheduled, true);
+  },
+
+  'a utm_source from an earlier visit is sent with the verification': async () => {
+    values.clear();
+    local.clear();
+    captureUtmSource('?utm_source=YouTube&utm_medium=video');
+    let sent;
+    globalThis.fetch = async (_url, init) => {
+      sent = JSON.parse(init.body);
+      return { ok: true, json: async () => ({ verified: true, configured: true, downloadToken: token }) };
+    };
+    await checkBookingAccess(`?payment_id=${paymentId}`);
+    assert.deepEqual(sent, { razorpay_payment_id: paymentId, utm_source: 'youtube' });
+  },
+
+  'a malformed or stale utm_source is not sent': async () => {
+    values.clear();
+    local.clear();
+    captureUtmSource('?utm_source=%3Cscript%3E');
+    assert.equal(local.size, 0);
+    local.set('rb-utm-source', JSON.stringify({ v: 'youtube', at: Date.now() - 31 * 24 * 60 * 60 * 1000 }));
+    let sent;
+    globalThis.fetch = async (_url, init) => {
+      sent = JSON.parse(init.body);
+      return { ok: true, json: async () => ({ verified: true, configured: true, downloadToken: token }) };
+    };
+    await checkBookingAccess(`?payment_id=${paymentId}`);
+    assert.deepEqual(sent, { razorpay_payment_id: paymentId });
   },
 };
 

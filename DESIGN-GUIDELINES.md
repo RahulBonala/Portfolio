@@ -57,6 +57,8 @@ Type rules:
 
 Skip link, focus-visible rings (accent), `aria-label` on icon-only controls, `aria-expanded`/`aria-current` where relevant, decorative SVGs `aria-hidden`, 44px touch targets, WCAG AA contrast (orange on near-black passes 6.4:1; the bright orange is never used for body text), Escape closes the mobile menu, honeypot on the form.
 
+**Channel brand (Pay Grade AI).** The YouTube section is the one place a second palette appears: the channel's navy `#0B1220` and blue `#3B82F6`, confined to the channel card (top rule, avatar) and the logo files in `public/brand/paygrade/`. Use the white wordmark on dark, the navy one on light. Buttons and labels around it stay on the site accent. The red YouTube glyph is the platform's logo and appears once, in the card.
+
 ## 6. Anti-patterns (updated)
 
 Still banned: gradient rainbows, glassmorphism as a motif, decorative emoji, sparkle bullets, urgency/discount markers, auto-popups, more than one pulsing dot (the canonical one lives in the footer), "AI-native"-style buzzwords in copy, endless purposeless loops.
@@ -79,6 +81,7 @@ src/
     ├── three/HeroScene.tsx — lazy R3F particle network
     ├── About.tsx        — statement, prose, numbers, timeline
     ├── Work.tsx         — 3 project worlds + archive (data inline)
+    ├── YouTube.tsx      — Pay Grade AI channel card + 3 newest videos (from api/youtube.ts; card alone if the feed fails)
     ├── Skills.tsx       — segment-meter specimen rows
     ├── Approach.tsx     — pinned manifesto + quotes
     ├── Contact.tsx      — direct email + EmailJS form

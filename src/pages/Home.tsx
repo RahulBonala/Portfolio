@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Work from '../components/Work';
+import YouTube from '../components/YouTube';
 import Skills from '../components/Skills';
 import Approach from '../components/Approach';
 import Testimonials from '../components/Testimonials';
@@ -21,6 +22,7 @@ const Home: React.FC = () => {
       <Hero />
       <About />
       <Work />
+      <YouTube />
       <Skills />
       <Approach />
       <Testimonials variant="page" />

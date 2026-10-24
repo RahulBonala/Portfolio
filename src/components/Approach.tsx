@@ -10,7 +10,7 @@ const Approach: React.FC = () => {
     <section id="approach" className="section approach">
       <div className="container">
         <div className="sec-label">
-          <em>004</em> Approach
+          <em>005</em> Approach
         </div>
 
         <h2 className="approach-line" data-reveal="up">

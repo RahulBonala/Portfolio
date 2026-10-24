@@ -146,6 +146,42 @@ function recall(): BookingAccess | null {
   return null;
 }
 
+/**
+ * Where the visitor came from, for attributing bookings (e.g. utm_source=
+ * youtube from a video description).
+ *
+ * Razorpay sends a buyer back with only a payment id, so the utm parameter
+ * from their first visit is long gone by then. It is kept in localStorage on
+ * arrival and sent with the verification request, which stores it on the
+ * booking row. Last touch wins; it lapses after 30 days.
+ */
+const UTM_KEY = 'rb-utm-source';
+const UTM_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000;
+const UTM_VALUE = /^[a-z0-9._-]{1,40}$/;
+
+export function captureUtmSource(search: string) {
+  const value = (new URLSearchParams(search).get('utm_source') ?? '').trim().toLowerCase();
+  if (!UTM_VALUE.test(value)) return;
+  try {
+    localStorage.setItem(UTM_KEY, JSON.stringify({ v: value, at: Date.now() }));
+  } catch {
+    /* storage unavailable — the booking just goes unattributed */
+  }
+}
+
+function recallUtmSource(): string | null {
+  try {
+    const stored = localStorage.getItem(UTM_KEY);
+    if (!stored) return null;
+    const { v, at } = JSON.parse(stored) as { v?: unknown; at?: unknown };
+    if (typeof v !== 'string' || !UTM_VALUE.test(v)) return null;
+    if (typeof at !== 'number' || Date.now() - at > UTM_MAX_AGE_MS) return null;
+    return v;
+  } catch {
+    return null;
+  }
+}
+
 /** Strips the payment params so the URL isn't reusable if shared or bookmarked. */
 function scrubUrl() {
   try {
@@ -175,11 +211,13 @@ export async function checkBookingAccess(search: string): Promise<BookingAccess>
     return remembered ?? { state: 'denied' };
   }
 
+  const utmSource = recallUtmSource();
+
   try {
     const res = await fetch('/api/verify-booking', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload.body),
+      body: JSON.stringify(utmSource ? { ...payload.body, utm_source: utmSource } : payload.body),
     });
 
     // No endpoint deployed (static-only preview, or the function is missing):

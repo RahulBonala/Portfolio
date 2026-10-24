@@ -233,6 +233,65 @@
    Sits immediately below the booking card and deliberately repeats its
    chrome, padding and full container width, so the two read as a pair
    rather than as a card followed by an afterthought. */
+/* "Not ready to book?" — a quiet line under the booking card, deliberately
+   smaller than it so it never competes with paying. */
+.teach-channel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-lg);
+  padding: 16px clamp(18px, 3vw, 28px);
+  margin-bottom: 28px;
+}
+
+.teach-channel-mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.teach-channel-copy {
+  flex: 1 1 220px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--ink-secondary);
+}
+
+.teach-channel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 20px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.teach-channel-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-faint);
+}
+
+.teach-channel-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .teach-channel-btn {
+    transition: none;
+  }
+}
+
 .teach-review {
   display: grid;
   gap: clamp(24px, 3vw, 44px);

@@ -90,7 +90,7 @@ const Contact: React.FC = () => {
     <section id="contact" className="section contact">
       <div className="container">
         <div className="sec-label">
-          <em>005</em> Contact
+          <em>006</em> Contact
         </div>
 
         <h2 className="sec-title contact-title" data-reveal="up">

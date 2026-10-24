@@ -107,7 +107,7 @@ const Skills: React.FC = () => {
     <section id="skills" className="section skills">
       <div className="container">
         <div className="sec-label">
-          <em>003</em> Receipts
+          <em>004</em> Receipts
         </div>
         <h2 className="sec-title" data-reveal="up">
           Claims,<br />

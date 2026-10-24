@@ -14,6 +14,10 @@ create table if not exists public.bookings (
   created_at timestamptz default now()
 );
 
+-- Where the buyer came from (e.g. 'youtube'), from ?utm_source on their first
+-- visit. Added after the table existed, hence the separate statement.
+alter table public.bookings add column if not exists utm_source text;
+
 -- reviews table
 --
 -- `email` is optional and given for follow-up only (an offer, a later

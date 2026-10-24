@@ -5,11 +5,12 @@ import './Hero.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FACTS = [
+const FACTS: { k: string; v: string; href?: string }[] = [
   { k: 'Now', v: 'Product Designer, AI specialist at Ginthi.ai' },
   { k: 'Built', v: 'BestAnswers.AI and Stepforge, solo' },
   { k: 'Teaching', v: 'Zero to Live, 1:1 sessions for new builders' },
   { k: 'Based', v: 'Bangalore, India. Working globally.' },
+  { k: 'Channel', v: 'Pay Grade AI, daily AI news on YouTube', href: '#youtube' },
 ];
 
 /**
@@ -186,10 +187,10 @@ const Hero: React.FC = () => {
 
       <div className="hero-facts-wrap">
         <dl className="container hero-facts">
-          {FACTS.map(({ k, v }) => (
+          {FACTS.map(({ k, v, href }) => (
             <div className="hero-fact" key={k}>
               <dt>{k}</dt>
-              <dd>{v}</dd>
+              <dd>{href ? <a className="hero-fact-link" href={href}>{v}</a> : v}</dd>
             </div>
           ))}
         </dl>

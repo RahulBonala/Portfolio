@@ -6,9 +6,10 @@ import './Header.css';
 const NAV_LINKS = [
   { id: 'about', label: 'About', index: '01' },
   { id: 'work', label: 'Work', index: '02' },
-  { id: 'skills', label: 'Skills', index: '03' },
-  { id: 'approach', label: 'Approach', index: '04' },
-  { id: 'contact', label: 'Contact', index: '05' },
+  { id: 'youtube', label: 'YouTube', index: '03' },
+  { id: 'skills', label: 'Receipts', index: '04' },
+  { id: 'approach', label: 'Approach', index: '05' },
+  { id: 'contact', label: 'Contact', index: '06' },
 ];
 
 const Header: React.FC = () => {
@@ -168,6 +169,7 @@ const Header: React.FC = () => {
         <div className="menu-overlay-foot">
           <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>GitHub</a>
           <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>LinkedIn</a>
+          <a href="https://www.youtube.com/channel/UCIfuWTDvEMRy-5Ib68FBcMg" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>YouTube</a>
           <a href="mailto:rahulbonala06@gmail.com" tabIndex={isMenuOpen ? 0 : -1}>Email</a>
           <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf" tabIndex={isMenuOpen ? 0 : -1}>Resume</a>
         </div>

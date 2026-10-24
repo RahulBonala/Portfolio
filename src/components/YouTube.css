@@ -1,0 +1,312 @@
+/* ── YouTube: the Pay Grade AI channel ─────────────────────────
+   Site tokens throughout; the channel's own navy (#0B1220) and blue
+   (#3B82F6) appear only on the channel card, so the section reads as
+   the site's while the card reads as the channel's. */
+.yt {
+  --yt-navy: #0B1220;
+  --yt-blue: #3B82F6;
+}
+
+.yt-lede {
+  max-width: 62ch;
+  margin-top: clamp(18px, 2.4vh, 28px);
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: var(--ink-secondary);
+}
+
+.yt-grid {
+  display: grid;
+  gap: clamp(20px, 2.6vw, 32px);
+  margin-top: clamp(32px, 5vh, 56px);
+  align-items: start;
+}
+
+/* Alone, the card keeps a card's width instead of stretching across. */
+.yt-grid:not(.has-videos) .yt-channel {
+  max-width: 560px;
+}
+
+@media (min-width: 960px) {
+  .yt-grid.has-videos {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+
+/* ── Channel card ── */
+.yt-channel {
+  position: relative;
+  min-width: 0;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  padding: clamp(24px, 3.4vw, 36px);
+  overflow: hidden;
+}
+
+/* The channel blue as a single top rule: the card's one brand mark. */
+.yt-channel::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--yt-blue);
+}
+
+.yt-channel-head {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.yt-avatar {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--yt-navy);
+  box-shadow: 0 0 0 1px var(--hairline-strong);
+}
+
+.yt-channel-id {
+  min-width: 0;
+}
+
+.yt-channel-kicker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+
+.yt-glyph {
+  flex: none;
+}
+
+.yt-channel-name {
+  line-height: 0;
+}
+
+/* White wordmark on the dark theme, navy on the light one. */
+.yt-logo {
+  display: block;
+  width: min(100%, 240px);
+  height: auto;
+}
+
+.yt-logo--light {
+  display: none;
+}
+
+:root[data-theme='light'] .yt-logo--dark {
+  display: none;
+}
+
+:root[data-theme='light'] .yt-logo--light {
+  display: block;
+}
+
+.yt-channel-line {
+  margin: 22px 0 26px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.yt-channel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.yt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 12px 22px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    border-color var(--transition-fast), background var(--transition-fast);
+}
+
+.yt-btn--primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.yt-btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+.yt-btn--secondary {
+  color: var(--ink);
+  border: 1px solid var(--hairline-strong);
+  font-weight: 600;
+}
+
+.yt-btn--secondary:hover {
+  border-color: var(--accent);
+  background: var(--accent-faint);
+}
+
+/* Same treatment as the site's other accent-filled controls: a page-coloured
+   gap inside an accent ring, visible against the fill and the page alike. */
+.yt-btn:focus-visible,
+.yt-video:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 3px var(--bg);
+}
+
+/* ── Latest videos ── */
+.yt-videos {
+  min-width: 0;
+  animation: yt-in 0.6s var(--ease-out) both;
+}
+
+@keyframes yt-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+.yt-videos-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+
+.yt-video-list {
+  display: grid;
+  gap: 12px;
+  list-style: none;
+}
+
+.yt-video {
+  display: grid;
+  grid-template-columns: minmax(120px, 42%) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-md);
+  background: var(--bg-raised);
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.yt-video:hover {
+  border-color: var(--hairline-strong);
+  transform: translateY(-2px);
+}
+
+.yt-video-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--yt-navy);
+}
+
+/* hqdefault is 4:3 with letterbox bars; cover crops them away. */
+.yt-video-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease-out);
+}
+
+.yt-video-thumb img.is-fallback {
+  object-fit: contain;
+  padding: 12%;
+}
+
+.yt-video:hover .yt-video-thumb img {
+  transform: scale(1.04);
+}
+
+.yt-video-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding-right: 6px;
+}
+
+.yt-video-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: var(--ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.yt-video:hover .yt-video-title {
+  color: var(--accent);
+}
+
+.yt-video-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* Phones: cards stack, the thumbnail goes full width above its title. */
+@media (max-width: 560px) {
+  .yt-video {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .yt-video-body {
+    padding: 0 4px 4px;
+  }
+
+  .yt-channel-actions .yt-btn {
+    flex: 1 1 100%;
+  }
+
+  .yt-avatar {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yt-videos {
+    animation: none;
+  }
+
+  .yt-btn,
+  .yt-video,
+  .yt-video-thumb img {
+    transition: none;
+  }
+
+  .yt-btn--primary:hover,
+  .yt-video:hover,
+  .yt-video:hover .yt-video-thumb img {
+    transform: none;
+  }
+}

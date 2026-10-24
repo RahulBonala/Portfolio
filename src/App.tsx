@@ -13,6 +13,8 @@ import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import Teach from './pages/Teach';
 import Review from './pages/Review';
+import { CHANNEL } from './lib/youtube';
+import { captureUtmSource } from './lib/payment';
 import './App.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -77,6 +79,12 @@ function App() {
     };
   }, []);
 
+  // Remember where a visitor came from (e.g. ?utm_source=youtube) so a later
+  // booking can be attributed to it. See src/lib/payment.ts.
+  useEffect(() => {
+    captureUtmSource(window.location.search);
+  }, []);
+
   // Debounced refresh keeps ScrollTrigger positions correct across viewport
   // resizes and orientation changes (the audit's "resize blackout" class).
   useEffect(() => {
@@ -130,11 +138,17 @@ function App() {
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
             <span className="footer-dot" aria-hidden="true">·</span>
+            <a href={CHANNEL.url} target="_blank" rel="noopener noreferrer">YouTube</a>
+            <span className="footer-dot" aria-hidden="true">·</span>
             <a href="mailto:rahulbonala06@gmail.com">Email</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <Link to="/teach">Live sessions</Link>
           </div>
-          <p className="footer-copy">&copy; 2024 Sri Sai Rahul Bonala. All rights reserved.</p>
+          {/* Prerendered at build time, so a page built last year hydrates with a
+              different year; the suppression lets the client's year win quietly. */}
+          <p className="footer-copy" suppressHydrationWarning>
+            &copy; {new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.
+          </p>
         </div>
       </footer>
     </div>

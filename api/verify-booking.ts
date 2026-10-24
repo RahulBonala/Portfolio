@@ -69,32 +69,52 @@ function str(value: unknown, max = 200): string {
   return typeof value === 'string' && value.length <= max ? value : '';
 }
 
+/** The visitor's utm_source (e.g. 'youtube'), or null. Same rule as the client. */
+function utm(value: unknown): string | null {
+  const v = str(value, 40).trim().toLowerCase();
+  return /^[a-z0-9._-]{1,40}$/.test(v) ? v : null;
+}
+
 /**
  * Records the buyer so Rahul has a list of who booked, and so a review can be
  * tied back to a real payment. Deliberately fire-and-forget with its own
  * try/catch: the payment is already verified by the time this runs, and a
  * database hiccup must never stop someone reaching their session.
  */
-async function recordBooking(paymentId: string, linkId: string, known?: PaymentDetails | null) {
+async function recordBooking(
+  paymentId: string,
+  linkId: string,
+  known?: PaymentDetails | null,
+  utmSource?: string | null
+) {
   if (!dbConfigured()) return;
   try {
     // The Payment Button path has already looked this payment up to prove it;
     // reusing that result keeps the buyer waiting on one API call, not two.
     const details = known ?? (await fetchPaymentDetails(paymentId));
-    await insert(
-      'bookings',
-      {
-        razorpay_payment_id: paymentId,
-        razorpay_payment_link_id: linkId || null,
-        email: details?.email ?? null,
-        phone: details?.phone ?? null,
-        name: details?.name ?? null,
-        amount_minor: details?.amountMinor ?? null,
-        currency: details?.currency ?? 'INR',
-        status: 'paid',
-      },
-      { onConflict: 'razorpay_payment_id' }
-    );
+    const row = {
+      razorpay_payment_id: paymentId,
+      razorpay_payment_link_id: linkId || null,
+      email: details?.email ?? null,
+      phone: details?.phone ?? null,
+      name: details?.name ?? null,
+      amount_minor: details?.amountMinor ?? null,
+      currency: details?.currency ?? 'INR',
+      status: 'paid',
+    };
+    // utm_source is only sent when there is one, so a repeat verification
+    // without it (a refresh, another device) never wipes the attribution.
+    try {
+      await insert('bookings', utmSource ? { ...row, utm_source: utmSource } : row, {
+        onConflict: 'razorpay_payment_id',
+      });
+    } catch (err) {
+      // A database without the utm_source column yet (see supabase/schema.sql)
+      // must still record the booking itself.
+      if (!utmSource) throw err;
+      console.error('recordBooking with utm_source failed, retrying without', err instanceof Error ? err.message : err);
+      await insert('bookings', row, { onConflict: 'razorpay_payment_id' });
+    }
   } catch (err) {
     console.error('recordBooking failed', err instanceof Error ? err.message : err);
   }
@@ -122,7 +142,7 @@ async function checkScheduled(paymentId: string): Promise<boolean> {
  * fails the amount and currency checks. What survives all three is a settled
  * ₹99 session payment, which is exactly who should get in.
  */
-async function lookupAndGrant(res: Res, paymentId: string, secret: string) {
+async function lookupAndGrant(res: Res, paymentId: string, secret: string, utmSource: string | null) {
   if (!process.env.RAZORPAY_KEY_ID) {
     // Nothing to verify *with*. Same fail-open-but-loud stance as a missing
     // secret: this is our deployment gap, not the buyer's fault.
@@ -141,7 +161,7 @@ async function lookupAndGrant(res: Res, paymentId: string, secret: string) {
     return res.status(200).json({ verified: false, configured: true, reason: 'amount_mismatch' });
   }
 
-  await recordBooking(paymentId, '', details);
+  await recordBooking(paymentId, '', details, utmSource);
   const scheduled = await checkScheduled(paymentId);
 
   return res.status(200).json({
@@ -179,12 +199,13 @@ export default async function handler(req: Req, res: Res) {
   const reference = str(body.razorpay_payment_link_reference_id);
   const status = str(body.razorpay_payment_link_status, 40);
   const signature = str(body.razorpay_signature, 128).trim().toLowerCase();
+  const utmSource = utm(body.utm_source);
 
   // ── Payment Button: a bare payment id, nothing to check it against ──────
   // Asking Razorpay what this payment is is the whole proof, so it runs before
   // the signature branch rejects the request for the missing link fields.
   if (PAYMENT_ID.test(paymentId) && !linkId && !signature) {
-    return lookupAndGrant(res, paymentId, secret);
+    return lookupAndGrant(res, paymentId, secret, utmSource);
   }
 
   if (
@@ -205,7 +226,7 @@ export default async function handler(req: Req, res: Res) {
 
   // Only a genuine payment gets recorded, so the bookings table can be trusted
   // as the list of people who actually paid.
-  if (ok) await recordBooking(paymentId, linkId);
+  if (ok) await recordBooking(paymentId, linkId, null, utmSource);
   const scheduled = ok ? await checkScheduled(paymentId) : false;
 
   return res.status(200).json({

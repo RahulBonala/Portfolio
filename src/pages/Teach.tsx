@@ -7,6 +7,7 @@ import Testimonials from '../components/Testimonials';
 import ReviewForm from '../components/ReviewForm';
 import BookingConfirmed from '../components/BookingConfirmed';
 import { BOOKING } from '../lib/booking';
+import { CHANNEL } from '../lib/youtube';
 import { checkBookingAccess, peekBookingAccess, type BookingAccess } from '../lib/payment';
 import { RB_EVENTS } from '../lib/robomark';
 import { useReveals } from '../hooks/useReveals';
@@ -169,6 +170,18 @@ const Teach: React.FC = () => {
           </div>
           <BookingSteps stage="payment" />
         </section>
+
+        <aside className="teach-channel" data-reveal="up" aria-label="Free videos on YouTube">
+          <img className="teach-channel-mark" src={CHANNEL.avatar} alt="" width="400" height="400" loading="lazy" decoding="async" />
+          <p className="teach-channel-copy">Not ready to book? Watch the free videos first.</p>
+          <a className="teach-channel-btn" href={CHANNEL.courseUrl} target="_blank" rel="noopener noreferrer">
+            Open the channel
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <line x1="7" y1="17" x2="17" y2="7" /><polyline points="7 7 17 7 17 17" />
+            </svg>
+            <span className="visually-hidden"> (opens YouTube in a new tab)</span>
+          </a>
+        </aside>
 
         {/* Directly under the booking card and built to the same width, so the
             two read as a pair: one card to book, one to report back. */}
