@@ -77,7 +77,7 @@ src/
     ├── Cursor.tsx       — custom cursor
     ├── RoboCompanion.tsx — the pixel robot travelling with the cursor (fine pointer only; the only place it currently appears)
     ├── Header.tsx       — fixed bar + full-screen mobile menu
-    ├── Hero.tsx         — 3D hero + intro choreography + facts strip
+    ├── Hero.tsx         — centred two-line headline + brief + facts strip (no animated visual)
     ├── three/HeroScene.tsx — lazy R3F particle network
     ├── About.tsx        — statement, prose, numbers, timeline
     ├── Work.tsx         — 3 project worlds + archive (data inline)

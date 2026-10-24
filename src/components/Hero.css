@@ -20,7 +20,7 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 55% at 68% 38%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%),
+    radial-gradient(ellipse 70% 55% at 50% 42%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%),
     radial-gradient(ellipse 60% 50% at 25% 80%, color-mix(in srgb, var(--ink) 4%, transparent), transparent 65%);
 }
 
@@ -36,89 +36,17 @@
   -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black 30%, transparent 75%);
 }
 
-/* ── BestAnswers debate-graph miniature (ambient, ≤30% visual weight) ──
-   Calm and premium: thin hairline edges, dim idle persona nodes, and the
-   verdict node as the single slow point of emphasis. */
-.hero-graph {
-  position: absolute;
-  top: 50%;
-  right: -2%;
-  transform: translateY(-50%);
-  width: min(54vw, 720px);
-  height: auto;
-  opacity: 0.42;
-  pointer-events: none;
-}
-
-.hg-edge path {
-  fill: none;
-  stroke: var(--hairline-strong);
-  stroke-width: 0.65;
-  opacity: 0.6;
-}
-
-.hg-edge--debate path {
-  stroke-dasharray: 2 6;
-  opacity: 0.4;
-}
-
-.hg-dot {
-  fill: var(--accent);
-  opacity: 0.85;
-}
-
-/* idle persona nodes sit quietly in the background */
-.hg-node-dot {
-  fill: var(--ink-muted);
-}
-
-.hg-node-ring {
-  fill: none;
-  stroke: var(--ink-faint);
-  stroke-width: 0.75;
-  opacity: 0.5;
-}
-
-.hg-label {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.04em;
-  fill: var(--ink-faint);
-}
-
-/* the verdict is the one element that gets the accent + the slow pulse */
-.hg-node--verdict .hg-node-dot {
-  fill: var(--accent);
-}
-
-.hg-label--verdict {
-  fill: var(--ink-muted);
-  font-weight: 500;
-}
-
-.hg-verdict-pulse {
-  stroke: var(--accent);
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: hg-pulse 7s ease-in-out infinite;
-}
-
-@keyframes hg-pulse {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.12; transform: scale(1.45); }
-}
-
-/* Reduced motion: freeze SMIL message dots and the verdict pulse */
-@media (prefers-reduced-motion: reduce) {
-  .hg-dots { display: none; }
-  .hg-verdict-pulse { animation: none; }
-}
-
 /* ── Content ────────────────────────────────────────────────── */
+/* Centred, single column: the headline, the brief and the CTAs read top to
+   bottom down the middle of the screen. */
 .hero-content {
   position: relative;
   z-index: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .hero-eyebrow {
@@ -144,8 +72,9 @@
 .hero-title {
   font-family: var(--font-display);
   font-weight: 800;
-  /* Fraunces 800 is a display face — sized so "ENGINEER for" fits even at 375px */
-  font-size: clamp(1.7rem, 7.2vw, 6.2rem);
+  /* Two lines, always: sized so "PRODUCT DESIGNER for" stays on one line from
+     a 375px phone up to the 1320px container. */
+  font-size: clamp(1.3rem, 6vw, 5.4rem);
   line-height: 1;
   letter-spacing: -0.025em;
   text-transform: uppercase;
@@ -160,6 +89,7 @@
 
 .hero-line-inner {
   display: inline-block;
+  padding-right: 0.08em; /* the italic "for" leans past its box; keep it inside the clip */
   will-change: transform;
 }
 
@@ -176,7 +106,7 @@
 }
 
 .hero-sub {
-  max-width: 560px;
+  max-width: 660px;
   font-size: clamp(1rem, 1.4vw, 1.15rem);
   line-height: 1.75;
   color: var(--ink-secondary);
@@ -186,6 +116,7 @@
 /* ── CTAs ───────────────────────────────────────────────────── */
 .hero-ctas {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
@@ -333,21 +264,6 @@
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 760px) {
-  /* On narrow screens, simplify the graph to a clean ambient constellation:
-     drop the mono labels (they read as clutter behind the CTAs) and let the
-     nodes + edges + verdict sit faintly behind the content. */
-  .hg-label {
-    display: none;
-  }
-
-  .hero-graph {
-    width: 150%;
-    right: -28%;
-    opacity: 0.3;
-  }
-}
-
 @media (max-width: 900px) {
   .hero-facts {
     grid-template-columns: repeat(2, 1fr);
@@ -381,6 +297,12 @@
 }
 
 @media (max-width: 540px) {
+  /* The first line is ~12em wide; 7vw is the most a phone can take
+     without breaking it. */
+  .hero-title {
+    font-size: 7vw;
+  }
+
   .hero-facts {
     grid-template-columns: 1fr;
   }

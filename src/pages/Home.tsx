@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   useReveals(ref);
 
   useEffect(() => {
-    document.title = 'Rahul Bonala: Product Designer & Developer';
+    document.title = 'Rahul Bonala - Product Designer & AI Builder at Ginthi.ai';
   }, []);
 
   return (
