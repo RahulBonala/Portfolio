@@ -35,7 +35,7 @@ function stubPayment(payment) {
 const capturedPayment = {
   id: 'pay_BUTTONtest123',
   status: 'captured',
-  amount: 9900,
+  amount: 99900,
   currency: 'INR',
   email: 'buyer@example.com',
   contact: '+919000000000',
@@ -152,6 +152,13 @@ const tests = {
 
   'a cheaper payment cannot buy a session': async () => {
     stubPayment({ ...capturedPayment, amount: 100 });
+    const r = await call({ razorpay_payment_id: capturedPayment.id });
+    assert.equal(r.body.verified, false);
+    assert.equal(r.body.reason, 'amount_mismatch');
+  },
+
+  'a payment at the old ₹99 price no longer buys a session': async () => {
+    stubPayment({ ...capturedPayment, amount: 9900 });
     const r = await call({ razorpay_payment_id: capturedPayment.id });
     assert.equal(r.body.verified, false);
     assert.equal(r.body.reason, 'amount_mismatch');

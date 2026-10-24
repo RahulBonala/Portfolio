@@ -2,7 +2,7 @@
 
 > **Decisions settled (2026-07-30).** Name: **Zero to Live**, under the brand
 > **AI Builders by Rahul** — both already appear in the Playbook PDF and the
-> social poster, so the site now matches the print. Price: **₹99**. Palette:
+> social poster, so the site now matches the print. Price: **₹999**. Palette:
 > **the portfolio's existing dark theme** (see "Design system" below). The
 > WhatsApp community and direct-access promises are removed until those
 > channels exist.
@@ -155,7 +155,7 @@ tools crash, code errors, deployments fail — and shows how to handle each.
 - **60 minutes**, soft limit, 15–30 min buffer between bookings
 - **Google Meet**, one person per session
 - **English**, with Telugu on request
-- **₹99** — matches the Razorpay button
+- **₹999** — matches the Razorpay button
 
 ## 11. Voice
 

@@ -8,13 +8,13 @@
 //      https://rahulbonala.me/teach — that page verifies the payment
 //      before it hands out the scheduling link (see src/lib/payment.ts).
 export const BOOKING = {
-  price: '₹99',
+  price: '₹999',
   /**
    * Amount in paise. Must match the Razorpay button, `price`, and
    * SESSION_AMOUNT_MINOR in api/verify-booking.ts, which rejects a payment
    * that does not cost exactly this much.
    */
-  amountMinor: 9900,
+  amountMinor: 99900,
   currency: 'INR',
   route: '/teach',
   bookedRoute: '/teach',

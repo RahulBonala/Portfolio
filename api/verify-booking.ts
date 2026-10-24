@@ -55,7 +55,7 @@ const SIGNATURE = /^[a-f0-9]{64}$/;
  * tsconfig.api.json compiles `api` alone, so reaching into src/ would pull a
  * client file into a second TypeScript project.
  */
-const SESSION_AMOUNT_MINOR = 9900;
+const SESSION_AMOUNT_MINOR = 99900;
 const SESSION_CURRENCY = 'INR';
 
 /**
@@ -140,7 +140,7 @@ async function checkScheduled(paymentId: string): Promise<boolean> {
  * merchant's payment fails for the same reason — the lookup is authenticated as
  * us. A real but wrong payment of ours (a refund test, a different product)
  * fails the amount and currency checks. What survives all three is a settled
- * ₹99 session payment, which is exactly who should get in.
+ * ₹999 session payment, which is exactly who should get in.
  */
 async function lookupAndGrant(res: Res, paymentId: string, secret: string, utmSource: string | null) {
   if (!process.env.RAZORPAY_KEY_ID) {
