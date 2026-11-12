@@ -7,6 +7,8 @@ import Skills from '../components/Skills';
 import Approach from '../components/Approach';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
+import Faq from '../components/Faq';
+import { titleFor } from '../lib/seo';
 import { useReveals } from '../hooks/useReveals';
 
 const Home: React.FC = () => {
@@ -14,7 +16,7 @@ const Home: React.FC = () => {
   useReveals(ref);
 
   useEffect(() => {
-    document.title = 'Rahul Bonala - Product Designer & AI Builder at Ginthi.ai';
+    document.title = titleFor('/');
   }, []);
 
   return (
@@ -27,6 +29,7 @@ const Home: React.FC = () => {
       <Approach />
       <Testimonials variant="page" />
       <Contact />
+      <Faq />
     </div>
   );
 };

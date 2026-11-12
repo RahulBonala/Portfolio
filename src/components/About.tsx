@@ -33,13 +33,13 @@ const TIMELINE = [
     note: 'I own design and front-end build for Ginthi’s web platform, taking features from concept through interface to shipped React, and building the AI tooling that lets a small team move quickly. Designing and developing the same surface means there’s no handoff to lose intent in.',
   },
   {
-    period: '2023 – 2026',
+    period: '2023 to 2026',
     role: 'UI/UX Designer & Developer',
     org: 'Smiths Detection',
     note: 'Designed and built service consoles used daily by engineers across Europe, APAC, and North America. React, Java, and Python behind the screens.',
   },
   {
-    period: '2019 – 2023',
+    period: '2019 to 2023',
     role: 'B.Tech, Electronics & Instrumentation',
     org: 'SASTRA University',
     note: 'Robotics and IoT on Raspberry Pi, OpenCV, and embedded C. Systems thinking that still shapes how I build.',
@@ -73,7 +73,7 @@ const About: React.FC = () => {
               That habit compounded. Today I&apos;m the product designer and AI
               specialist at Ginthi.ai, designing and developing a live platform with
               production traffic flowing the whole time. Nights and weekends, I build
-              with AI: BestAnswers.AI puts four models in a room and makes them argue
+              with AI: BestAnswersAI puts four models in a room and makes them argue
               before you get an answer.
             </p>
             <p>
@@ -87,14 +87,14 @@ const About: React.FC = () => {
           <figure className="about-photo" data-reveal="scale">
             <img
               src={profileImg}
-              alt="Sri Sai Rahul Bonala, portrait"
+              alt="Rahul Bonala, product designer and AI builder"
               loading="lazy"
               decoding="async"
               width="374"
               height="450"
             />
             <figcaption>
-              <span>Bangalore, IST</span>
+              <span>Bengaluru, IST</span>
               <span>Remote anywhere</span>
             </figcaption>
           </figure>

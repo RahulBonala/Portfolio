@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { useReveals } from '../hooks/useReveals';
+import { titleFor } from '../lib/seo';
 import './CaseStudy.css';
 
 type Outcome = { metric: string; label: string; method: string };
@@ -24,7 +25,7 @@ const STUDIES: Record<string, Study> = {
   bestanswers: {
     slug: 'bestanswers',
     eyebrow: 'AI Product · Built solo',
-    title: 'BestAnswers.AI',
+    title: 'BestAnswersAI',
     summary:
       'A multi-agent answer engine: four AI personas debate a question in parallel, and a meta-judge merges the strongest reasoning into one answer with the disagreements left visible.',
     meta: { role: 'Product, design & engineering (solo)', timeframe: 'Personal product · ongoing', stack: 'React · TypeScript · Vite · Tailwind · multi-LLM' },
@@ -51,7 +52,7 @@ const STUDIES: Record<string, Study> = {
       'What happened was the simultaneous-streaming chaos above. Seeing it run told me the sequencing was the real design problem, not the layout. I reworked the order (personas resolve, then the judge speaks) in the same file I’d just been styling. Design decision and implementation were one act, and the running thing corrected the next decision. The verdict graph in this portfolio’s hero is that same idea, miniaturised.',
     ],
     outcomes: {
-      intro: 'BestAnswers.AI is live and built end-to-end by me.',
+      intro: 'BestAnswersAI is live and built end-to-end by me.',
       items: [
         { metric: 'Live', label: 'shipped and publicly usable', method: 'Try it directly at bestanswersai.com, with no signup needed to ask a question.' },
         { metric: '4', label: 'models debating per query', method: 'Parallel calls across Gemini, Llama, and Mistral, merged by a meta-judge.' },
@@ -67,11 +68,11 @@ const STUDIES: Record<string, Study> = {
   },
   'smiths-detection': {
     slug: 'smiths-detection',
-    eyebrow: 'Enterprise UX · 2023–2026',
+    eyebrow: 'Enterprise UX · 2023 to 2026',
     title: 'Smiths Detection service consoles',
     summary:
       'Design and front-end build of service consoles used daily by maintenance engineers across Europe, APAC, and North America, plus the automation behind the reports those teams relied on.',
-    meta: { role: 'UI/UX Designer & Developer', timeframe: '2023 – 2026', stack: 'React · Java · Python' },
+    meta: { role: 'UI/UX Designer & Developer', timeframe: '2023 to 2026', stack: 'React · Java · Python' },
     problem:
       'Maintenance engineers servicing detection hardware worked across tools built for the machines, not the people. Diagnosing an issue meant cross-referencing several screens and a lot of tribal knowledge, which made onboarding slow and mistakes easy. Leadership wanted consoles a newer engineer could pick up quickly and that behaved consistently across very different regional teams. The brief was effectively: same job, far less friction, and measurable enough that support load and satisfaction would move.',
     constraints: [
@@ -116,7 +117,7 @@ const CaseStudy: React.FC = () => {
   const study = slug ? STUDIES[slug] : undefined;
 
   useEffect(() => {
-    if (study) document.title = `${study.title} case study · Rahul Bonala`;
+    if (study) document.title = titleFor(`/work/${study.slug}`);
   }, [study]);
 
   if (!study) return <Navigate to="/" replace />;

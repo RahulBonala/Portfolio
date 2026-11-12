@@ -65,6 +65,13 @@
   color: var(--ink);
 }
 
+/* The eyebrow now lives inside the H1: undo the headline's type settings. */
+.hero-title .hero-title-name {
+  justify-content: center;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
 .hero-eyebrow-sep {
   color: var(--accent);
 }

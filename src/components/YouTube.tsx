@@ -33,6 +33,7 @@ const VideoCard: React.FC<{ video: ChannelVideo }> = ({ video }) => {
           <img
             src={thumb}
             alt=""
+            aria-hidden="true"
             width="480"
             height="360"
             loading="lazy"
@@ -89,6 +90,7 @@ const YouTube: React.FC = () => {
                 className="yt-avatar"
                 src={CHANNEL.avatar}
                 alt=""
+                aria-hidden="true"
                 width="400"
                 height="400"
                 loading="lazy"
