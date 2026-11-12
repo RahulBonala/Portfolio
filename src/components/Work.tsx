@@ -100,7 +100,7 @@ const PROJECTS = [
     title: 'Stepforge',
     tagline: 'Upload a résumé. Get a portfolio website.',
     story:
-      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 33 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
+      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 39 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
     points: [
       'Extraction and parsing run in your own browser, so the résumé isn’t uploaded unless you choose a cloud feature',
       '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',

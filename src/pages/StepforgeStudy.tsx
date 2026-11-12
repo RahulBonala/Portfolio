@@ -14,7 +14,7 @@ const HOW = [
   'Text is extracted in your own browser tab with pdf.js, or OCR for images, so the resume is not uploaded unless you choose a cloud feature.',
   'A deterministic parser turns headings, dates, contacts and sections into structured data. A validation gate scores the result and drops anything it cannot type, rather than guessing.',
   'You review every extracted role, project and skill, with a strength score and confidence flags. Optional AI suggestions appear side by side with Accept and Reject controls.',
-  'You pick one of 33 designs, then download the portfolio as one self-contained HTML file or publish it to a shareable Stepforge link.',
+  'You pick one of 39 designs, then download the portfolio as one self-contained HTML file or publish it to a shareable Stepforge link.',
   'The same resume then feeds an 8 step career guide: roles your experience already supports, transferable skills, best-fit industries, a target role, a gap check against a real job description, pivot paths, a repositioned resume and a 30 day search plan.',
 ];
 
