@@ -13,6 +13,8 @@ import Home from './pages/Home';
 import CaseStudy from './pages/CaseStudy';
 import Teach from './pages/Teach';
 import Review from './pages/Review';
+import StepforgeStudy from './pages/StepforgeStudy';
+import AiAgents from './pages/AiAgents';
 import { CHANNEL } from './lib/youtube';
 import { captureUtmSource } from './lib/payment';
 import './App.css';
@@ -118,6 +120,8 @@ function App() {
       <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/work/stepforge" element={<StepforgeStudy />} />
+          <Route path="/work/ai-agents" element={<AiAgents />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
           <Route path="/teach" element={<Teach />} />
           <Route path="/teach/booked" element={<RedirectToTeach />} />

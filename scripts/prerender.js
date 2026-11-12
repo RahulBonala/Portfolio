@@ -9,57 +9,21 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://rahulbonala.me';
 
-// Routes to prerender → output path under dist/.
+// Routes to prerender, with their per-route title, description, canonical and
+// page-specific JSON-LD, live in src/lib/seo.ts (ROUTE_META) and are read from
+// the SSR bundle below, so the pages and this script share one source.
 //
-// `title` / `description` are per-route: previously every prerendered page
-// inherited the home page's title, description and canonical, so a link to
-// /teach shared anywhere (LinkedIn, WhatsApp, an ad) previewed as the generic
-// portfolio and every page competed with the others in search for the same
-// terms. `noindex` keeps post-payment pages out of the index.
-const ROUTES = [
-  {
-    path: '/',
-    out: 'index.html',
-    // Home keeps the template's own tags — they're already written for it.
-  },
-  {
-    path: '/work/bestanswers',
-    out: 'work/bestanswers/index.html',
-    title: 'BestAnswers.AI case study · Rahul Bonala',
-    description:
-      'How I built a multi-agent answer engine: four AI personas debate in parallel and a meta-judge merges the strongest reasoning, with the disagreements left visible.',
-  },
-  {
-    path: '/work/smiths-detection',
-    out: 'work/smiths-detection/index.html',
-    title: 'Smiths Detection service consoles: a case study · Rahul Bonala',
-    description:
-      'Designing and building service consoles used daily by maintenance engineers across Europe, APAC and North America. 95% CSAT, 80% faster workflows, 70% fewer support tickets.',
-  },
-  {
-    path: '/teach',
-    out: 'teach/index.html',
-    title: 'Zero to Live: turn your idea into a website in an hour · Rahul Bonala',
-    description:
-      'Turn your idea into a live website in about 60 minutes. A one-on-one session using free AI tools, with zero coding. You leave with the 15-page AI Builder’s Playbook and every prompt, able to do it again yourself.',
-  },
-  {
-    path: '/review',
-    out: 'review/index.html',
-    title: 'Leave a review · Zero to Live',
-    description: 'Tell me how your Zero to Live session went.',
-    // A link to hand out, not a page to be found. Indexing it would invite
-    // drive-by submissions the moderation queue exists to absorb.
-    noindex: true,
-  }
-];
+// Previously every prerendered page inherited the home page's title,
+// description and canonical, so a link to /teach shared anywhere previewed as
+// the generic portfolio and every page competed for the same terms. `noindex`
+// keeps pages like /review out of the index.
 
 // Entry filename is content-hashed — find it
 const entry = readdirSync(resolve(root, 'dist-ssr')).find(
   (f) => f.startsWith('entry-prerender') && f.endsWith('.js')
 );
 if (!entry) throw new Error('prerender: SSR entry not found in dist-ssr/');
-const { render } = await import(pathToFileURL(resolve(root, 'dist-ssr', entry)).href);
+const { render, ROUTE_META: ROUTES, aiAgentsJsonLd } = await import(pathToFileURL(resolve(root, 'dist-ssr', entry)).href);
 
 const template = readFileSync(resolve(root, 'dist/index.html'), 'utf8');
 const marker = '<div id="root"></div>';
@@ -83,27 +47,27 @@ const attr = (value) =>
  * function exists to fix.
  */
 function applyMeta(html, route) {
-  if (!route.title && !route.description && !route.noindex) return html;
-
   const url = `${SITE}${route.path}`;
+  // The home page keeps its shorter social copy from index.html.
+  const isHome = route.path === '/';
   let out = html;
 
   const swap = (pattern, replacement, what) => {
     if (!pattern.test(out)) {
       throw new Error(`prerender: could not set ${what} for ${route.path}; did index.html change?`);
     }
-    out = out.replace(pattern, replacement);
+    out = out.replace(pattern, () => replacement);
   };
 
   if (route.title) {
     const t = attr(route.title);
     swap(/<title>[\s\S]*?<\/title>/, `<title>${t}</title>`, 'title');
-    swap(
+    if (!isHome) swap(
       /<meta property="og:title" content="[^"]*"/,
       `<meta property="og:title" content="${t}"`,
       'og:title'
     );
-    swap(
+    if (!isHome) swap(
       /<meta name="twitter:title" content="[^"]*"/,
       `<meta name="twitter:title" content="${t}"`,
       'twitter:title'
@@ -117,12 +81,12 @@ function applyMeta(html, route) {
       `<meta name="description" content="${d}"`,
       'description'
     );
-    swap(
+    if (!isHome) swap(
       /<meta property="og:description"\s+content="[^"]*"/,
       `<meta property="og:description" content="${d}"`,
       'og:description'
     );
-    swap(
+    if (!isHome) swap(
       /<meta name="twitter:description"\s+content="[^"]*"/,
       `<meta name="twitter:description" content="${d}"`,
       'twitter:description'
@@ -140,9 +104,28 @@ function applyMeta(html, route) {
     'og:url'
   );
 
-  if (route.noindex) {
-    out = out.replace('</head>', '  <meta name="robots" content="noindex, nofollow" />\n</head>');
+  if (route.ogType) {
+    swap(
+      /<meta property="og:type" content="[^"]*"/,
+      `<meta property="og:type" content="${attr(route.ogType)}"`,
+      'og:type'
+    );
   }
+
+  if (route.noindex) {
+    swap(
+      /<meta name="robots" content="[^"]*"/,
+      '<meta name="robots" content="noindex, nofollow"',
+      'robots'
+    );
+  }
+
+  // Page-specific structured data goes where index.html marks it.
+  const blocks = [...(route.jsonLd ?? []), ...(route.path === '/work/ai-agents' ? aiAgentsJsonLd() : [])];
+  const ld = blocks
+    .map((b) => `<script type="application/ld+json">${JSON.stringify(b).replace(/</g, '\\u003c')}</script>`)
+    .join('\n  ');
+  swap(/<!-- route-jsonld -->/, ld, 'route JSON-LD marker');
 
   return out;
 }

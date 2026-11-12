@@ -26,7 +26,7 @@ const GROUPS: Group[] = [
       {
         skill: 'Product & UI/UX design',
         claim: 'Took a multi-agent AI product from blank canvas to shipped interface, solo.',
-        proof: 'BestAnswers.AI case study',
+        proof: 'BestAnswersAI case study',
         href: '/work/bestanswers',
       },
       {
@@ -50,7 +50,7 @@ const GROUPS: Group[] = [
       {
         skill: 'React + TypeScript',
         claim: 'Production single-page apps and this prerendered, hydrated portfolio.',
-        proof: 'BestAnswers.AI (live)',
+        proof: 'BestAnswersAI (live)',
         href: 'https://bestanswersai.com/',
         external: true,
       },
@@ -74,7 +74,7 @@ const GROUPS: Group[] = [
       {
         skill: 'Multi-agent systems',
         claim: 'Four LLM personas debating in parallel, merged by a meta-judge.',
-        proof: 'BestAnswers.AI (live)',
+        proof: 'BestAnswersAI (live)',
         href: 'https://bestanswersai.com/',
         external: true,
       },

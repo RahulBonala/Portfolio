@@ -73,15 +73,15 @@ const PROJECTS = [
     ],
     stack: ['React', 'TypeScript', 'AI agents', 'Node'],
     links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
-    visual: <img src={byocImg} alt="Build Your Own Company configurator" loading="lazy" decoding="async" width="600" height="400" />,
+    visual: <img src={byocImg} alt="BYOC, Build Your Own Company AI agents configurator" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
     index: '02',
     meta: 'AI Product · Live',
-    title: 'BestAnswers.AI',
+    title: 'BestAnswersAI',
     tagline: 'Four AIs argue. You get the strongest answer.',
     story:
-      'Ask one model and you get one confident voice, right or wrong. BestAnswers.AI convenes four AI personas (Researcher, Engineer, Friend, Academic), lets them debate in parallel, and a meta-judge merges the strongest reasoning into a single answer with the disagreements left visible. Trust through transparent disagreement, not single-source confidence.',
+      'Ask one model and you get one confident voice, right or wrong. BestAnswersAI convenes four AI personas (Researcher, Engineer, Friend, Academic), lets them debate in parallel, and a meta-judge merges the strongest reasoning into a single answer with the disagreements left visible. Trust through transparent disagreement, not single-source confidence.',
     points: [
       'Multi-agent debate architecture: parallel calls across Gemini, Llama, and Mistral',
       'Meta-judge consensus layer with a transparent verdict on why an answer won',
@@ -92,7 +92,7 @@ const PROJECTS = [
       { label: 'Read the case study', href: '/work/bestanswers' },
       { label: 'Visit live site', href: 'https://bestanswersai.com/' },
     ],
-    visual: <img src={bestAnswerImg} alt="BestAnswers.AI interface" loading="lazy" decoding="async" width="600" height="400" />,
+    visual: <img src={bestAnswerImg} alt="BestAnswersAI multi agent answer screen" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
     index: '03',
@@ -100,7 +100,7 @@ const PROJECTS = [
     title: 'Stepforge',
     tagline: 'Upload a résumé. Get a portfolio website.',
     story:
-      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 33 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
+      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 39 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
     points: [
       'Extraction and parsing run in your own browser, so the résumé isn’t uploaded unless you choose a cloud feature',
       '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',
@@ -108,7 +108,7 @@ const PROJECTS = [
     ],
     stack: ['React', 'TypeScript', 'Supabase', 'Vercel Functions', 'Gemini'],
     links: [{ label: 'Visit live site', href: 'https://stepforge.co' }],
-    visual: <img src={stepforgeImg} alt="Stepforge logo" loading="lazy" decoding="async" width="600" height="400" />,
+    visual: <img src={stepforgeImg} alt="Stepforge logo, resume to portfolio website app" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
     index: '04',

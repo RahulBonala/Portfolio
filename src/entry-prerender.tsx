@@ -13,3 +13,6 @@ export function render(path: string): string {
     </StrictMode>
   );
 }
+
+// Per-route metadata for scripts/prerender.js (one source with the pages).
+export { ROUTE_META, aiAgentsJsonLd } from './lib/seo';

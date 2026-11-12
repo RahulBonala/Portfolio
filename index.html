@@ -31,54 +31,77 @@
   <meta name="theme-color" content="#060607" />
 
   <!-- Title & Description -->
-  <title>Rahul Bonala - Product Designer &amp; AI Builder at Ginthi.ai</title>
+  <title>Rahul Bonala | Product Designer &amp; AI Builder, Bengaluru</title>
   <meta name="description"
-    content="Rahul Bonala is a product designer and AI builder in Bangalore with ~4 years of designing AI-native products and writing the code that ships them. Product Designer &amp; Developer at Ginthi.ai. Creator of BestAnswers.AI, Stepforge, BYOC and the Pay Grade AI YouTube channel, and teacher of Zero to Live, 1:1 sessions that take an idea to a live website in an hour." />
-  <meta name="keywords"
-    content="Rahul Bonala, Sri Sai Rahul Bonala, product designer AI, AI builder, Pay Grade AI, UI UX designer Bangalore, product developer, BestAnswers.AI, Stepforge, BYOC SDLC agents, Zero to Live, AI Builders by Rahul" />
-  <meta name="author" content="Sri Sai Rahul Bonala" />
+    content="Rahul Bonala is a product designer and AI builder in Bengaluru. See AI agent projects, product case studies and Zero to Live website sessions." />
+  <meta name="author" content="Rahul Bonala" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
 
   <!-- Canonical -->
   <link rel="canonical" href="https://rahulbonala.me/" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Rahul Bonala - Product Designer &amp; AI Builder at Ginthi.ai" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Rahul Bonala | Product Designer &amp; AI Builder" />
   <meta property="og:description"
-    content="Product designer and AI builder. I design AI-native products and write the code that ships them. Creator of BestAnswers.AI, Stepforge, BYOC and the Pay Grade AI YouTube channel." />
-  <meta property="og:type" content="website" />
+    content="Product designer and AI builder in Bengaluru. Creator of BestAnswersAI and Stepforge." />
   <meta property="og:url" content="https://rahulbonala.me/" />
   <meta property="og:image" content="https://rahulbonala.me/og-image.png" />
-  <meta property="og:locale" content="en_US" />
+  <!-- The real size of public/og-image.png (it is not 1200x630). -->
+  <meta property="og:image:width" content="1422" />
+  <meta property="og:image:height" content="650" />
+  <meta property="og:image:alt" content="Rahul Bonala, product designer and AI builder" />
   <meta property="og:site_name" content="Rahul Bonala" />
+  <meta property="og:locale" content="en_IN" />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rahul Bonala - Product Designer &amp; AI Builder at Ginthi.ai" />
+  <meta name="twitter:title" content="Rahul Bonala | Product Designer &amp; AI Builder" />
   <meta name="twitter:description"
-    content="Product designer and AI builder. I design AI-native products and write the code that ships them: BestAnswers.AI, Stepforge, BYOC, Pay Grade AI and 1:1 Zero to Live sessions." />
+    content="Product designer and AI builder in Bengaluru. Creator of BestAnswersAI and Stepforge." />
   <meta name="twitter:image" content="https://rahulbonala.me/og-image.png" />
-  <meta name="twitter:image:alt" content="Rahul Bonala, product designer and developer portfolio" />
+  <meta name="twitter:image:alt" content="Rahul Bonala, product designer and AI builder" />
 
-  <!-- Structured data: Person -->
+  <!-- Structured data: the site-wide graph (Person + WebSite). Page-specific
+       blocks (ProfilePage + FAQPage on the home page, Article, Service,
+       CollectionPage) are added per route by scripts/prerender.js at the
+       marker below, so each one only appears on the page it describes. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Sri Sai Rahul Bonala",
-    "url": "https://rahulbonala.me/",
-    "jobTitle": "Product Designer & AI Builder",
-    "worksFor": { "@type": "Organization", "name": "Ginthi.ai" },
-    "knowsAbout": ["Product design", "UI/UX", "AI tools", "React", "TypeScript", "Figma"],
-    "address": { "@type": "PostalAddress", "addressLocality": "Bangalore", "addressCountry": "IN" },
-    "sameAs": [
-      "https://github.com/rahulbonala",
-      "https://stepforge.co",
-      "https://bestanswersai.com/",
-      "https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/",
-      "https://www.youtube.com/channel/UCIfuWTDvEMRy-5Ib68FBcMg"
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://rahulbonala.me/#person",
+        "name": "Rahul Bonala",
+        "alternateName": "Sri Sai Rahul Bonala",
+        "url": "https://rahulbonala.me/",
+        "image": "https://rahulbonala.me/og-image.png",
+        "jobTitle": "Product Designer & AI Builder",
+        "worksFor": { "@type": "Organization", "name": "Ginthi.ai" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "addressCountry": "IN" },
+        "alumniOf": { "@type": "CollegeOrUniversity", "name": "SASTRA University" },
+        "knowsAbout": ["Product design", "UX design", "AI agents", "Multi agent systems", "Frontend development", "React", "TypeScript"],
+        "sameAs": [
+          "https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/",
+          "https://github.com/RahulBonala",
+          "https://www.youtube.com/channel/UCIfuWTDvEMRy-5Ib68FBcMg",
+          "https://bestanswersai.com/",
+          "https://stepforge.co/"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://rahulbonala.me/#website",
+        "url": "https://rahulbonala.me/",
+        "name": "Rahul Bonala",
+        "publisher": { "@id": "https://rahulbonala.me/#person" },
+        "inLanguage": "en-IN"
+      }
     ]
   }
   </script>
+  <!-- route-jsonld -->
 
   <!-- Sitemap hint -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />

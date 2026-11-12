@@ -11,6 +11,7 @@ import { CHANNEL } from '../lib/youtube';
 import { checkBookingAccess, peekBookingAccess, type BookingAccess } from '../lib/payment';
 import { RB_EVENTS } from '../lib/robomark';
 import { useReveals } from '../hooks/useReveals';
+import { titleFor } from '../lib/seo';
 import './Teach.css';
 
 /** The brief overview beside the video: what the hour is actually spent on. */
@@ -47,7 +48,7 @@ const Teach: React.FC = () => {
 
   useEffect(() => {
     if (view === 'pitch') {
-      document.title = 'Zero to Live: turn your idea into a website in an hour · Rahul Bonala';
+      document.title = titleFor('/teach');
       return;
     }
 
@@ -57,7 +58,7 @@ const Teach: React.FC = () => {
       setAccess(result);
       if (result.state === 'granted') {
         setView('unlocked');
-        document.title = 'Payment received. Pick your slot · Rahul Bonala';
+        document.title = 'Payment received. Pick your slot | Rahul Bonala';
         window.dispatchEvent(new Event(RB_EVENTS.celebrate));
       } else if (result.state === 'denied') {
         setView('pitch');
@@ -118,11 +119,11 @@ const Teach: React.FC = () => {
         <header className="teach-head">
           <div className="teach-head-copy">
             <p className="teach-eyebrow">AI Builders by Rahul · Zero to Live</p>
-            <h1 className="teach-title" data-reveal="up">Turn your idea into a live website. In one hour.</h1>
+            <h1 className="teach-title" data-reveal="up">Zero to Live: turn your idea into a live website in one hour.</h1>
             <p className="teach-lede" data-reveal="up">
-              A live, one-on-one session where I show you the complete path, from a rough
-              idea in your head to a real website on the internet. Using free AI tools.
-              Without writing a single line of code yourself.
+              A live, one-on-one session where I show you how to create a website, from a
+              rough idea in your head to a real site live on the internet in one hour. Using
+              free AI tools. Without writing a single line of code yourself.
             </p>
 
             <ol className="teach-phases" data-reveal="up" aria-label="The four phases of a session">
@@ -172,7 +173,7 @@ const Teach: React.FC = () => {
         </section>
 
         <aside className="teach-channel" data-reveal="up" aria-label="Free videos on YouTube">
-          <img className="teach-channel-mark" src={CHANNEL.avatar} alt="" width="400" height="400" loading="lazy" decoding="async" />
+          <img className="teach-channel-mark" src={CHANNEL.avatar} alt="" aria-hidden="true" width="400" height="400" loading="lazy" decoding="async" />
           <p className="teach-channel-copy">Not ready to book? Watch the free videos first.</p>
           <a className="teach-channel-btn" href={CHANNEL.courseUrl} target="_blank" rel="noopener noreferrer">
             Open the channel

@@ -7,9 +7,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 const FACTS: { k: string; v: string; href?: string }[] = [
   { k: 'Now', v: 'Product Designer, AI specialist at Ginthi.ai' },
-  { k: 'Built', v: 'BestAnswers.AI and Stepforge, solo' },
+  { k: 'Built', v: 'BestAnswersAI and Stepforge, solo' },
   { k: 'Teaching', v: 'Zero to Live, 1:1 sessions for new builders' },
-  { k: 'Based', v: 'Bangalore, India. Working globally.' },
+  { k: 'Based', v: 'Bengaluru, India. Working globally.' },
   { k: 'Channel', v: 'Pay Grade AI, daily AI news on YouTube', href: '#youtube' },
 ];
 
@@ -74,23 +74,21 @@ const Hero: React.FC = () => {
       </div>
 
       <div className="container hero-content">
-        <p className="hero-eyebrow">
-          <span className="hero-eyebrow-name">Sri Sai Rahul Bonala</span>
-          <span className="hero-eyebrow-sep" aria-hidden="true">/</span>
-          Portfolio
-        </p>
-
         <h1 className="hero-title">
+          {/* The name is part of the H1 for search, styled as the old eyebrow line. */}
+          <span className="hero-eyebrow hero-title-name">
+            <span className="hero-eyebrow-name">Rahul Bonala</span>
+          </span>
           <span className="hero-line"><span className="hero-line-inner">Product designer <em>for</em></span></span>
           <span className="hero-line"><span className="hero-line-inner"><em>the</em> AI era<span className="hero-dot">.</span></span></span>
         </h1>
 
         <p className="hero-sub">
-          I design AI-native products and write the code that ships them,
-          because handoff is where most good ideas quietly die. Right now
-          that&apos;s at Ginthi.ai, where I design and build an AI-powered
-          accounts payable platform from Figma to production. On my own I&apos;ve
-          shipped BestAnswers.AI, Stepforge and BYOC, and every day I break down
+          I&apos;m Rahul Bonala, a product designer and AI builder in Bengaluru. I design
+          AI-native products and write the code that ships them, because handoff is where
+          most good ideas quietly die. Right now that&apos;s at Ginthi.ai, where I design
+          and build an AI-powered accounts payable platform from Figma to production. On my
+          own I&apos;ve shipped BestAnswersAI, Stepforge and BYOC, and every day I break down
           a new AI tool on my YouTube channel, Pay Grade AI.
         </p>
 

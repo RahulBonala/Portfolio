@@ -25,7 +25,7 @@ const Approach: React.FC = () => {
             gets dropped for time. I close that gap by doing both ends myself.
           </p>
           <p>
-            BestAnswers.AI is the clearest example. The core idea (four AI personas
+            BestAnswersAI is the clearest example. The core idea (four AI personas
             arguing, then a judge merging the strongest reasoning) only works if you
             can <em>see</em> the disagreement. I couldn&apos;t spec that in a static
             frame, so I designed it in code: built the debate view, watched four real
