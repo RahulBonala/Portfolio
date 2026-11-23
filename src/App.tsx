@@ -144,6 +144,10 @@ function App() {
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href={CHANNEL.url} target="_blank" rel="noopener noreferrer">YouTube</a>
             <span className="footer-dot" aria-hidden="true">·</span>
+            <a href="https://www.instagram.com/rahul_bonala/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <a href="https://x.com/RahulBonala" target="_blank" rel="noopener noreferrer">X</a>
+            <span className="footer-dot" aria-hidden="true">·</span>
             <a href="mailto:rahulbonala06@gmail.com">Email</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <Link to="/teach">Live sessions</Link>

@@ -193,6 +193,16 @@ const Contact: React.FC = () => {
                 </a>
               </li>
               <li>
+                <a href="https://www.instagram.com/rahul_bonala/" target="_blank" rel="noopener noreferrer">
+                  Instagram <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://x.com/RahulBonala" target="_blank" rel="noopener noreferrer">
+                  X <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li>
                 <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf">
                   Resume (PDF) <span aria-hidden="true">↓</span>
                 </a>
