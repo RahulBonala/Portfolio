@@ -138,7 +138,7 @@ function App() {
           <p className="footer-name">Sri Sai Rahul Bonala</p>
           <p className="footer-role">Product Designer · Developer · Teacher</p>
           <div className="footer-links">
-            <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="https://www.linkedin.com/in/rahulbonala/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
             <span className="footer-dot" aria-hidden="true">·</span>
