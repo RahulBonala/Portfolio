@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
   <meta charset="UTF-8" />
@@ -10,30 +10,30 @@
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 
-  <meta name="color-scheme" content="dark light" />
+  <meta name="color-scheme" content="light dark" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Apply persisted theme before first paint to avoid flash (default: dark) -->
+  <!-- Apply persisted theme before first paint to avoid flash (default: light) -->
   <script>
     (function () {
       try {
         var stored = localStorage.getItem('portfolio-theme');
-        var theme = (stored === 'light' || stored === 'dark') ? stored : 'dark';
+        var theme = (stored === 'light' || stored === 'dark') ? stored : 'light';
         document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.style.colorScheme = theme;
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'dark'); }
+      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
     })();
   </script>
 
   <!-- Google Search Console Verification -->
   <meta name="google-site-verification" content="dn7zrSFJ9YeU3Xf_YiNrlGOqahY9XnfirkrEmUio5IY" />
 
-  <meta name="theme-color" content="#060607" />
+  <meta name="theme-color" content="#f7f8fb" />
 
   <!-- Title & Description -->
-  <title>Rahul Bonala | Product Designer &amp; AI Builder, Bengaluru</title>
+  <title>Rahul Bonala | SaaS Products by an Independent Software Business</title>
   <meta name="description"
-    content="Rahul Bonala is a product designer and AI builder in Bengaluru. See AI agent projects, product case studies and Zero to Live website sessions." />
+    content="Rahul Bonala is an independent software business in Bengaluru building SaaS products: Stepforge, BestAnswersAI and BYOC. See the products, case studies and Zero to Live training." />
   <meta name="author" content="Rahul Bonala" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
 
@@ -42,9 +42,9 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="profile" />
-  <meta property="og:title" content="Rahul Bonala | Product Designer &amp; AI Builder" />
+  <meta property="og:title" content="Rahul Bonala | SaaS Products" />
   <meta property="og:description"
-    content="Product designer and AI builder in Bengaluru. Creator of BestAnswersAI and Stepforge." />
+    content="An independent software business in Bengaluru building SaaS products: Stepforge, BestAnswersAI and BYOC." />
   <meta property="og:url" content="https://rahulbonala.me/" />
   <meta property="og:image" content="https://rahulbonala.me/og-image.png" />
   <!-- The real size of public/og-image.png (it is not 1200x630). -->
@@ -56,9 +56,9 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Rahul Bonala | Product Designer &amp; AI Builder" />
+  <meta name="twitter:title" content="Rahul Bonala | SaaS Products" />
   <meta name="twitter:description"
-    content="Product designer and AI builder in Bengaluru. Creator of BestAnswersAI and Stepforge." />
+    content="An independent software business in Bengaluru building SaaS products: Stepforge, BestAnswersAI and BYOC." />
   <meta name="twitter:image" content="https://rahulbonala.me/og-image.png" />
   <meta name="twitter:image:alt" content="Rahul Bonala, product designer and AI builder" />
 
@@ -77,25 +77,39 @@
         "alternateName": "Sri Sai Rahul Bonala",
         "url": "https://rahulbonala.me/",
         "image": "https://rahulbonala.me/og-image.png",
-        "jobTitle": "Product Designer & AI Builder",
+        "jobTitle": "Founder, software developer and product designer",
         "worksFor": { "@type": "Organization", "name": "Ginthi.ai" },
         "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "addressCountry": "IN" },
         "alumniOf": { "@type": "CollegeOrUniversity", "name": "SASTRA University" },
-        "knowsAbout": ["Product design", "UX design", "AI agents", "Multi agent systems", "Frontend development", "React", "TypeScript"],
+        "knowsAbout": ["SaaS", "Software development", "Product design", "UX design", "AI agents", "Multi agent systems", "Frontend development", "React", "TypeScript"],
         "sameAs": [
           "https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/",
           "https://github.com/RahulBonala",
           "https://www.youtube.com/channel/UCIfuWTDvEMRy-5Ib68FBcMg",
           "https://bestanswersai.com/",
-          "https://stepforge.co/"
+          "https://stepforge.co/",
+          "https://build-your-own-company.vercel.app/"
         ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://rahulbonala.me/#business",
+        "name": "Rahul Bonala",
+        "legalName": "Sri Sai Rahul Bonala",
+        "description": "Independent software business building SaaS products.",
+        "url": "https://rahulbonala.me/",
+        "logo": "https://rahulbonala.me/favicon-192.png",
+        "email": "rahulbonala06@gmail.com",
+        "founder": { "@id": "https://rahulbonala.me/#person" },
+        "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressRegion": "Karnataka", "addressCountry": "IN" },
+        "knowsAbout": ["SaaS", "Software development", "AI applications"]
       },
       {
         "@type": "WebSite",
         "@id": "https://rahulbonala.me/#website",
         "url": "https://rahulbonala.me/",
         "name": "Rahul Bonala",
-        "publisher": { "@id": "https://rahulbonala.me/#person" },
+        "publisher": { "@id": "https://rahulbonala.me/#business" },
         "inLanguage": "en-IN"
       }
     ]

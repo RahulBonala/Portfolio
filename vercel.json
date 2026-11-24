@@ -6,7 +6,7 @@
     { "source": "/teach/booked", "destination": "/teach", "permanent": false }
   ],
   "rewrites": [
-    { "source": "/((?!api/|work/|teach|review|assets/|chunks/|.*\\..*).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|work/|legal/|about|teach|review|assets/|chunks/|.*\\..*).*)", "destination": "/index.html" }
   ],
   "functions": {
     "api/playbook.ts": {

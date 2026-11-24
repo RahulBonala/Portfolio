@@ -118,12 +118,13 @@ const Teach: React.FC = () => {
             everything below it into view sooner. */}
         <header className="teach-head">
           <div className="teach-head-copy">
-            <p className="teach-eyebrow">AI Builders by Rahul · Zero to Live</p>
-            <h1 className="teach-title" data-reveal="up">Zero to Live: turn your idea into a live website in one hour.</h1>
+            <p className="teach-eyebrow">Software training by Rahul Bonala · Zero to Live</p>
+            <h1 className="teach-title" data-reveal="up">Zero to Live: build and ship your first web app with AI in one hour.</h1>
             <p className="teach-lede" data-reveal="up">
-              A live, one-on-one session where I show you how to create a website, from a
-              rough idea in your head to a real site live on the internet in one hour. Using
-              free AI tools. Without writing a single line of code yourself.
+              A live, one-on-one training session where I teach you the workflow I use to
+              build my own SaaS products: from a rough idea in your head to a working web app
+              live on the internet in one hour. Using free AI tools. Without writing a single
+              line of code yourself.
             </p>
 
             <ol className="teach-phases" data-reveal="up" aria-label="The four phases of a session">
@@ -167,6 +168,11 @@ const Teach: React.FC = () => {
             <p className="teach-book-note">
               Pay below and you’ll be taken straight to the scheduler to pick your time.
               Full refund if it didn’t help. The pitch is the work, not the price.
+            </p>
+            <p className="teach-book-note">
+              Sold by Sri Sai Rahul Bonala (Rahul Bonala, independent software business).
+              See the <Link to="/legal/terms" className="about-inline-link">terms</Link> and
+              the <Link to="/legal/refunds" className="about-inline-link">refund and cancellation policy</Link>.
             </p>
           </div>
           <BookingSteps stage="payment" />

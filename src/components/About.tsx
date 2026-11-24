@@ -72,15 +72,16 @@ const About: React.FC = () => {
             <p>
               That habit compounded. Today I&apos;m the product designer and AI
               specialist at Ginthi.ai, designing and developing a live platform with
-              production traffic flowing the whole time. Nights and weekends, I build
-              with AI: BestAnswersAI puts four models in a room and makes them argue
-              before you get an answer.
+              production traffic flowing the whole time. And I run my own software
+              business, Rahul Bonala, which builds and sells SaaS products: Stepforge,
+              BestAnswersAI and BYOC, with more on the way.{' '}
+              <Link to="/about" className="about-inline-link">About the business</Link>.
             </p>
             <p>
               And because the fastest way to sharpen a workflow is to teach it, I run{' '}
               <Link to="/teach" className="about-inline-link">Zero to Live</Link>,
-              one-on-one sessions where someone with an idea and no code leaves
-              with a website they built themselves.
+              one-on-one training sessions where someone with an idea and no code
+              leaves with a working web app they built themselves.
             </p>
           </div>
 

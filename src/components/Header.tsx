@@ -5,7 +5,7 @@ import './Header.css';
 
 const NAV_LINKS = [
   { id: 'about', label: 'About', index: '01' },
-  { id: 'work', label: 'Work', index: '02' },
+  { id: 'work', label: 'Products', index: '02' },
   { id: 'youtube', label: 'YouTube', index: '03' },
   { id: 'skills', label: 'Receipts', index: '04' },
   { id: 'approach', label: 'Approach', index: '05' },

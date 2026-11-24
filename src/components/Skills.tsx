@@ -94,7 +94,7 @@ const GROUPS: Group[] = [
       },
       {
         skill: 'Teaching the workflow',
-        claim: 'Live 1:1 sessions taking someone’s idea to a deployed site with free AI tools.',
+        claim: 'Live 1:1 training sessions taking someone’s idea to a deployed web app with free AI tools.',
         proof: 'Zero to Live sessions',
         href: '/teach',
       },
