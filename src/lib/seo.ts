@@ -113,6 +113,26 @@ export const ROUTE_META: RouteMeta[] = [
     ],
   },
   {
+    path: '/about',
+    out: 'about/index.html',
+    title: 'About Rahul Bonala: Bio, Work and Official Profiles',
+    description:
+      'Rahul Bonala is a product designer and AI builder in Bengaluru at Gintic.ai, and founder of BestAnswersAI and Stepforge. Bio, timeline and official profiles.',
+    ogType: 'profile',
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        '@id': `${SITE}/about#page`,
+        url: `${SITE}/about`,
+        name: 'About Rahul Bonala',
+        mainEntity: PERSON,
+        isPartOf: { '@id': `${SITE}/#website` },
+        inLanguage: 'en-IN',
+      },
+    ],
+  },
+  {
     path: '/teach',
     out: 'teach/index.html',
     title: 'Zero to Live: Your Website Live in One Hour | Rahul Bonala',

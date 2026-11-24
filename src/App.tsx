@@ -15,6 +15,7 @@ import Teach from './pages/Teach';
 import Review from './pages/Review';
 import StepforgeStudy from './pages/StepforgeStudy';
 import AiAgents from './pages/AiAgents';
+import AboutPage from './pages/AboutPage';
 import { CHANNEL } from './lib/youtube';
 import { captureUtmSource } from './lib/payment';
 import './App.css';
@@ -120,6 +121,7 @@ function App() {
       <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/work/stepforge" element={<StepforgeStudy />} />
           <Route path="/work/ai-agents" element={<AiAgents />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
@@ -138,6 +140,8 @@ function App() {
           <p className="footer-name">Sri Sai Rahul Bonala</p>
           <p className="footer-role">Product Designer · Developer · Teacher</p>
           <div className="footer-links">
+            <Link to="/about">About</Link>
+            <span className="footer-dot" aria-hidden="true">·</span>
             <a href="https://www.linkedin.com/in/rahulbonala/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>

@@ -115,6 +115,17 @@
   margin: 28px 0 14px;
 }
 
+/* A block of copy meant to be quoted as is (the /about short bio). */
+.case-quote {
+  border-left: 2px solid var(--accent);
+  padding-left: 18px;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--ink);
+  max-width: 64ch;
+  margin-bottom: 18px;
+}
+
 .case-lead {
   font-size: clamp(1.15rem, 1.8vw, 1.5rem);
   font-weight: 600;

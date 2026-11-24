@@ -82,6 +82,9 @@ const About: React.FC = () => {
               one-on-one sessions where someone with an idea and no code leaves
               with a website they built themselves.
             </p>
+            <p>
+              <Link to="/about" className="about-inline-link">Read the full bio</Link>
+            </p>
           </div>
 
           <figure className="about-photo" data-reveal="scale">
