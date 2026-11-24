@@ -1,6 +1,6 @@
 # Design Guidelines — v3 (futuristic editorial, dark-first)
 
-The reference for working on this portfolio after the 2026 redesign. A dark-first editorial system positioning Rahul as a **product designer & developer specialising in AI-native UI/UX** (currently at Ginthi.ai). A light theme exists as a toggle; dark is the default and the identity.
+The reference for working on this portfolio after the 2026 redesign. A dark-first editorial system positioning Rahul as a **product designer & developer specialising in AI-native UI/UX** (currently at Gintic.ai). A light theme exists as a toggle; dark is the default and the identity.
 
 > The controlling rule is unchanged: **don't make it look like AI slop.** Every other rule is downstream of that. The redesign dodges the 2026 slop palette (dark + purple/cyan glow + glassmorphism + bento grids) on purpose.
 

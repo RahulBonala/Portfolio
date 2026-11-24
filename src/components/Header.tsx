@@ -168,8 +168,10 @@ const Header: React.FC = () => {
         </nav>
         <div className="menu-overlay-foot">
           <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>GitHub</a>
-          <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>LinkedIn</a>
+          <a href="https://www.linkedin.com/in/rahulbonala/" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>LinkedIn</a>
           <a href="https://www.youtube.com/channel/UCIfuWTDvEMRy-5Ib68FBcMg" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>YouTube</a>
+          <a href="https://www.instagram.com/rahul_bonala/" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>Instagram</a>
+          <a href="https://x.com/RahulBonala" target="_blank" rel="noopener noreferrer" tabIndex={isMenuOpen ? 0 : -1}>X</a>
           <a href="mailto:rahulbonala06@gmail.com" tabIndex={isMenuOpen ? 0 : -1}>Email</a>
           <a href="/resume.pdf" download="Rahul_Bonala_Resume.pdf" tabIndex={isMenuOpen ? 0 : -1}>Resume</a>
         </div>

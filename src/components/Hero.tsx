@@ -6,7 +6,7 @@ import './Hero.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const FACTS: { k: string; v: string; href?: string }[] = [
-  { k: 'Now', v: 'Product Designer, AI specialist at Ginthi.ai' },
+  { k: 'Now', v: 'Product Designer, AI specialist at Gintic.ai' },
   { k: 'Built', v: 'BestAnswersAI and Stepforge, solo' },
   { k: 'Teaching', v: 'Zero to Live, 1:1 sessions for new builders' },
   { k: 'Based', v: 'Bengaluru, India. Working globally.' },
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
         <p className="hero-sub">
           I&apos;m Rahul Bonala, a product designer and AI builder in Bengaluru. I design
           AI-native products and write the code that ships them, because handoff is where
-          most good ideas quietly die. Right now that&apos;s at Ginthi.ai, where I design
+          most good ideas quietly die. Right now that&apos;s at Gintic.ai, where I design
           and build an AI-powered accounts payable platform from Figma to production. On my
           own I&apos;ve shipped BestAnswersAI, Stepforge and BYOC, and every day I break down
           a new AI tool on my YouTube channel, Pay Grade AI.

@@ -15,6 +15,7 @@ import Teach from './pages/Teach';
 import Review from './pages/Review';
 import StepforgeStudy from './pages/StepforgeStudy';
 import AiAgents from './pages/AiAgents';
+import AboutPage from './pages/AboutPage';
 import { CHANNEL } from './lib/youtube';
 import { captureUtmSource } from './lib/payment';
 import './App.css';
@@ -120,6 +121,7 @@ function App() {
       <main id="main">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/work/stepforge" element={<StepforgeStudy />} />
           <Route path="/work/ai-agents" element={<AiAgents />} />
           <Route path="/work/:slug" element={<CaseStudy />} />
@@ -138,11 +140,17 @@ function App() {
           <p className="footer-name">Sri Sai Rahul Bonala</p>
           <p className="footer-role">Product Designer · Developer · Teacher</p>
           <div className="footer-links">
-            <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <Link to="/about">About</Link>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <a href="https://www.linkedin.com/in/rahulbonala/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href="https://github.com/rahulbonala" target="_blank" rel="noopener noreferrer">GitHub</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href={CHANNEL.url} target="_blank" rel="noopener noreferrer">YouTube</a>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <a href="https://www.instagram.com/rahul_bonala/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <a href="https://x.com/RahulBonala" target="_blank" rel="noopener noreferrer">X</a>
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href="mailto:rahulbonala06@gmail.com">Email</a>
             <span className="footer-dot" aria-hidden="true">·</span>

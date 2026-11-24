@@ -188,8 +188,18 @@ const Contact: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">
+                <a href="https://www.linkedin.com/in/rahulbonala/" target="_blank" rel="noopener noreferrer">
                   LinkedIn <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/rahul_bonala/" target="_blank" rel="noopener noreferrer">
+                  Instagram <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://x.com/RahulBonala" target="_blank" rel="noopener noreferrer">
+                  X <span aria-hidden="true">↗</span>
                 </a>
               </li>
               <li>

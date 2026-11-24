@@ -29,8 +29,8 @@ const TIMELINE = [
   {
     period: 'Now',
     role: 'Product Designer, AI specialist (UI/UX)',
-    org: 'Ginthi.ai',
-    note: 'I own design and front-end build for Ginthi’s web platform, taking features from concept through interface to shipped React, and building the AI tooling that lets a small team move quickly. Designing and developing the same surface means there’s no handoff to lose intent in.',
+    org: 'Gintic.ai',
+    note: 'I own design and front-end build for Gintic’s web platform, taking features from concept through interface to shipped React, and building the AI tooling that lets a small team move quickly. Designing and developing the same surface means there’s no handoff to lose intent in.',
   },
   {
     period: '2023 to 2026',
@@ -71,7 +71,7 @@ const About: React.FC = () => {
             </p>
             <p>
               That habit compounded. Today I&apos;m the product designer and AI
-              specialist at Ginthi.ai, designing and developing a live platform with
+              specialist at Gintic.ai, designing and developing a live platform with
               production traffic flowing the whole time. Nights and weekends, I build
               with AI: BestAnswersAI puts four models in a room and makes them argue
               before you get an answer.
@@ -81,6 +81,9 @@ const About: React.FC = () => {
               <Link to="/teach" className="about-inline-link">Zero to Live</Link>,
               one-on-one sessions where someone with an idea and no code leaves
               with a website they built themselves.
+            </p>
+            <p>
+              <Link to="/about" className="about-inline-link">Read the full bio</Link>
             </p>
           </div>
 
