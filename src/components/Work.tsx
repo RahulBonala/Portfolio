@@ -61,23 +61,26 @@ const CourseVisual = () => (
 const PROJECTS = [
   {
     index: '01',
-    meta: 'AI Agents · Experiment',
-    title: 'BYOC: SDLC Agents',
-    tagline: 'What if the agency was software?',
+    meta: 'SaaS · Career tools · Live',
+    title: 'Stepforge',
+    tagline: 'Upload a résumé. Get a portfolio website.',
     story:
-      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick (auth, payments, dashboards) and watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
+      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 39 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
     points: [
-      'AI agents mapped to SDLC phases: plan, design, build, test, ship',
-      'Interactive 3D-style configurator and a metro-map pipeline tracker',
-      'Honesty about cost as the core product idea, with no black-box quotes',
+      'Extraction and parsing run in your own browser, so the résumé isn’t uploaded unless you choose a cloud feature',
+      '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',
+      'Ships with its own safety nets: accessibility, responsive, print and old-mobile-engine gates in CI',
     ],
-    stack: ['React', 'TypeScript', 'AI agents', 'Node'],
-    links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
-    visual: <img src={byocImg} alt="BYOC, Build Your Own Company AI agents configurator" loading="lazy" decoding="async" width="600" height="400" />,
+    stack: ['React', 'TypeScript', 'Supabase', 'Vercel Functions', 'Gemini'],
+    links: [
+      { label: 'Read the case study', href: '/work/stepforge' },
+      { label: 'Visit live site', href: 'https://stepforge.co' },
+    ],
+    visual: <img src={stepforgeImg} alt="Stepforge logo, resume to portfolio website app" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
     index: '02',
-    meta: 'AI Product · Live',
+    meta: 'SaaS · AI answers · Live',
     title: 'BestAnswersAI',
     tagline: 'Four AIs argue. You get the strongest answer.',
     story:
@@ -96,27 +99,27 @@ const PROJECTS = [
   },
   {
     index: '03',
-    meta: 'SaaS · Live',
-    title: 'Stepforge',
-    tagline: 'Upload a résumé. Get a portfolio website.',
+    meta: 'SaaS · Product planning · Live',
+    title: 'BYOC: SDLC Agents',
+    tagline: 'What if the agency was software?',
     story:
-      'Drop in a CV (PDF, Word, Pages, or a photo of a printed page) and a few seconds later you have a real portfolio site: hero, work history as case studies, projects, skills, contact. Pick from 39 designs, then download it as one portable HTML file or publish it to a shareable link. The parser is deliberately deterministic rather than a model, because a regex cannot invent an employer; AI is opt-in, is forbidden from adding facts, and never touches names, dates or job titles.',
+      'Build Your Own Company turns the software delivery lifecycle into a product. Configure what your product needs brick by brick (auth, payments, dashboards) and watch the cost update in real time, then follow the build through a metro-map of SDLC phases. Underneath, AI agents carry the work through those phases autonomously.',
     points: [
-      'Extraction and parsing run in your own browser, so the résumé isn’t uploaded unless you choose a cloud feature',
-      '~89% text and number retention across a 46-résumé test corpus, with a validation gate that drops anything it can’t type rather than guessing',
-      'Ships with its own safety nets: accessibility, responsive, print and old-mobile-engine gates in CI',
+      'AI agents mapped to SDLC phases: plan, design, build, test, ship',
+      'Interactive 3D-style configurator and a metro-map pipeline tracker',
+      'Honesty about cost as the core product idea, with no black-box quotes',
     ],
-    stack: ['React', 'TypeScript', 'Supabase', 'Vercel Functions', 'Gemini'],
-    links: [{ label: 'Visit live site', href: 'https://stepforge.co' }],
-    visual: <img src={stepforgeImg} alt="Stepforge logo, resume to portfolio website app" loading="lazy" decoding="async" width="600" height="400" />,
+    stack: ['React', 'TypeScript', 'AI agents', 'Node'],
+    links: [{ label: 'Visit live site', href: 'https://build-your-own-company.vercel.app/' }],
+    visual: <img src={byocImg} alt="BYOC, Build Your Own Company AI agents configurator" loading="lazy" decoding="async" width="600" height="400" />,
   },
   {
     index: '04',
-    meta: 'Teaching · Live Sessions',
+    meta: 'Training · 1:1 Live Sessions',
     title: 'Zero to Live',
     tagline: 'Your idea, live on the internet, in an hour.',
     story:
-      'Once or twice a week I block an hour to sit with one person, usually a student or someone early in their career, and take their idea all the way to a live website using free AI tools. Define, design, develop, deploy, in one sitting. They leave with the Playbook, every prompt we used, and the thing most tutorials never teach: how to fix it themselves when it breaks.',
+      'The products are built with a workflow I also teach. Once or twice a week I block an hour for a 1:1 training session with one person, usually a student or someone early in their career, and we take their idea all the way to a live web app using free AI tools. Define, design, develop, deploy, in one sitting. They leave with the Playbook, every prompt we used, and the thing most tutorials never teach: how to fix it themselves when it breaks.',
     points: [
       'You bring an idea; we take it all the way to a live URL in the hour',
       'The whole path in one go: define, design, develop, deploy, all with free AI tools',
@@ -167,11 +170,11 @@ const Work: React.FC = () => {
     <section id="work" className="section work" ref={sectionRef}>
       <div className="container">
         <div className="sec-label">
-          <em>002</em> Selected work
+          <em>002</em> Products
         </div>
         <h2 className="sec-title" data-reveal="up">
-          Four things<br />
-          <span className="accent-word">worth your time.</span>
+          Software, built<br />
+          <span className="accent-word">and shipped.</span>
         </h2>
       </div>
 

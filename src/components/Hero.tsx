@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
@@ -6,9 +7,9 @@ import './Hero.css';
 gsap.registerPlugin(ScrollTrigger);
 
 const FACTS: { k: string; v: string; href?: string }[] = [
-  { k: 'Now', v: 'Product Designer, AI specialist at Ginthi.ai' },
-  { k: 'Built', v: 'BestAnswersAI and Stepforge, solo' },
-  { k: 'Teaching', v: 'Zero to Live, 1:1 sessions for new builders' },
+  { k: 'Products', v: 'Stepforge, BestAnswersAI and BYOC, all SaaS' },
+  { k: 'Built by', v: 'One maker, end to end: design, code, support' },
+  { k: 'Training', v: 'Zero to Live, 1:1 sessions on building software with AI' },
   { k: 'Based', v: 'Bengaluru, India. Working globally.' },
   { k: 'Channel', v: 'Pay Grade AI, daily AI news on YouTube', href: '#youtube' },
 ];
@@ -79,29 +80,29 @@ const Hero: React.FC = () => {
           <span className="hero-eyebrow hero-title-name">
             <span className="hero-eyebrow-name">Rahul Bonala</span>
           </span>
-          <span className="hero-line"><span className="hero-line-inner">Product designer <em>for</em></span></span>
+          <span className="hero-line"><span className="hero-line-inner">SaaS products <em>for</em></span></span>
           <span className="hero-line"><span className="hero-line-inner"><em>the</em> AI era<span className="hero-dot">.</span></span></span>
         </h1>
 
         <p className="hero-sub">
-          I&apos;m Rahul Bonala, a product designer and AI builder in Bengaluru. I design
-          AI-native products and write the code that ships them, because handoff is where
-          most good ideas quietly die. Right now that&apos;s at Ginthi.ai, where I design
-          and build an AI-powered accounts payable platform from Figma to production. On my
-          own I&apos;ve shipped BestAnswersAI, Stepforge and BYOC, and every day I break down
-          a new AI tool on my YouTube channel, Pay Grade AI.
+          Rahul Bonala is an independent software business in Bengaluru that builds and
+          sells SaaS products: web apps you open in a browser and start using in one step.
+          Stepforge turns a resume into a portfolio website, BestAnswersAI makes four AI
+          agents argue before you get an answer, and BYOC prices a software product brick by
+          brick. I&apos;m Sri Sai Rahul Bonala: I design every product and write the code
+          that ships it, because handoff is where most good ideas quietly die.
         </p>
 
         <div className="hero-ctas">
           <a href="#work" className="hero-cta-primary" data-cursor-label="View">
-            Selected work
+            See the products
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <line x1="12" y1="5" x2="12" y2="19" /><polyline points="19 12 12 19 5 12" />
             </svg>
           </a>
-          <a href="#contact" className="hero-cta-secondary">
-            Get in touch
-          </a>
+          <Link to="/about" className="hero-cta-secondary">
+            About the business
+          </Link>
         </div>
       </div>
 

@@ -88,3 +88,9 @@
     padding: 40px 0 28px;
   }
 }
+
+/* Policy links: a quieter second row under the social links. */
+.footer-legal a {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}

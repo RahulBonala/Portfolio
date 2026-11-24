@@ -304,3 +304,23 @@
     margin-bottom: 4px;
   }
 }
+
+/* The same two-column list, used for things that are kept, not rejected
+   (the product list and principles on /about). */
+.case-rejected-name.is-kept {
+  text-decoration: none;
+}
+
+.case-tag {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+.case-list + .case-body {
+  margin-top: 24px;
+}

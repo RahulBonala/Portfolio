@@ -1,6 +1,6 @@
 # Portfolio
 
-Personal portfolio for **Sri Sai Rahul Bonala** — Product Designer & Developer (AI-native UI/UX).
+Site of **Rahul Bonala**, an independent software business run by Sri Sai Rahul Bonala that builds and sells SaaS products (Stepforge, BestAnswersAI, BYOC). It also carries the founder's portfolio and the Zero to Live training sessions.
 
 Live at [rahulbonala.me](https://rahulbonala.me).
 
@@ -52,6 +52,16 @@ every visitor — never use that prefix for a secret.
 
 To add the session intro video, set `youTubeId` (or `file`) in
 `src/lib/booking.ts`. The video section renders nothing until one is set.
+
+## Business pages
+
+`/about` (the business and its product line) and `/legal/terms`, `/legal/refunds`,
+`/legal/privacy`, `/legal/contact` are the pages a payment gateway reviews. The
+operator's details and the product list live in `src/lib/business.ts`: to launch
+a new SaaS product, add it to `PRODUCTS` there, and add its site to the same
+Razorpay account under the same business category. If a price, the booking flow
+or the data the site stores changes, update the matching policy in
+`src/pages/Legal.tsx` and bump `BUSINESS.policiesUpdated`.
 
 ## Design system
 

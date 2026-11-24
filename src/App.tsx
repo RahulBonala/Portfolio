@@ -15,6 +15,8 @@ import Teach from './pages/Teach';
 import Review from './pages/Review';
 import StepforgeStudy from './pages/StepforgeStudy';
 import AiAgents from './pages/AiAgents';
+import Legal from './pages/Legal';
+import AboutBusiness from './pages/AboutBusiness';
 import { CHANNEL } from './lib/youtube';
 import { captureUtmSource } from './lib/payment';
 import './App.css';
@@ -126,6 +128,8 @@ function App() {
           <Route path="/teach" element={<Teach />} />
           <Route path="/teach/booked" element={<RedirectToTeach />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/about" element={<AboutBusiness />} />
+          <Route path="/legal/:doc" element={<Legal />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
@@ -136,7 +140,7 @@ function App() {
       <footer className="footer">
         <div className="container footer-inner">
           <p className="footer-name">Sri Sai Rahul Bonala</p>
-          <p className="footer-role">Product Designer · Developer · Teacher</p>
+          <p className="footer-role">SaaS products · Independent software business</p>
           <div className="footer-links">
             <a href="https://www.linkedin.com/in/sri-sai-rahul-7b08b51b1/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <span className="footer-dot" aria-hidden="true">·</span>
@@ -146,12 +150,24 @@ function App() {
             <span className="footer-dot" aria-hidden="true">·</span>
             <a href="mailto:rahulbonala06@gmail.com">Email</a>
             <span className="footer-dot" aria-hidden="true">·</span>
-            <Link to="/teach">Live sessions</Link>
+            <Link to="/teach">Software training</Link>
           </div>
+          {/* The business pages a payment gateway checks. See src/pages/Legal.tsx. */}
+          <nav className="footer-links footer-legal" aria-label="Policies">
+            <Link to="/about">About the business</Link>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <Link to="/legal/terms">Terms</Link>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <Link to="/legal/refunds">Refunds &amp; cancellations</Link>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <Link to="/legal/privacy">Privacy</Link>
+            <span className="footer-dot" aria-hidden="true">·</span>
+            <Link to="/legal/contact">Contact us</Link>
+          </nav>
           {/* Prerendered at build time, so a page built last year hydrates with a
               different year; the suppression lets the client's year win quietly. */}
           <p className="footer-copy" suppressHydrationWarning>
-            &copy; {new Date().getFullYear()} Sri Sai Rahul Bonala. All rights reserved.
+            &copy; {new Date().getFullYear()} Rahul Bonala, operated by Sri Sai Rahul Bonala (sole proprietor), Bengaluru, India. All rights reserved.
           </p>
         </div>
       </footer>

@@ -99,7 +99,7 @@ const Contact: React.FC = () => {
         </h2>
 
         <p className="contact-sub" data-reveal="up">
-          A role, a freelance project, an AI idea, or a question about the course.
+          A question about one of the products, a role, an AI idea, or a question about the training.
           I read every email and reply within a day.
         </p>
 

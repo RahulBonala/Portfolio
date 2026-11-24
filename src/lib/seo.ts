@@ -10,6 +10,8 @@
  * Copy rule: no em or en dashes in anything a visitor or a search result shows.
  */
 
+import { PRODUCTS } from './business';
+
 export const SITE = 'https://rahulbonala.me';
 const PERSON = { '@id': `${SITE}/#person` };
 
@@ -23,11 +25,22 @@ export type FaqItem = {
 export const PORTFOLIO_FAQ: FaqItem[] = [
   {
     q: 'Who is Rahul Bonala?',
-    a: 'Rahul Bonala is a product designer and AI builder in Bengaluru who designs AI native products and writes the code that ships them.',
+    a: 'Rahul Bonala is an independent software business in Bengaluru that builds and sells SaaS products, run by Sri Sai Rahul Bonala, a product designer and software developer who designs every product and writes the code that ships it.',
+    links: [{ label: 'About the business', href: '/about' }],
   },
   {
-    q: 'What has Rahul Bonala built?',
-    a: 'BestAnswersAI, a multi agent AI answer engine, and Stepforge, a resume to portfolio and career planning app, plus BYOC and the other projects listed on this site.',
+    q: 'What does Rahul Bonala sell?',
+    a: `SaaS products: ${PRODUCTS.map((p) => p.name).join(', ')}, each sold on its own site. Alongside them, Zero to Live is a 1:1 live training session in building and deploying software with AI tools, sold on this site.`,
+    links: [
+      { label: 'Products', href: '/about' },
+      { label: 'Zero to Live', href: '/teach' },
+      { label: 'Terms', href: '/legal/terms' },
+      { label: 'Refund policy', href: '/legal/refunds' },
+    ],
+  },
+  {
+    q: 'Which SaaS products has Rahul Bonala built?',
+    a: 'Stepforge, a resume to portfolio and career planning app; BestAnswersAI, a multi agent AI answer engine; and BYOC, which turns planning and building a software product into a configurator you can price in real time.',
     links: [
       { label: 'BestAnswersAI', href: 'https://bestanswersai.com/' },
       { label: 'Stepforge', href: 'https://stepforge.co/' },
@@ -42,7 +55,7 @@ export const PORTFOLIO_FAQ: FaqItem[] = [
   },
   {
     q: 'What is Zero to Live?',
-    a: 'A 1:1 live session where Rahul helps you take an idea from zero to a live website in one hour.',
+    a: 'A 1:1 live training session where Rahul teaches you to build and deploy your first web app with free AI tools, from idea to live on the internet in one hour.',
     links: [{ label: 'Book Zero to Live', href: '/teach' }],
   },
   {
@@ -89,7 +102,51 @@ const article = (path: string, headline: string, description: string) => ({
   isPartOf: { '@id': `${SITE}/#website` },
 });
 
-const HOME_TITLE = 'Rahul Bonala | Product Designer & AI Builder, Bengaluru';
+/** The policy pages (src/pages/Legal.tsx). */
+const LEGAL_ROUTES: RouteMeta[] = [
+  {
+    slug: 'terms',
+    title: 'Terms and Conditions | Rahul Bonala',
+    description: 'Terms for using rahulbonala.me and buying from Rahul Bonala, an independent software business run by Sri Sai Rahul Bonala.',
+  },
+  {
+    slug: 'refunds',
+    title: 'Refund and Cancellation Policy | Rahul Bonala',
+    description: 'How refunds, cancellations and rescheduling work for Zero to Live sessions bought on rahulbonala.me.',
+  },
+  {
+    slug: 'privacy',
+    title: 'Privacy Policy | Rahul Bonala',
+    description: 'What rahulbonala.me collects, why, which services process it, and how to see or delete your data.',
+  },
+  {
+    slug: 'contact',
+    title: 'Contact Us | Rahul Bonala',
+    description: 'Contact Rahul Bonala, an independent software business in Bengaluru run by Sri Sai Rahul Bonala, about a purchase, a refund or your data.',
+    type: 'ContactPage',
+  },
+].map(({ slug, title, description, type }) => ({
+  path: `/legal/${slug}`,
+  out: `legal/${slug}/index.html`,
+  title,
+  description,
+  ogType: 'website' as const,
+  jsonLd: [
+    {
+      '@context': 'https://schema.org',
+      '@type': type ?? 'WebPage',
+      '@id': `${SITE}/legal/${slug}#page`,
+      url: `${SITE}/legal/${slug}`,
+      name: title,
+      description,
+      publisher: PERSON,
+      isPartOf: { '@id': `${SITE}/#website` },
+      inLanguage: 'en-IN',
+    },
+  ],
+}));
+
+const HOME_TITLE = 'Rahul Bonala | SaaS Products by an Independent Software Business';
 
 export const ROUTE_META: RouteMeta[] = [
   {
@@ -97,7 +154,7 @@ export const ROUTE_META: RouteMeta[] = [
     out: 'index.html',
     title: HOME_TITLE,
     description:
-      'Rahul Bonala is a product designer and AI builder in Bengaluru. See AI agent projects, product case studies and Zero to Live website sessions.',
+      'Rahul Bonala is an independent software business in Bengaluru building SaaS products: Stepforge, BestAnswersAI and BYOC. See the products, case studies and Zero to Live training.',
     ogType: 'profile',
     jsonLd: [
       {
@@ -105,7 +162,7 @@ export const ROUTE_META: RouteMeta[] = [
         '@type': 'ProfilePage',
         '@id': `${SITE}/#profile`,
         url: `${SITE}/`,
-        name: 'Rahul Bonala | Product Designer & AI Builder',
+        name: 'Rahul Bonala | SaaS Products',
         mainEntity: PERSON,
         isPartOf: { '@id': `${SITE}/#website` },
       },
@@ -115,17 +172,18 @@ export const ROUTE_META: RouteMeta[] = [
   {
     path: '/teach',
     out: 'teach/index.html',
-    title: 'Zero to Live: Your Website Live in One Hour | Rahul Bonala',
+    title: 'Zero to Live: Build Your First Web App with AI | Rahul Bonala',
     description:
-      'A 1:1 live session with Rahul Bonala that takes your idea from zero to a live website in one hour. Book your Zero to Live session.',
+      'A 1:1 live training session with Rahul Bonala: learn to build and deploy your first web app with free AI tools, from idea to live in one hour.',
     ogType: 'website',
     jsonLd: [
       {
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: 'Zero to Live',
-        serviceType: '1:1 live website building session',
-        description: 'A one hour 1:1 live session that takes your idea from zero to a live website.',
+        serviceType: 'Software development training',
+        category: 'Software',
+        description: 'A one hour 1:1 live training session in building and deploying software with AI tools, from idea to a live web app.',
         provider: PERSON,
         areaServed: 'Worldwide',
         url: `${SITE}/teach`,
@@ -193,6 +251,27 @@ export const ROUTE_META: RouteMeta[] = [
       ),
     ],
   },
+  {
+    path: '/about',
+    out: 'about/index.html',
+    title: 'About Rahul Bonala: SaaS Products and the Business Behind Them',
+    description:
+      'Rahul Bonala is an independent software business in Bengaluru that builds and sells SaaS products: Stepforge, BestAnswersAI and BYOC.',
+    ogType: 'website',
+    jsonLd: [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'AboutPage',
+        '@id': `${SITE}/about#page`,
+        url: `${SITE}/about`,
+        name: 'About Rahul Bonala',
+        about: { '@id': `${SITE}/#business` },
+        isPartOf: { '@id': `${SITE}/#website` },
+        inLanguage: 'en-IN',
+      },
+    ],
+  },
+  ...LEGAL_ROUTES,
   {
     path: '/review',
     out: 'review/index.html',

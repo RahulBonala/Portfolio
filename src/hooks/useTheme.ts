@@ -22,15 +22,15 @@ const prefersReducedMotion = () =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /**
- * Dark is the default and the identity. A stored 'light' choice is applied
- * after mount — initial state stays 'dark' so client hydration matches the
- * prerendered HTML (the pre-paint script in index.html sets the attribute).
+ * Light is the default. A stored 'dark' choice is applied after mount —
+ * initial state stays 'light' so client hydration matches the prerendered
+ * HTML (the pre-paint script in index.html sets the attribute).
  *
  * Toggling cross-fades the whole document via the View Transitions API where
  * supported; otherwise a short CSS colour transition. Instant under reduced motion.
  */
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>('dark');
+  const [theme, setThemeState] = useState<Theme>('light');
 
   useEffect(() => {
     try {

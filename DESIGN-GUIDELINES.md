@@ -1,6 +1,6 @@
-# Design Guidelines — v3 (futuristic editorial, dark-first)
+# Design Guidelines — v3 (futuristic editorial, light by default)
 
-The reference for working on this portfolio after the 2026 redesign. A dark-first editorial system positioning Rahul as a **product designer & developer specialising in AI-native UI/UX** (currently at Ginthi.ai). A light theme exists as a toggle; dark is the default and the identity.
+The reference for working on this portfolio after the 2026 redesign. An editorial system (light by default, dark on toggle) positioning **Rahul Bonala as an independent software business that builds and sells SaaS products**, made end to end by its founder, a product designer and developer (currently also at Ginthi.ai). The home page still carries the founder's background; `/about` describes the business. Light is the default theme; dark is available from the header toggle, and a visitor's choice is remembered.
 
 > The controlling rule is unchanged: **don't make it look like AI slop.** Every other rule is downstream of that. The redesign dodges the 2026 slop palette (dark + purple/cyan glow + glassmorphism + bento grids) on purpose.
 
@@ -15,7 +15,7 @@ The reference for working on this portfolio after the 2026 redesign. A dark-firs
 
 ## 2. Tokens
 
-All tokens live in [src/index.css](src/index.css). Two themes: **dark (default)** = near-black + signature orange (`#ff6b1a`); **light** = off-white + deep orange (`#c2410c`, AA on light). The toggle lives in the header; `useTheme` ([src/hooks/useTheme.ts](src/hooks/useTheme.ts)) persists the choice and a pre-paint script in index.html prevents flash. Never hardcode a theme color — everything (including the SVG diagrams and the three.js scene) reads the CSS variables.
+All tokens live in [src/index.css](src/index.css). Two themes: **light (default)** = off-white + deep orange (`#c2410c`, AA on light); **dark** = near-black + signature orange (`#ff6b1a`). The toggle lives in the header; `index.html` ships `data-theme="light"` so even no-JS visitors get light; `useTheme` ([src/hooks/useTheme.ts](src/hooks/useTheme.ts)) persists the choice and a pre-paint script in index.html prevents flash. Never hardcode a theme color — everything (including the SVG diagrams and the three.js scene) reads the CSS variables.
 
 | Token | Value | Use |
 |---|---|---|
